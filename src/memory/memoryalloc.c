@@ -2,7 +2,7 @@
 #include "DNA-functions.h"
 
 /**--------------------------------------------------------- 
-Functions to allocate memory
+Functions to allocate memory 
 ---------------------------------------------------------**/
 
 int MemoryAllocGrid (int NPoints, struct DNA_Grid *Grid)
