@@ -1,0 +1,61 @@
+#########################################################
+#                                                       #
+#  DNA Options File                                     #
+#                                                       #
+#########################################################
+
+FLUID
+SoundSpeed 1500.0
+Density 1000.0
+FluidNonLinearity 0
+LocalNonlinearity False
+END
+
+RUNOPTIONS
+TimeStart 0.0
+TimeEnd 0.901e-4
+WriteFrequency 8000
+SamplePoints 5 0.00 0.05 0.10 0.15 0.20
+END
+
+BOUNDARYMOTION
+BoundaryMotionType linear
+BoundaryMotionStartTime 0.0e-0
+BoundaryMotionEndTime 2.3e10
+InitialMovingBoundaryPosition 0.0
+FixedBoundaryPosition 0.12
+MovingBoundaryVelocityAmplitude 500
+MovingBoundaryFrequency 1e4
+END
+
+BACKGROUNDFLOW
+Geometry 1dCartesian
+BackgroundMotionMode quiescent
+HorizonRadius 0.6
+BackgroundVelocityScalingFactor 2.0
+GravitationalPotential False
+END
+
+EXCITATION
+ExcitationStart 0.0
+ExcitationEnd 1e10
+ExcitationNode 0
+ExcitationFunctionType sine
+PressureAmplitude 1.0e3
+ExcitationFrequency 1e5
+PhaseShiftAngle 0
+PowerCoeff 1
+GaussEnvelope False
+EnvelopedPeriod 2
+GaussShapeCoeff 0.1
+END
+
+FINITEDIFFERENCE
+TimeStepSize 6.25e-10
+NPoints 4801
+nCorrectors 1
+correctorWeight 1.0
+BoundaryConditionEast absorbing
+BoundaryConditionWest scattering
+END
+
