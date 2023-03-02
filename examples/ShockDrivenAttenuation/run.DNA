@@ -54,7 +54,7 @@ FINITEDIFFERENCE
 TimeStepSize 1.25e-9
 NPoints 20001
 nCorrectors 1
-correctorWeight 2.0
+correctorWeight 1.5
 BoundaryConditionEast absorbing
 BoundaryConditionWest scattering
 END
