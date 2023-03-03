@@ -1,7 +1,10 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
-
+/**--------------------------------------------------------- 
+This function calls all the routines for memory allocation as implemented in
+<memoryalloc.c> and it is call upon initialization (see <initializesimulation.c>). 
+---------------------------------------------------------**/
 
 int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 { 

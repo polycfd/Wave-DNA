@@ -1,6 +1,11 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/**--------------------------------------------------------- 
+This function frees all alocated memory upon termination of the simulation
+and it is called in main.c.
+---------------------------------------------------------**/
+
 int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
   if(RunOptions->Probes.nSamplePoints > 0)
