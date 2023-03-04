@@ -65,7 +65,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   MovingBoundary->Udot_backgroundAtWall = (*RunOptions->WaveBackgroundAccelerationAtWall)(RunOptions, MovingBoundary, RunOptions->t);
   (*RunOptions->WaveBackgroundMotion)(RunOptions, Fields, MovingBoundary, RunOptions->t);
 
-  /** the term qphi represents the product of the acoustic perturbation potential phi
+  /** The term qphi represents the product of the acoustic perturbation potential phi
   and the velocity q = dXI/dt of the grid points in the computational domain as viewed
   from a moving point in the physical domain (also taking the Jacobain into ccoutn) **/
   SolveCalcqphi(RunOptions, Fields);
