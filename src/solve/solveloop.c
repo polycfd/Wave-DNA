@@ -1,7 +1,13 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
-/** Called in main.c if only wave is to be solved **/
+/**--------------------------------------------------------- 
+The fucntion <SolveTimeLoop> is called in main.c and represents the time loop of the
+simulation. In <SolveTimeLoop>, the function <Solve> is called, in which the numerical
+algorithm is implemented. 
+---------------------------------------------------------**/
+
+
 int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
 {
   RunOptions->t = RunOptions->tStart;
@@ -42,9 +48,6 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 }
 
 
-
-
-/** This function is always called when wave is to be solved **/
 int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
 {
   int corrNo;
@@ -62,7 +65,9 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   MovingBoundary->Udot_backgroundAtWall = (*RunOptions->WaveBackgroundAccelerationAtWall)(RunOptions, MovingBoundary, RunOptions->t);
   (*RunOptions->WaveBackgroundMotion)(RunOptions, Fields, MovingBoundary, RunOptions->t);
 
-  //ToDo: check appropriate position of this
+  /** the term qphi represents the product of the acoustic perturbation potential phi
+  and the velocity q = dXI/dt of the grid points in the computational domain as viewed
+  from a moving point in the physical domain (also taking the Jacobain into ccoutn) **/
   SolveCalcqphi(RunOptions, Fields);
   
   /** Predictior step: coordinate transformations, explicit solution, storing results of initial guess **/
@@ -84,11 +89,15 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
 
   BoundaryConditions(RunOptions, Fields, FluidProperties);
 
+  /** The following block converts the acoustic perturbation potential field
+  (primary solution of the numerical procedure), sets the new excitation pressure
+  at the emission node and subsequently converts the excitation pressure into the
+  excitation perturbation potential (typically a boundary condition). **/
   TransformPotentialFieldToPressureField(RunOptions, Fields, FluidProperties);
   WaveExcitationSetPressure(RunOptions, Fields, RunOptions->t);
   TransformExcitationPressureToExcitationPotential(RunOptions, Fields, FluidProperties);
-  //RunOptions->phiField.val[RunOptions->iExcitation] = RunOptions->pExcitation;
 
+  /** Updating the old fields required for time integration **/
   SolveUpdateOldFields(RunOptions, Fields);
 
   /** Write results to disc and update write counter **/

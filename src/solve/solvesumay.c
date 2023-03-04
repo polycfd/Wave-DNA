@@ -1,6 +1,11 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/**--------------------------------------------------------- 
+For a finite difference scheme for the k-th partial time derivative
+d^k phi/dt^k = a0*phi_new + Sum((a*phi)_old)/dt^k, the following function calls the
+functions to compute Sum((a*phi)_old).
+---------------------------------------------------------**/
 
 int SolveSumAy_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {   

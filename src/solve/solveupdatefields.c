@@ -1,6 +1,7 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/** Function to update all old fields required for the time integration **/
 int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
   int iPoint;
@@ -23,7 +24,9 @@ int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   return 0;
 }
 
-
+/** The term qphi represents the product of the acoustic perturbation potential phi
+  and the velocity q = dXI/dt of the grid points in the computational domain as viewed
+  from a moving point in the physical domain (also taking the Jacobain into ccoutn) **/
 int SolveCalcqphi(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
   int iPoint;
