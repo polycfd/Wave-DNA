@@ -1,6 +1,20 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/**--------------------------------------------------------- 
+The following two functions convert the excitation pressure to the excitation
+potential at the excitation node <iExcitation>
+(<TransformExcitationPressureToExcitationPotential>) and the acoustic perturbation
+potential field phi into the acoustic pressure field
+(<TransformPotentialFieldToPressureField>). The variable names follow a similar
+pattern as in <transformeqn.c>.
+
+The conversion essentially relies on the transformed form of the transient
+Bernoulli equation (expressed in terms of phi). After the terms related to phi are
+constructed, the acoustic pressure follows by forward substitution, whereas the
+excitation potential is the "new" term in the time-marching scheme (corresponding
+to the a0 coefficient of the time integration scheme).
+---------------------------------------------------------**/
 
 int TransformExcitationPressureToExcitationPotential(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties)
 {

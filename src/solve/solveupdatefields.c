@@ -1,6 +1,10 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/**--------------------------------------------------------- 
+Functions to update fields that do not require discretization 
+---------------------------------------------------------**/
+
 /** Function to update all old fields required for the time integration **/
 int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
