@@ -94,7 +94,6 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   at the emission node and subsequently converts the excitation pressure into the
   excitation perturbation potential (typically a boundary condition). **/
   TransformPotentialFieldToPressureField(RunOptions, Fields, FluidProperties);
-  WaveExcitationSetPressure(RunOptions, Fields, RunOptions->t);
   TransformExcitationPressureToExcitationPotential(RunOptions, Fields, FluidProperties);
 
   /** Updating the old fields required for time integration **/

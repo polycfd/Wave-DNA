@@ -5,6 +5,8 @@ int main(int argc, char **args)
 {
   char str[DNA_STRINGLENGTH_SPRINTF];
 
+  /** See <DNA.h> for the declaration and content of the following structure.
+  They may contain nested structures. **/
   struct DNA_RunOptions RunOptions;
   struct DNA_Fields Fields;
   struct DNA_MovingBoundary MovingBoundary;
@@ -32,12 +34,13 @@ int main(int argc, char **args)
   InitializeSimulation(&RunOptions, &Fields, &MovingBoundary);
   InitializeProcessOptions(&RunOptions, &Fields, &MovingBoundary);
 
-  /** Solve bubble and wave dynamics **/
   sprintf(str, "Executing solver.");
   IOInfoOnScreen(DNA_MEDIUMPRIO, RunOptions.OnScreenIOPriority, str);
-        
+
+  /** Time loop of the numerical simulation **/  
   SolveTimeLoop(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
+  /** Free all allocated memory **/
   MemoryFreeFields(&RunOptions, &Fields);
 
   sprintf(str, "Solver has concluded in %.3f s.\n+", (double) (clock() - startTime) / CLOCKS_PER_SEC);

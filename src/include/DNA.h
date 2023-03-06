@@ -124,8 +124,8 @@ struct DNA_NumericsFD
 /** Run options of the simulation **/
 struct DNA_RunOptions
 { 
-  int OnScreenIOPriority;  // Determines how much stuff is printed in the terminal (low = pretty much all, high = only essentials)
-  char OptionsDir[DNA_STRINGLENGTH];  // Directory path of the options file
+  int OnScreenIOPriority;
+  char OptionsDir[DNA_STRINGLENGTH];
 
   int dimension;
   int backgroundMotionMode;

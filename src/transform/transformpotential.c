@@ -19,18 +19,17 @@ to the a0 coefficient of the time integration scheme).
 int TransformExcitationPressureToExcitationPotential(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties)
 {
   DNA_FLOAT NLflag = 0.0;//RunOptions->LagrangianDensityFlag;
-  DNA_FLOAT DoFlag = 1.0;
   
   DNA_FLOAT phi;
   
-  DNA_FLOAT p = Fields->phi.val[RunOptions->iExcitation];
+  DNA_FLOAT p = RunOptions->pExcitation;
   DNA_FLOAT b = Fields->sum_aphi_dt1.val[RunOptions->iExcitation];
   DNA_FLOAT dt = RunOptions->NumericsFD.dt;
   DNA_FLOAT a0 = RunOptions->NumericsFD.FDCoeffs.adt_order1.dt1[0];
   DNA_FLOAT detJ = Fields->Grid.detJacobi;
   DNA_FLOAT dXI1_phi = Fields->dXI1_phi.val[RunOptions->iExcitation];
-  DNA_FLOAT u0 = Fields->BackgroundVelocity.val[RunOptions->iExcitation]*DoFlag;
-  DNA_FLOAT q = Fields->Grid.q[RunOptions->iExcitation]*DoFlag;
+  DNA_FLOAT u0 = Fields->BackgroundVelocity.val[RunOptions->iExcitation];
+  DNA_FLOAT q = Fields->Grid.q[RunOptions->iExcitation];
   DNA_FLOAT dtphi = Fields->dt1_phi.val[RunOptions->iExcitation];
   
   DNA_FLOAT transformed_dXI1_phi = detJ*dXI1_phi;
@@ -53,7 +52,6 @@ int TransformExcitationPressureToExcitationPotential(struct DNA_RunOptions *RunO
 int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties)
 {
   DNA_FLOAT NLflag = RunOptions->LagrangianDensityFlag;
-  DNA_FLOAT DoFlag = 1.0;
   
   int iPoint;
   
@@ -66,8 +64,8 @@ int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, st
   for (iPoint=1; iPoint<RunOptions->NumericsFD.NPoints; iPoint++)
   {
     DNA_FLOAT dXI1_phi = Fields->dXI1_phi.val[iPoint];
-    DNA_FLOAT u0 = Fields->BackgroundVelocity.val[iPoint]*DoFlag;
-    DNA_FLOAT q = Fields->Grid.q[iPoint]*DoFlag;
+    DNA_FLOAT u0 = Fields->BackgroundVelocity.val[iPoint];
+    DNA_FLOAT q = Fields->Grid.q[iPoint];
     DNA_FLOAT dtphi = Fields->dt1_phi.val[iPoint];
   
     DNA_FLOAT transformed_dXI1_phi = detJ*dXI1_phi;

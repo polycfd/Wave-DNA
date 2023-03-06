@@ -22,7 +22,6 @@ int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof
                                        DNA_FLOAT val);
 
 /** Wave excitation **/
-int WaveExcitationSetPressure(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, DNA_FLOAT time);
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions);
 DNA_FLOAT WaveExcitationConst(struct DNA_RunOptions *RunOptions);
 DNA_FLOAT WaveExcitationGaussEnvelope(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff);

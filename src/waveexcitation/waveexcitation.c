@@ -1,19 +1,31 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
+/**--------------------------------------------------------- 
+The following functions are meant to impose a wave exciation signal for the
+acoustic pressure. The return value (acoustic pressure) is
+applied to the excitation node in in the time loop (function <SolveTimeLoop> 
+in <solveloop.c>).
 
-int WaveExcitationSetPressure(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, DNA_FLOAT time)
-{
-  if((time >= RunOptions->WaveExcitation.ExcitationStart) && (time <= RunOptions->WaveExcitation.ExcitationEnd))
-  {
-    Fields->phi.val[RunOptions->iExcitation] = RunOptions->pExcitation;
-  }
-  else{
-    Fields->phi.val[RunOptions->iExcitation] = 0.0;
-  }
-  
-  return 0;
-}
+The excitation function is either sinusoidal (<WaveExcitationSineModulated>)
+or constant (<WaveExcitationConst>). In addition, it can be convoluted with
+a Gaussian envelope (<WaveExcitationGaussEnvelope> or
+<WaveExcitationGaussEnvelopeNone> if no envelope is applied). The corresponding
+excitation and Gauss envelope functions are called by reference based on the 
+user settings in the options file. The respective function pointers are called
+<PeriodicPressureExcitation> and <GaussConvolutionFactor>.
+
+The function pointers are called in the time loop function <SolveTimeLoop>
+(see <solveloop.c>). The sequence in <SolveTimeLoop> is as follows:
+
+1.) Determine the Gauss envelope (= 1.0 = const if no envelope is applied)
+2.) Determine the excitation pressure <pExcitation>.
+
+The excitation pressure is then converted into the excitation potential and
+assigned to the excitation node in the <Solve> function called inside
+<SolveTimeLoop>. The conversion and assignment is done by the function
+<TransformExcitationPressureToExcitationPotential>. 
+---------------------------------------------------------**/
 
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions)
 { 
