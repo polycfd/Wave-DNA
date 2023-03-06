@@ -28,33 +28,30 @@ assigned to the excitation node in the <Solve> function called inside
 ---------------------------------------------------------**/
 
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions)
-{ 
+{
   DNA_FLOAT yamp = RunOptions->WaveExcitation.PressureAmplitude;
   DNA_FLOAT frequ = RunOptions->WaveExcitation.ExcitationFrequency;
   DNA_FLOAT deltaPhi = RunOptions->WaveExcitation.PhaseShiftAngle;
   DNA_FLOAT power = RunOptions->WaveExcitation.PowerCoeff;
   DNA_FLOAT time = RunOptions->t;
   DNA_FLOAT GaussEnvelope = RunOptions->WaveExcitation.GaussConvolutionFactor;
-  
-  return (yamp*DNA_POW(DNA_SIN((DNA_FLOAT)2.0*DNA_PI*frequ*time - deltaPhi), power))*GaussEnvelope;
+
+  return (yamp * DNA_POW(DNA_SIN((DNA_FLOAT) 2.0 * DNA_PI * frequ * time - deltaPhi), power)) * GaussEnvelope;
 }
 
 DNA_FLOAT WaveExcitationConst(struct DNA_RunOptions *RunOptions)
 {
   DNA_FLOAT GaussEnvelope = RunOptions->WaveExcitation.GaussConvolutionFactor;
-  return RunOptions->WaveExcitation.PressureAmplitude*GaussEnvelope;
+  return RunOptions->WaveExcitation.PressureAmplitude * GaussEnvelope;
 }
 
 DNA_FLOAT WaveExcitationGaussEnvelope(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff)
 {
   DNA_FLOAT GaussEnvelope;
-  DNA_FLOAT arg = 4.0*DNA_POW2(frequ*time - periodNo + (DNA_FLOAT)0.5);
+  DNA_FLOAT arg = 4.0 * DNA_POW2(frequ * time - periodNo + (DNA_FLOAT) 0.5);
   GaussEnvelope = DNA_POW(shapeCoeff, arg);
-  
+
   return GaussEnvelope;
 }
 
-DNA_FLOAT WaveExcitationGaussEnvelopeNone(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff)
-{ 
-  return 1.0;
-}
+DNA_FLOAT WaveExcitationGaussEnvelopeNone(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff) { return 1.0; }

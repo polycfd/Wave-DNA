@@ -7,8 +7,8 @@ simulation. In <SolveTimeLoop>, the function <Solve> is called, in which the num
 algorithm is implemented. 
 ---------------------------------------------------------**/
 
-
-int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
+int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                  struct DNA_FluidProperties *FluidProperties)
 {
   RunOptions->t = RunOptions->tStart;
   RunOptions->tEnd = RunOptions->tEnd;
@@ -17,10 +17,7 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
   while (RunOptions->t < (RunOptions->tEnd + DNA_EPS))
   {
     /** Calling the function to prescribe the boundary motion **/
-    if(
-           (RunOptions->t >= RunOptions->WaveExcitation.BoundaryMotionStartTime)
-        && (RunOptions->t <= RunOptions->WaveExcitation.BoundaryMotionEndTime) 
-      )
+    if ((RunOptions->t >= RunOptions->WaveExcitation.BoundaryMotionStartTime) && (RunOptions->t <= RunOptions->WaveExcitation.BoundaryMotionEndTime))
     {
       (*RunOptions->BoundaryMotion)(RunOptions, MovingBoundary, FluidProperties, RunOptions->t);
     }
@@ -39,14 +36,13 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
     RunOptions->pExcitation = (*RunOptions->PeriodicPressureExcitation)(RunOptions);
 
     Solve(RunOptions, Fields, MovingBoundary, FluidProperties);
-    
+
     RunOptions->t += RunOptions->NumericsFD.dt;
     ++(RunOptions->NumericsFD.dtNumber);
   }
 
   return 0;
 }
-
 
 int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
 {
@@ -55,7 +51,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   /** Sum over previous function values times corresponding FD coefficients **/
   SolveSumAy_dt(RunOptions, Fields);
 
-   /** Updating the position of the excitation boundary and the uniform grid (metrics) **/
+  /** Updating the position of the excitation boundary and the uniform grid (metrics) **/
   Fields->Grid.xmov = MovingBoundary->R;
   GridPhysicalDomain(&(RunOptions->NumericsFD), &(Fields->Grid));
   GridMotion(RunOptions, Fields, MovingBoundary);
@@ -69,7 +65,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   and the velocity q = dXI/dt of the grid points in the computational domain as viewed
   from a moving point in the physical domain (also taking the Jacobain into ccoutn) **/
   SolveCalcqphi(RunOptions, Fields);
-  
+
   /** Predictior step: coordinate transformations, explicit solution, storing results of initial guess **/
   TransformEqn_Predictor(RunOptions, Fields, MovingBoundary, FluidProperties);
   SolveExplicit_Predictor(RunOptions, Fields);
@@ -81,7 +77,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
     SolveCorrectLaplacian(RunOptions, Fields);
     TransformEqn_Corrector(RunOptions, Fields, FluidProperties);
     SolveExplicit_Corrector(RunOptions, Fields);
-  }  
+  }
 
   /** Updating explcit spatial/time derivatives **/
   SolveExplicitDerivatives_dx(RunOptions, Fields);
@@ -114,7 +110,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   if (RunOptions->writeCount == RunOptions->writeFrequency)
   {
     RunOptions->writeCount = 0;
-  }  
+  }
 
   return 0;
 }

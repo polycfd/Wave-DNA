@@ -7,7 +7,7 @@ The following functions explicitly compute the required derivatives in the coord
 ---------------------------------------------------------**/
 
 int SolveExplicitDerivatives_dx(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
-{   
+{
   FDGradient(&RunOptions->NumericsFD, &Fields->phi, &Fields->dXI1_phi);
 
   FDLaplacian(&RunOptions->NumericsFD, &Fields->phi, &Fields->dXI2_phi);
@@ -18,7 +18,7 @@ int SolveExplicitDerivatives_dx(struct DNA_RunOptions *RunOptions, struct DNA_Fi
 }
 
 int SolveExplicitDerivatives_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
-{ 
+{
   // First partial time derivative of phi
   FDdt1(&RunOptions->NumericsFD, &Fields->sum_aphi_dt1, &Fields->phi, &Fields->dt1_phi);
 

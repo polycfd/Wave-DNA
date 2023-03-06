@@ -8,7 +8,8 @@ Reading the options file. In case of doubt, this file can always be consulted
 to check for valid options.
 ---------------------------------------------------------**/
 
-int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
+int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                      struct DNA_FluidProperties *FluidProperties)
 {
   int l = 0;
   int line = 0;
@@ -51,7 +52,7 @@ int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
           l = IOReadOneOption(OptionsFile, option3);
           RunOptions->Probes.nSamplePoints = atoi(option3);
 
-          if(RunOptions->Probes.nSamplePoints > 0)
+          if (RunOptions->Probes.nSamplePoints > 0)
           {
             MemoryAllocSamplePoints(RunOptions->Probes.nSamplePoints, &RunOptions->Probes);
 

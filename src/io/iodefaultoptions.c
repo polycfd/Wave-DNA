@@ -6,8 +6,9 @@ Setting the default options to enable a default run even for an empty
 options file.
 ---------------------------------------------------------**/
 
-int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
-{  
+int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                     struct DNA_FluidProperties *FluidProperties)
+{
   RunOptions->OnScreenIOPriority = DNA_LOWPRIO + DNA_MEDIUMPRIO + DNA_HIGHPRIO;
 
   /** Fluid properties **/
@@ -28,20 +29,21 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   /** Physical domain **/
   // The default length of the domain comprises 10 emitted wavelengths
   MovingBoundary->R0 = 0.0;
-  Fields->Grid.xfix = 10.0*FluidProperties->c0/RunOptions->WaveExcitation.ExcitationFrequency;
+  Fields->Grid.xfix = 10.0 * FluidProperties->c0 / RunOptions->WaveExcitation.ExcitationFrequency;
   Fields->Grid.xmov = MovingBoundary->R0;
 
   /** Numerical resolution **/
   // 100 grid points per wavelength
-  RunOptions->NumericsFD.NPoints = 100*(int)((Fields->Grid.xfix - Fields->Grid.xmov)/(FluidProperties->c0/RunOptions->WaveExcitation.ExcitationFrequency)) + 1; 
-  RunOptions->NumericsFD.dx = (Fields->Grid.xfix - Fields->Grid.xmov)/((DNA_FLOAT)RunOptions->NumericsFD.NPoints - 1);
+  RunOptions->NumericsFD.NPoints =
+      100 * (int) ((Fields->Grid.xfix - Fields->Grid.xmov) / (FluidProperties->c0 / RunOptions->WaveExcitation.ExcitationFrequency)) + 1;
+  RunOptions->NumericsFD.dx = (Fields->Grid.xfix - Fields->Grid.xmov) / ((DNA_FLOAT) RunOptions->NumericsFD.NPoints - 1);
   // CFL0 = 0.1 per default
-  RunOptions->NumericsFD.dt = (RunOptions->NumericsFD.dx)*0.1/(FluidProperties->c0); 
+  RunOptions->NumericsFD.dt = (RunOptions->NumericsFD.dx) * 0.1 / (FluidProperties->c0);
 
   /** Physical simulation time **/
   RunOptions->tStart = 0.0;
   // Per default, 10 emitted wave periods are simulated
-  RunOptions->tEnd = 10.0/RunOptions->WaveExcitation.ExcitationFrequency;
+  RunOptions->tEnd = 10.0 / RunOptions->WaveExcitation.ExcitationFrequency;
   RunOptions->WaveExcitation.ExcitationStart = RunOptions->tStart;
   RunOptions->WaveExcitation.ExcitationEnd = RunOptions->tEnd;
   RunOptions->WaveExcitation.BoundaryMotionStartTime = RunOptions->tStart;
@@ -52,11 +54,11 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   MovingBoundary->U_backgroundAtWall = 0;
   MovingBoundary->Udot_backgroundAtWall = 0;
   RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude = 0;
-  RunOptions->WaveExcitation.MovingBoundaryFrequency = 0.1*RunOptions->WaveExcitation.ExcitationFrequency;
+  RunOptions->WaveExcitation.MovingBoundaryFrequency = 0.1 * RunOptions->WaveExcitation.ExcitationFrequency;
 
   /** Background flow **/
   RunOptions->statHorizon = 0;
-  RunOptions->radius_horizon = 0.9*Fields->Grid.xmov;
+  RunOptions->radius_horizon = 0.9 * Fields->Grid.xmov;
   RunOptions->U_backgroundScaling = 2.0;
   RunOptions->GravitationalPotentialOption = 0;
 
@@ -67,7 +69,7 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   /** Results **/
   // The default write frequency is set in such a way that the results are written only once
   // at the end of the simulation
-  RunOptions->writeFrequency = (int)((RunOptions->tEnd - RunOptions->tStart)/RunOptions->NumericsFD.dt);
+  RunOptions->writeFrequency = (int) ((RunOptions->tEnd - RunOptions->tStart) / RunOptions->NumericsFD.dt);
   RunOptions->Probes.nSamplePoints = 0;
 
   /** The following options are needed to set the function pointers (process options) **/
@@ -83,6 +85,3 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
 
   return 0;
 }
-
-
-

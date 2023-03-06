@@ -56,5 +56,7 @@ typedef double DNA_FLOAT;
 
 /** Debugging aid **/
 #define DNA_WHERE printf("HERE - %s:%d\n", __FILE__, __LINE__);
-#define DNA_WHERE_INT(a) printf("HERE - %s:%d = %i\n", __FILE__, __LINE__, a);<
+#define DNA_WHERE_INT(a)                                \
+  printf("HERE - %s:%d = %i\n", __FILE__, __LINE__, a); \
+  <
 #endif

@@ -6,7 +6,7 @@ Central difference (dx) and forward difference (dt) coefficients.
 ---------------------------------------------------------**/
 
 int FDFiniteDifferenceCoeffs(struct DNA_NumericsFD *NumericsFD)
-{   
+{
   NumericsFD->FDCoeffs.adt_order1.dt1[0] = 1.0;
   NumericsFD->FDCoeffs.adt_order1.dt1[1] = -1.0;
 

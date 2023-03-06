@@ -12,14 +12,13 @@ int FDdt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, stru
   int iPoint;
   DNA_FLOAT a0 = NumericsFD->FDCoeffs.adt_order1.dt1[0];
 
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
-    dt1Field->val[iPoint] = (a0*Y->val[iPoint] + SumAY->val[iPoint])/NumericsFD->dt;
+    dt1Field->val[iPoint] = (a0 * Y->val[iPoint] + SumAY->val[iPoint]) / NumericsFD->dt;
   }
-  
-  return 0;  
-}
 
+  return 0;
+}
 
 int FDdt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt2Field)
 {
@@ -27,10 +26,10 @@ int FDdt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, stru
   DNA_FLOAT dtPow2 = DNA_POW2(NumericsFD->dt);
   DNA_FLOAT a0 = NumericsFD->FDCoeffs.adt_order1.dt2[0];
 
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
-    dt2Field->val[iPoint] = (a0*Y->val[iPoint] + SumAY->val[iPoint])/dtPow2;
+    dt2Field->val[iPoint] = (a0 * Y->val[iPoint] + SumAY->val[iPoint]) / dtPow2;
   }
-  
-  return 0;  
+
+  return 0;
 }

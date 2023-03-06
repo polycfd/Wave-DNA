@@ -18,8 +18,7 @@ based on the settings specified in the options file.
 int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *ScalarField, DNA_FLOAT val);
-int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof_OldScalarFields, struct DNA_OldScalarFields *OldScalarFields,
-                                       DNA_FLOAT val);
+int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof_OldScalarFields, struct DNA_OldScalarFields *OldScalarFields, DNA_FLOAT val);
 
 /** Wave excitation **/
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions);
@@ -32,7 +31,8 @@ int TransformExcitationPressureToExcitationPotential(struct DNA_RunOptions *RunO
 int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties);
 
 /** Transformation between the physical and the computational domain and geometrical decay in spherical symmetry **/
-int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties);
+int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                           struct DNA_FluidProperties *FluidProperties);
 int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties);
 double TransformSphericalDecay(DNA_FLOAT x);
 double TransformNoGeometricalDecay(DNA_FLOAT x);
@@ -50,8 +50,9 @@ double BackgroundFlowGravitationalPotential_dummy(struct DNA_RunOptions *RunOpti
 
 /** Functions related to the numerical solution algorithm **/
 int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties);
-int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties);
-int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields); 
+int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                  struct DNA_FluidProperties *FluidProperties);
+int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveCalcqphi(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveSumAy_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveSumAy_dx(struct DNA_RunOptions *RunOptions);
@@ -70,18 +71,27 @@ int FDdt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, stru
 int FDdt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt2Field);
 int FDSumAY_dt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_OldScalarFields *OldScalarFields);
 int FDSumAY_dt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_OldScalarFields *OldScalarFields);
-int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
+int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
+                  struct DNA_ScalarField *OldField);
+int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
+                  struct DNA_ScalarField *OldField);
+int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
+                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
+int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
+                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
+int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
+                   struct DNA_ScalarField *OldField);
 
 /** Functions to set the boundary conditions and to describe the motion of the moving domain boundary **/
 int BoundaryConditions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties);
-int BoundaryMotionLinear(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT time);
-int BoundaryMotionOscillating(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT time);
-int BoundaryMotionStationaryBlackHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT time);
-int BoundaryMotionStationaryWhiteHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT time);
+int BoundaryMotionLinear(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
+                         DNA_FLOAT time);
+int BoundaryMotionOscillating(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
+                              DNA_FLOAT time);
+int BoundaryMotionStationaryBlackHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
+                                      DNA_FLOAT time);
+int BoundaryMotionStationaryWhiteHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
+                                      DNA_FLOAT time);
 
 /** Functions to create the computational and physical grids and to compute the metrics of the coordinate transformation **/
 int GridPhysicalDomain(struct DNA_NumericsFD *NumericsFD, struct DNA_Grid *Grid);
@@ -101,13 +111,15 @@ int MemoryFreeSampleVectors(int writeFrequency, struct DNA_Probes *Probes);
 int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 
 /** In put and output on screen and writing to disk **/
-int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties);
+int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                     struct DNA_FluidProperties *FluidProperties);
 int IOInfoOnScreen(int Priority, int PriorityOption, char *str);
 int IOErrorOnScreen(int num, char *message);
 int IOWelcomeScreen();
 int IOExitScreen(double totaltime);
 int IOReadOneOption(FILE *OptionsFile, char *stuk);
-int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties);
+int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
+                      struct DNA_FluidProperties *FluidProperties);
 int IOReadCommandLineOptions(int argc, char **args, struct DNA_RunOptions *RunOptions);
 int IOLineGet(char *ssring, FILE *fp);
 int IOLineGetSemi(char *ssring, FILE *fp);

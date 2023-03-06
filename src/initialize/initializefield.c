@@ -10,12 +10,12 @@ temporal discretization.
 int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *ScalarField, DNA_FLOAT val)
 {
   int iPoint;
-  
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
     ScalarField->val[iPoint] = val;
   }
-  
+
   return 0;
 }
 
@@ -23,16 +23,14 @@ int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof
 {
   int iPoint;
   int j;
-  
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
-    for(j=0; j<sizeof_OldScalarFields; j++)
+    for (j = 0; j < sizeof_OldScalarFields; j++)
     {
       (OldScalarFields->o[j]).val[iPoint] = val;
     }
   }
-  
+
   return 0;
 }
-
-

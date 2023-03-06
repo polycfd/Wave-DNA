@@ -116,14 +116,14 @@ struct DNA_NumericsFD
   int BCWest;
   int BCEast;
   int nCorrectors;
-  DNA_FLOAT correctorWeight; 
+  DNA_FLOAT correctorWeight;
 
   struct DNA_FDCoeffs FDCoeffs;
 };
 
 /** Run options of the simulation **/
 struct DNA_RunOptions
-{ 
+{
   int OnScreenIOPriority;
   char OptionsDir[DNA_STRINGLENGTH];
 
@@ -132,11 +132,11 @@ struct DNA_RunOptions
   int BoundaryMotionType;
   int statHorizon;
   int GravitationalPotentialOption;
-  
+
   DNA_FLOAT tStart;
   DNA_FLOAT tEnd;
   DNA_FLOAT t;
-  
+
   int LagrangianDensityFlag;
   DNA_FLOAT radius_horizon;
   DNA_FLOAT U_backgroundScaling;
@@ -161,14 +161,17 @@ struct DNA_RunOptions
   DNA_FLOAT (*GaussEnvelope)(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff);
 
   /** Pointers to the boundary condition functions **/
-  int (*FDBC_East)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-  int (*FDBC_West)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
+  int (*FDBC_East)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
+                   struct DNA_ScalarField *OldField);
+  int (*FDBC_West)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
+                   struct DNA_ScalarField *OldField);
 
   // Pointer to the function describing the decay/amplification due to the geometry of the problem
   double (*GeometricalDecay)(DNA_FLOAT x);
 
   // Pointers to the boundary and background flow motion functions
-  int (*BoundaryMotion)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT time);
+  int (*BoundaryMotion)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
+                        DNA_FLOAT time);
   int (*WaveBackgroundMotion)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
   double (*WaveBackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
   double (*WaveBackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
@@ -210,12 +213,12 @@ struct DNA_Fields
   struct DNA_ScalarField dt1_dXI1_phi;
   struct DNA_ScalarField dt1_dXI1_qphi;
   struct DNA_ScalarField PressureField;
-  
+
   struct DNA_ScalarField sum_aphi_dt1;
   struct DNA_ScalarField sum_aphi_dt2;
   struct DNA_ScalarField sum_adXI1_phi_dt1;
   struct DNA_ScalarField sum_adXI1_qphi_dt1;
-  
+
   struct DNA_ScalarField phi1_initGuess;
   struct DNA_ScalarField RHS;
   struct DNA_ScalarField AA;

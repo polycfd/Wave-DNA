@@ -37,7 +37,7 @@ int main(int argc, char **args)
   sprintf(str, "Executing solver.");
   IOInfoOnScreen(DNA_MEDIUMPRIO, RunOptions.OnScreenIOPriority, str);
 
-  /** Time loop of the numerical simulation **/  
+  /** Time loop of the numerical simulation **/
   SolveTimeLoop(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
   /** Free all allocated memory **/

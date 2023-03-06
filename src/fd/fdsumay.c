@@ -16,9 +16,9 @@ int FDSumAY_dt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY
   int iPoint;
   DNA_FLOAT amin1 = NumericsFD->FDCoeffs.adt_order1.dt1[1];
 
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
-    SumAY->val[iPoint] = amin1*OldScalarFields->o[0].val[iPoint];
+    SumAY->val[iPoint] = amin1 * OldScalarFields->o[0].val[iPoint];
   }
 
   return 0;
@@ -30,11 +30,9 @@ int FDSumAY_dt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY
   DNA_FLOAT amin1 = NumericsFD->FDCoeffs.adt_order1.dt2[1];
   DNA_FLOAT amin2 = NumericsFD->FDCoeffs.adt_order1.dt2[2];
 
-  for(iPoint=0; iPoint<(NumericsFD->NPoints); iPoint++)
+  for (iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
   {
-    SumAY->val[iPoint] = 
-      amin1*OldScalarFields->o[0].val[iPoint] 
-    + amin2*OldScalarFields->o[1].val[iPoint];
+    SumAY->val[iPoint] = amin1 * OldScalarFields->o[0].val[iPoint] + amin2 * OldScalarFields->o[1].val[iPoint];
   }
 
   return 0;
