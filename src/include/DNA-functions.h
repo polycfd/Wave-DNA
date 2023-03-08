@@ -1,6 +1,3 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "DNA.h"
 
 #ifndef DNAFUNCTIONS_H_

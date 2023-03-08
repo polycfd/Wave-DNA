@@ -1,6 +1,4 @@
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef DNACONSTANTS_H_
 #define DNACONSTANTS_H_
