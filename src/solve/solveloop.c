@@ -14,6 +14,9 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
   RunOptions->tEnd = RunOptions->tEnd;
   RunOptions->NumericsFD.dtNumber = 0;
 
+  int progress = 0;
+  IOProgressInitial();
+
   while (RunOptions->t < (RunOptions->tEnd + DNA_EPS))
   {
     /** Calling the function to prescribe the boundary motion **/
@@ -39,7 +42,11 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 
     RunOptions->t += RunOptions->NumericsFD.dt;
     ++(RunOptions->NumericsFD.dtNumber);
+
+    IOProgressUpdate(&progress, RunOptions->t, RunOptions->tEnd);
   }
+
+  IOProgressFinal();
 
   return 0;
 }

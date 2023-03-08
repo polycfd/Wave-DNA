@@ -35,7 +35,12 @@ int IOWelcomeScreen()
 {
   printf("+ --------------------------------------------------------------------------- \n");
   printf("+ \n");
-  printf("+ Name... \n");
+  printf("+ ██╗    ██╗ █████╗ ██╗   ██╗███████╗    ██████╗ ███╗   ██╗ █████╗ \n");
+  printf("+ ██║    ██║██╔══██╗██║   ██║██╔════╝    ██╔══██╗████╗  ██║██╔══██╗ \n");
+  printf("+ ██║ █╗ ██║███████║██║   ██║█████╗█████╗██║  ██║██╔██╗ ██║███████║ \n");
+  printf("+ ██║███╗██║██╔══██║╚██╗ ██╔╝██╔══╝╚════╝██║  ██║██║╚██╗██║██╔══██║ \n");
+  printf("+ ╚███╔███╔╝██║  ██║ ╚████╔╝ ███████╗    ██████╔╝██║ ╚████║██║  ██║ \n");
+  printf("+  ╚══╝╚══╝ ╚═╝  ╚═╝  ╚═══╝  ╚══════╝    ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝ \n");
   printf("+ \n");
   printf("+ Version: %.1f \n", DNA_VERSION_NUM);
   printf("+ Release date: %s  \n", DNA_RELEASE_DATE);
@@ -43,13 +48,6 @@ int IOWelcomeScreen()
   printf("+ Compiled in release mode \n");
 #else
   printf("+ Compiled in debug mode \n");
-#endif
-#if defined(DNA_PRECISION_QUAD)
-  printf("+ Compiled with quad precision \n");
-#elif defined(DNA_PRECISION_LONGDOUBLE)
-  printf("+ Compiled with long-double precision \n");
-#else
-  printf("+ Compiled with double precision \n");
 #endif
   printf("+\n");
   printf("+ --------------------------------------------------------------------------- \n+\n");
@@ -66,4 +64,31 @@ int IOExitScreen(double totaltime)
   printf("+ --------------------------------------------------------------------------- \n");
 
   return 0;
+}
+
+int IOProgressInitial()
+{
+  fprintf(stderr, "+ Progress %%: ");
+  return (0);
+}
+
+int IOProgressUpdate(int* prog, DNA_FLOAT elapsedtime, DNA_FLOAT totaltime)
+{
+  if (elapsedtime > (DNA_FLOAT) *prog * 0.02 * totaltime)
+  {
+    if (!(*prog % 5) && *prog != 50)
+      fprintf(stderr, "%i", *prog * 2);
+    else
+      fprintf(stderr, ".");
+
+    (*prog)++;
+  }
+
+  return (0);
+}
+
+int IOProgressFinal()
+{
+  fprintf(stderr, "100\n");
+  return (0);
 }

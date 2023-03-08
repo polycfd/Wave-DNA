@@ -130,5 +130,8 @@ int IOUpdateProbes_dummy(int id, struct DNA_RunOptions *RunOptions, struct DNA_F
 int IOWriteProbes(struct DNA_RunOptions *RunOptions);
 int IOWriteProbes_dummy(struct DNA_RunOptions *RunOptions);
 int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
+int IOProgressInitial();
+int IOProgressUpdate(int *prog, DNA_FLOAT elapsedtime, DNA_FLOAT totaltime);
+int IOProgressFinal();
 
 #endif
