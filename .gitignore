@@ -50,3 +50,23 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Latex
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+
+# Misc
+.DS_Store
+.vscode
+
+# CMake
+*.cmake
+CMakeCache.txt
+CMakeFiles/
+Makefile
