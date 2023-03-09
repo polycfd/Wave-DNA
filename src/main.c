@@ -28,8 +28,6 @@ int main(int argc, char **args)
 
   clock_t startTime = clock();
 
-  IOInfoOnScreen(DNA_HIGHPRIO, RunOptions.OnScreenIOPriority, str);
-
   /** Initialize the wave  **/
   InitializeSimulation(&RunOptions, &Fields, &MovingBoundary);
   InitializeProcessOptions(&RunOptions, &Fields, &MovingBoundary);
