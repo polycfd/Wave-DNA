@@ -27,9 +27,9 @@ Finally, the {\tt Wave-DNA} source directory must be specified. This is done by 
 \\[8pt]
 or by setting:
 \\[8pt]
-{\tt FILE (GLOB\_RECURSE MYFILES ABSOLUTE  \$ENV{WaveDNA\_DIR}/src/*.c)}
+{\tt FILE (GLOB\_RECURSE MYFILES ABSOLUTE  \$ENV\{WaveDNA\_DIR\}/src/*.c)}
 \\[8pt]
-The latter option requires to set the environmental variable {\tt \$ENV{WaveDNA\_DIR}} to {\tt /path/to/wavedna} in the configuration (run commands) file of the {\tt Unix} shell, as for instance {\tt /path/to/home/.bashrc}. With the default settings in the delivered {\tt CMakeLists.txt} file, the executable {\tt WaveDNA} is created in the build directory upon successful compilation. See the following lines in {\tt CMakeLists.txt}:
+The latter option requires to set the environmental variable {\tt \{WaveDNA\_DIR\}} to {\tt /path/to/wavedna} in the configuration (run commands) file of the {\tt Unix} shell, as for instance {\tt /path/to/home/.bashrc}. With the default settings in the provided {\tt CMakeLists.txt} file, the executable {\tt WaveDNA} is created in the build directory upon successful compilation. See the following lines in {\tt CMakeLists.txt}:
 \\[8pt]
 {\tt add\_executable(WaveDNA \${MYFILES})} \\
 {\tt target\_link\_libraries(WaveDNA \${mylibs}}
