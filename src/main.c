@@ -11,7 +11,6 @@ int main(int argc, char **args)
   struct DNA_FluidProperties FluidProperties;
 
   IOWelcomeScreen();
-
   clock_t starttime = clock();
 
   /** Read command line options **/
@@ -21,24 +20,19 @@ int main(int argc, char **args)
   IODefaultOptions(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
   printf("+ Reading options file %s\n+\n", RunOptions.OptionsDir);
-
   IOReadOptionsFile(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
-
-  clock_t startTime = clock();
 
   /** Initialize the wave  **/
   InitializeSimulation(&RunOptions, &Fields, &MovingBoundary);
   InitializeProcessOptions(&RunOptions, &Fields, &MovingBoundary);
 
-  printf("+ Executing solver.\n+\n");
-
   /** Time loop of the numerical simulation **/
+  printf("+ Executing solver.\n+\n");
   SolveTimeLoop(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
+  printf("+ Solver has concluded in %.3f s.\n+\n", (double) (clock() - starttime) / CLOCKS_PER_SEC);
 
   /** Free all allocated memory **/
   MemoryFreeFields(&RunOptions, &Fields);
-
-  printf("+ Solver has concluded in %.3f s.\n+\n", (double) (clock() - startTime) / CLOCKS_PER_SEC);
 
   IOExitScreen((double) (clock() - starttime) / CLOCKS_PER_SEC);
 
