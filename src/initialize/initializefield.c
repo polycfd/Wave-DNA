@@ -9,7 +9,7 @@ temporal discretization.
 
 int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *ScalarField, DNA_FLOAT val)
 {
-  for (int iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
     ScalarField->val[iPoint] = val;
   }
@@ -19,11 +19,11 @@ int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, struct DNA_Sca
 
 int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof_OldScalarFields, struct DNA_OldScalarFields *OldScalarFields, DNA_FLOAT val)
 {
-  for (int iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
     for (int j = 0; j < sizeof_OldScalarFields; j++)
     {
-      (OldScalarFields->o[j]).val[iPoint] = val;
+      OldScalarFields->o[j].val[iPoint] = val;
     }
   }
 

@@ -102,7 +102,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
   /** In the coefficient names, "1" and "2" refers to the order of the partial
   time-derivatives to which the coefficients belong, and "G", "L", and "M" means
   "gradient", "Laplacian", and "Mixed" (derivative), respectively. **/
-  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     q = Fields->Grid.q[iPoint];
     dqdt = Fields->Grid.dtq[iPoint];

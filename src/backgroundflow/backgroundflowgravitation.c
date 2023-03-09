@@ -9,10 +9,10 @@ If not applicable or if not acitvated in the options file, the pointer refers to
 
 DNA_FLOAT BackgroundFlowGravitationalPotential(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
 {
-  return (DNA_FLOAT) 2.0 * DNA_POW2(FluidProperties->c0) * RunOptions->radius_horizon / DNA_POW2(x);
+  return (2.0 * DNA_POW2(FluidProperties->c0) * RunOptions->radius_horizon / DNA_POW2(x));
 }
 
 DNA_FLOAT BackgroundFlowGravitationalPotential_dummy(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
 {
-  return (DNA_FLOAT) 0.0;
+  return (0.0);
 }

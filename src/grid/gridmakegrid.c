@@ -17,7 +17,7 @@ int GridPhysicalDomain(struct DNA_NumericsFD *NumericsFD, struct DNA_Grid *Grid)
 {
   NumericsFD->dx = (Grid->xfix - Grid->xmov) / ((DNA_FLOAT) NumericsFD->NPoints - 1.0);
 
-  for (int iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
     Grid->x[iPoint] = Grid->xmov + ((DNA_FLOAT) iPoint) * (NumericsFD->dx);
   }
@@ -29,9 +29,9 @@ int GridComputationalDomain(struct DNA_NumericsFD *NumericsFD, struct DNA_Grid *
 {
   NumericsFD->dXI = 1.0 / ((DNA_FLOAT) NumericsFD->NPoints - 1.0);
 
-  for (int iPoint = 0; iPoint < (NumericsFD->NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
-    Grid->XI[iPoint] = ((DNA_FLOAT) iPoint) * (NumericsFD->dXI);
+    Grid->XI[iPoint] = ((DNA_FLOAT) iPoint) * NumericsFD->dXI;
   }
 
   return 0;

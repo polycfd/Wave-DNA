@@ -11,7 +11,7 @@ int BoundaryMotionLinear(struct DNA_RunOptions *RunOptions, struct DNA_MovingBou
                          DNA_FLOAT time)
 {
   MovingBoundary->R =
-      MovingBoundary->R0 + (RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude) * (time - RunOptions->WaveExcitation.BoundaryMotionStartTime);
+      MovingBoundary->R0 + RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude * (time - RunOptions->WaveExcitation.BoundaryMotionStartTime);
   MovingBoundary->U = RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude;
   MovingBoundary->Udot = 0.0;
 
@@ -24,7 +24,7 @@ int BoundaryMotionOscillating(struct DNA_RunOptions *RunOptions, struct DNA_Movi
 {
   DNA_FLOAT Omega = (DNA_FLOAT) 2.0 * DNA_PI * RunOptions->WaveExcitation.MovingBoundaryFrequency;
 
-  MovingBoundary->R = MovingBoundary->R0 + (RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude) / (Omega + DNA_SMALL) *
+  MovingBoundary->R = MovingBoundary->R0 + RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude / (Omega + DNA_SMALL) *
                                                DNA_SIN((time - RunOptions->WaveExcitation.BoundaryMotionStartTime) * Omega);
   MovingBoundary->U = RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude * DNA_COS((time - RunOptions->WaveExcitation.BoundaryMotionStartTime) * Omega);
   MovingBoundary->Udot = -RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude * (Omega + DNA_SMALL) *
@@ -49,20 +49,17 @@ be mimicked in some close vicinity of the sonic horizon.
 int BoundaryMotionStationaryBlackHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                                       DNA_FLOAT time)
 {
-  DNA_FLOAT arg;
-
   RunOptions->statHorizon = 1;
   DNA_FLOAT k = RunOptions->U_backgroundScaling;
-  DNA_FLOAT kplusone = k + (DNA_FLOAT) 1.0;
-  DNA_FLOAT one_by_kplusone = (DNA_FLOAT) 1.0 / kplusone;
+  DNA_FLOAT kplusone = k + 1.0;
+  DNA_FLOAT one_by_kplusone = 1.0 / kplusone;
   DNA_FLOAT min_k_by_kplusone = -k / kplusone;
-  DNA_FLOAT min_2kplusone_by_kplusone = -((DNA_FLOAT) 2.0 * k + (DNA_FLOAT) 1.0) / kplusone;
-  arg = DNA_POW(MovingBoundary->R0, kplusone) - kplusone * FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * time;
+  DNA_FLOAT min_2kplusone_by_kplusone = -(2.0 * k + 1.0) / kplusone;
+  DNA_FLOAT arg = DNA_POW(MovingBoundary->R0, kplusone) - kplusone * FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * time;
 
   MovingBoundary->R = DNA_POW(arg, one_by_kplusone);
   MovingBoundary->U = -FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * DNA_POW(arg, min_k_by_kplusone);
-  MovingBoundary->Udot =
-      -k * DNA_POW2(FluidProperties->c0) * DNA_POW(RunOptions->radius_horizon, (DNA_FLOAT) 2.0 * k) * DNA_POW(arg, min_2kplusone_by_kplusone);
+  MovingBoundary->Udot = -k * DNA_POW2(FluidProperties->c0) * DNA_POW(RunOptions->radius_horizon, 2.0 * k) * DNA_POW(arg, min_2kplusone_by_kplusone);
 
   return 0;
 }
@@ -70,20 +67,17 @@ int BoundaryMotionStationaryBlackHole(struct DNA_RunOptions *RunOptions, struct 
 int BoundaryMotionStationaryWhiteHole(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                                       DNA_FLOAT time)
 {
-  DNA_FLOAT arg;
-
   RunOptions->statHorizon = 1;
   DNA_FLOAT k = RunOptions->U_backgroundScaling;
-  DNA_FLOAT kplusone = k + (DNA_FLOAT) 1.0;
-  DNA_FLOAT one_by_kplusone = (DNA_FLOAT) 1.0 / kplusone;
+  DNA_FLOAT kplusone = k + 1.0;
+  DNA_FLOAT one_by_kplusone = 1.0 / kplusone;
   DNA_FLOAT min_k_by_kplusone = -k / kplusone;
-  DNA_FLOAT min_2kplusone_by_kplusone = -((DNA_FLOAT) 2.0 * k + (DNA_FLOAT) 1.0) / kplusone;
-  arg = DNA_POW(MovingBoundary->R0, kplusone) + kplusone * FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * time;
+  DNA_FLOAT min_2kplusone_by_kplusone = -(2.0 * k + 1.0) / kplusone;
+  DNA_FLOAT arg = DNA_POW(MovingBoundary->R0, kplusone) + kplusone * FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * time;
 
   MovingBoundary->R = DNA_POW(arg, one_by_kplusone);
   MovingBoundary->U = FluidProperties->c0 * DNA_POW(RunOptions->radius_horizon, k) * DNA_POW(arg, min_k_by_kplusone);
-  MovingBoundary->Udot =
-      -k * DNA_POW2(FluidProperties->c0) * DNA_POW(RunOptions->radius_horizon, (DNA_FLOAT) 2.0 * k) * DNA_POW(arg, min_2kplusone_by_kplusone);
+  MovingBoundary->Udot = -k * DNA_POW2(FluidProperties->c0) * DNA_POW(RunOptions->radius_horizon, 2.0 * k) * DNA_POW(arg, min_2kplusone_by_kplusone);
 
   return 0;
 }

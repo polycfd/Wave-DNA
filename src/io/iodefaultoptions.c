@@ -36,7 +36,7 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
       100 * (int) ((Fields->Grid.xfix - Fields->Grid.xmov) / (FluidProperties->c0 / RunOptions->WaveExcitation.ExcitationFrequency)) + 1;
   RunOptions->NumericsFD.dx = (Fields->Grid.xfix - Fields->Grid.xmov) / ((DNA_FLOAT) RunOptions->NumericsFD.NPoints - 1);
   // CFL0 = 0.1 per default
-  RunOptions->NumericsFD.dt = (RunOptions->NumericsFD.dx) * 0.1 / (FluidProperties->c0);
+  RunOptions->NumericsFD.dt = RunOptions->NumericsFD.dx * 0.1 / (FluidProperties->c0);
 
   /** Physical simulation time **/
   RunOptions->tStart = 0.0;

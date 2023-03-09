@@ -58,7 +58,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
 
   /** Updating the position of the excitation boundary and the uniform grid (metrics) **/
   Fields->Grid.xmov = MovingBoundary->R;
-  GridPhysicalDomain(&(RunOptions->NumericsFD), &(Fields->Grid));
+  GridPhysicalDomain(&RunOptions->NumericsFD, &Fields->Grid);
   GridMotion(RunOptions, Fields, MovingBoundary);
 
   /** Background motion at the wall and in the entire field **/

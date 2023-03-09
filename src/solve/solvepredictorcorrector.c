@@ -22,7 +22,7 @@ int SolveCorrectLaplacian(struct DNA_RunOptions *RunOptions, struct DNA_Fields *
 /** Predicted solution == final solution if the number of corrector steps is zero. **/
 int SolveExplicit_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
-  for (int iPoint = 1; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 1; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     Fields->phi.val[iPoint] = (Fields->RHS.val[iPoint] + Fields->BB.val[iPoint]) / Fields->AA.val[iPoint];
   }
@@ -39,7 +39,7 @@ int SolveExplicit_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields
 {
   DNA_FLOAT gamma = RunOptions->NumericsFD.correctorWeight;
 
-  for (int iPoint = 1; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 1; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     Fields->phi.val[iPoint] =
         (1.0 - gamma) * Fields->phi1_initGuess.val[iPoint] + gamma * Fields->BBbyAA.val[iPoint] + gamma * Fields->RHS.val[iPoint] / Fields->AA.val[iPoint];
@@ -54,7 +54,7 @@ constituted by the initial guess and the re-evaluated field based on the re-eval
 Laplacian. **/
 int SolveStoreInitialGuess(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
-  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     Fields->BBbyAA.val[iPoint] = Fields->BB.val[iPoint] / (Fields->AA.val[iPoint]);
     Fields->phi1_initGuess.val[iPoint] = Fields->phi.val[iPoint];
