@@ -19,7 +19,7 @@ int main(int argc, char **args)
   /** Run and process options **/
   IODefaultOptions(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
-  printf("+ Reading options file %s\n+\n", RunOptions.OptionsDir);
+  printf("+ Reading options file %s\n+\n", RunOptions.OptionsFile);
   IOReadOptionsFile(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
   /** Initialize the wave  **/

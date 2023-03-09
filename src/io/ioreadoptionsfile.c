@@ -20,9 +20,9 @@ int IOReadOptionsFile(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
   int KeywordStatus = 1;
   char *dummy;  // Dummy required for string-to-float macro
 
-  if ((OptionsFile = fopen(RunOptions->OptionsDir, "r")) == (FILE *) NULL)
+  if ((OptionsFile = fopen(RunOptions->OptionsFile, "r")) == (FILE *) NULL)
   {
-    sprintf(str, "File %s cannot be opened for reading.\n", RunOptions->OptionsDir);
+    sprintf(str, "File %s cannot be opened for reading.\n", RunOptions->OptionsFile);
     IOErrorOnScreen(1, str);
   }
 

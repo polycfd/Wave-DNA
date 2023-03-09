@@ -5,14 +5,14 @@ int IOReadCommandLineOptions(int argc, char **args, struct DNA_RunOptions *RunOp
 {
   char str[DNA_STRINGLENGTH_SPRINTF];
 
-  sprintf(RunOptions->OptionsDir, "./run.DNA");
+  sprintf(RunOptions->OptionsFile, "./run.DNA");
 
   int i = 1;  // First argument is the DNA call
   while (i < argc)
   {
     if (strcmp("-options", args[i]) == 0)
     {
-      sprintf(RunOptions->OptionsDir, "%s", args[i + 1]);
+      sprintf(RunOptions->OptionsFile, "%s", args[i + 1]);
       i += 2;
     }
     else

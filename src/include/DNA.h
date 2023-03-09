@@ -120,7 +120,7 @@ struct DNA_NumericsFD
 /** Run options of the simulation **/
 struct DNA_RunOptions
 {
-  char OptionsDir[DNA_STRINGLENGTH];
+  char OptionsFile[DNA_STRINGLENGTH];
 
   int dimension;
   int backgroundMotionMode;
