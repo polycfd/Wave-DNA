@@ -12,18 +12,19 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
   {
     RunOptions->FDBC_East = &FDBC_Mur_dummy;
   }
-  if (RunOptions->NumericsFD.BCEast == 1)
+  else if (RunOptions->NumericsFD.BCEast == 1)
   {
     if (MovingBoundary->R0 < Fields->Grid.xfix)
       RunOptions->FDBC_East = &FDBC_Mur_East;
     else
       RunOptions->FDBC_East = &FDBC_Mur_East_inv;
   }
+
   if (RunOptions->NumericsFD.BCWest == 0)
   {
     RunOptions->FDBC_West = &FDBC_Mur_dummy;
   }
-  if (RunOptions->NumericsFD.BCWest == 1)
+  else if (RunOptions->NumericsFD.BCWest == 1)
   {
     if (MovingBoundary->R0 < Fields->Grid.xfix)
       RunOptions->FDBC_West = &FDBC_Mur_West;
@@ -35,7 +36,7 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
   {
     RunOptions->GaussEnvelope = &WaveExcitationGaussEnvelopeNone;
   }
-  if (RunOptions->WaveExcitation.GaussEnvelopeOption == 1)
+  else if (RunOptions->WaveExcitation.GaussEnvelopeOption == 1)
   {
     RunOptions->GaussEnvelope = &WaveExcitationGaussEnvelope;
   }
@@ -44,7 +45,7 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
   {
     RunOptions->PeriodicPressureExcitation = &WaveExcitationSineModulated;
   }
-  if (RunOptions->WaveExcitation.ExcitationFunction == 1)
+  else if (RunOptions->WaveExcitation.ExcitationFunction == 1)
   {
     RunOptions->PeriodicPressureExcitation = &WaveExcitationConst;
     /** Make sure that this is not be overwritten by the setting for the GaussEnvelopeOption **/
@@ -55,25 +56,26 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
   {
     RunOptions->BoundaryMotion = &BoundaryMotionLinear;
   }
-  if (RunOptions->BoundaryMotionType == 1)
+  else if (RunOptions->BoundaryMotionType == 1)
   {
     RunOptions->BoundaryMotion = &BoundaryMotionOscillating;
   }
-  if (RunOptions->BoundaryMotionType == 2)
+  else if (RunOptions->BoundaryMotionType == 2)
   {
     RunOptions->BoundaryMotion = &BoundaryMotionStationaryBlackHole;
   }
-  if (RunOptions->BoundaryMotionType == 3)
+  else if (RunOptions->BoundaryMotionType == 3)
   {
     RunOptions->BoundaryMotion = &BoundaryMotionStationaryWhiteHole;
   }
+
   if (RunOptions->BoundaryMotionType == 2 || RunOptions->BoundaryMotionType == 3)
   {
     if (RunOptions->GravitationalPotentialOption == 0)
     {
       RunOptions->WaveCalcGravitationalPotential = &BackgroundFlowGravitationalPotential_dummy;
     }
-    if (RunOptions->GravitationalPotentialOption == 1)
+    else if (RunOptions->GravitationalPotentialOption == 1)
     {
       RunOptions->WaveCalcGravitationalPotential = &BackgroundFlowGravitationalPotential;
     }
@@ -84,7 +86,7 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
     RunOptions->WaveBackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_decoupled;
     RunOptions->WaveBackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_decoupled;
   }
-  if (RunOptions->backgroundMotionMode == 1)
+  else if (RunOptions->backgroundMotionMode == 1)
   {
     RunOptions->WaveBackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_coupledToWall;
     RunOptions->WaveBackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_coupledToWall;
@@ -96,13 +98,14 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
     {
       RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_const;
     }
-    if (RunOptions->backgroundMotionMode == 1)
+    else if (RunOptions->backgroundMotionMode == 1)
     {
       RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_Cartesian;
     }
+
     RunOptions->GeometricalDecay = &TransformNoGeometricalDecay;
   }
-  if (RunOptions->dimension == 3)
+  else if (RunOptions->dimension == 3)
   {
     RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_spherical;
     RunOptions->GeometricalDecay = &TransformSphericalDecay;
@@ -118,6 +121,7 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
     RunOptions->IOWriteProbesOption = &IOWriteProbes_dummy;
     RunOptions->IOUpdateProbesOption = &IOUpdateProbes_dummy;
   }
+
   if (RunOptions->BoundaryMotionType == 2 || RunOptions->BoundaryMotionType == 3)
   {
     RunOptions->IOWriteStatHorizonOption = &IOWriteStatHorizon;

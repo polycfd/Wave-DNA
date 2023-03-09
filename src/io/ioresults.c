@@ -218,11 +218,11 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
         success = 1;
       }
     }
-    if (success == 0)
+
+    if (!success)
     {
-      printf("+ WARNING: sample point no ");
-      printf("%d", iSample + 1);
-      printf(" has no proper nearest neighbour!\n");
+      printf("+ WARNING: sample point no %d has no proper nearest neighbour!\n", iSample + 1);
+
       if (xtarg < Fields->Grid.xmov)
       {
         RunOptions->Probes.SampleIDs[iSample] = 0;
