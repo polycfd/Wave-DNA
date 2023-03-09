@@ -1,3 +1,5 @@
+#include <sys/stat.h>
+
 #include "DNA.h"
 #include "DNA-functions.h"
 
@@ -17,6 +19,10 @@ be moving.
 int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary)
 {
   int iPoint;
+
+  // Generate results directory if it does not yet exist.
+  struct stat st = {0};
+  if (stat("./results", &st) == -1) mkdir("results", 0700);
 
   RunOptions->writeCount = 0;
   IOWriteHeader(RunOptions);
