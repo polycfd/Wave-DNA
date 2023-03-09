@@ -10,9 +10,7 @@ instantaneous position, velocity, and acceleration of the moving domain boundary
 /** Spatially and temporarily constant background flow field **/
 int BackgroundFlowMotion_const(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
-  int iPoint;
-
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->BackgroundVelocity.val[iPoint] = MovingBoundary->U_backgroundAtWall;
     Fields->GradBackgroundVelocity.val[iPoint] = 0.0;
@@ -26,15 +24,14 @@ int BackgroundFlowMotion_const(struct DNA_RunOptions *RunOptions, struct DNA_Fie
 /** Transient and spherically symmetric background flow field **/
 int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
-  int iPoint;
   DNA_FLOAT k = RunOptions->U_backgroundScaling;
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->BackgroundVelocity.val[iPoint] = DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->U_backgroundAtWall;
   }
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (register int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->GradBackgroundVelocity.val[iPoint] = -k * Fields->BackgroundVelocity.val[iPoint] / (Fields->Grid.x[iPoint]);
 
@@ -42,7 +39,7 @@ int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA
                                                  k * MovingBoundary->U_backgroundAtWall / MovingBoundary->R * Fields->BackgroundVelocity.val[iPoint];
   }
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->dt1material_BackgroundVelocity.val[iPoint] =
         Fields->dt1_BackgroundVelocity.val[iPoint] + Fields->GradBackgroundVelocity.val[iPoint] * Fields->BackgroundVelocity.val[iPoint];
@@ -54,21 +51,19 @@ int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA
 /** Transient but spatially uniform background flow field (1d Cartesian coordinates) **/
 int BackgroundFlowMotion_Cartesian(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
-  int iPoint;
-
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->BackgroundVelocity.val[iPoint] = MovingBoundary->U_backgroundAtWall;
   }
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->GradBackgroundVelocity.val[iPoint] = 0.0;
 
     Fields->dt1_BackgroundVelocity.val[iPoint] = MovingBoundary->Udot;
   }
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     Fields->dt1material_BackgroundVelocity.val[iPoint] =
         Fields->dt1_BackgroundVelocity.val[iPoint] + Fields->GradBackgroundVelocity.val[iPoint] * Fields->BackgroundVelocity.val[iPoint];

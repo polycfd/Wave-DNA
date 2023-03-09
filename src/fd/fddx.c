@@ -12,7 +12,6 @@ represent gradients.
 
 int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *gradField)
 {
-  int iPoint;
   int endID = NumericsFD->NPoints - 1;
 
   DNA_FLOAT amin1 = NumericsFD->FDCoeffs.adx_order2.dx1[0];
@@ -20,7 +19,7 @@ int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, str
   DNA_FLOAT aplus1 = NumericsFD->FDCoeffs.adx_order2.dx1[2];
 
   // Compute gradient in internal field:
-  for (iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
+  for (int iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
   {
     gradField->val[iPoint] = (amin1 * Y->val[iPoint - 1] + a0 * Y->val[iPoint] + aplus1 * Y->val[iPoint + 1]) / NumericsFD->dXI;
   }
@@ -34,7 +33,6 @@ int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, str
 
 int FDLaplacian(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *LaplacianField)
 {
-  int iPoint;
   int endID = NumericsFD->NPoints - 1;
   DNA_FLOAT dxPow2 = DNA_POW2(NumericsFD->dXI);
 
@@ -43,7 +41,7 @@ int FDLaplacian(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, st
   DNA_FLOAT aplus1 = NumericsFD->FDCoeffs.adx_order2.dx2[2];
 
   // Compute Laplacian in internal field:
-  for (iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
+  for (int iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
   {
     LaplacianField->val[iPoint] = (amin1 * Y->val[iPoint - 1] + a0 * Y->val[iPoint] + aplus1 * Y->val[iPoint + 1]) / dxPow2;
   }

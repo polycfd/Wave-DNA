@@ -77,6 +77,7 @@ int MemoryAllocSampleVectors(int writeFrequency, struct DNA_Probes *Probes)
   int rows = writeFrequency;
   int cols = Probes->nSamplePoints;
   Probes->SamplePressure = (DNA_FLOAT **) malloc(rows * sizeof(DNA_FLOAT *));
+
   for (int i = 0; i < rows; i++)
   {
     Probes->SamplePressure[i] = (DNA_FLOAT *) malloc(cols * sizeof(DNA_FLOAT));

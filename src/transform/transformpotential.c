@@ -53,15 +53,13 @@ int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, st
 {
   DNA_FLOAT NLflag = RunOptions->LagrangianDensityFlag;
 
-  int iPoint;
-
   DNA_FLOAT p;
   DNA_FLOAT detJ = Fields->Grid.detJacobi;
 
   DNA_FLOAT rho0 = FluidProperties->rho0;
   DNA_FLOAT pow2_c0 = DNA_POW2(FluidProperties->c0);
 
-  for (iPoint = 1; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
+  for (int iPoint = 1; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     DNA_FLOAT dXI1_phi = Fields->dXI1_phi.val[iPoint];
     DNA_FLOAT u0 = Fields->BackgroundVelocity.val[iPoint];

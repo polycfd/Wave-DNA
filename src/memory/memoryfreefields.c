@@ -58,9 +58,7 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
 
 int MemoryFreeOldScalarFields(int structSize, struct DNA_OldScalarFields *OldScalarFields)
 {
-  int iStruct;
-
-  for (iStruct = 0; iStruct < structSize; iStruct++)
+  for (int iStruct = 0; iStruct < structSize; iStruct++)
   {
     free((OldScalarFields->o[iStruct]).val);
   }
@@ -70,9 +68,7 @@ int MemoryFreeOldScalarFields(int structSize, struct DNA_OldScalarFields *OldSca
 
 int MemoryFreeSampleVectors(int writeFrequency, struct DNA_Probes *Probes)
 {
-  int rows = writeFrequency;
-
-  for (int i = 0; i < rows; i++)
+  for (int i = 0; i < writeFrequency; i++)
   {
     free(Probes->SamplePressure[i]);
   }

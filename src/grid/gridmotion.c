@@ -20,10 +20,9 @@ int GridMotion(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, str
   Fields->Grid.divq = MovingBoundary->U / (Fields->Grid.xfix - MovingBoundary->R);
   Fields->Grid.dxidetJacobi = 0.0;
 
-  int iPoint;
   DNA_FLOAT DomainLength = Fields->Grid.xfix - MovingBoundary->R;
 
-  for (iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
+  for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     Fields->Grid.q[iPoint] = (Fields->Grid.XI[iPoint] - Fields->Grid.XI[RunOptions->NumericsFD.NPoints - 1]) / DomainLength * MovingBoundary->U;
 

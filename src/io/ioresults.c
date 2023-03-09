@@ -71,10 +71,8 @@ int IOWriteToDisc(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 
 int IOWriteProbes(struct DNA_RunOptions *RunOptions)
 {
-  int iTime;
-
   RunOptions->WaveResults = fopen("results/probes.dat", "a");
-  for (iTime = 0; iTime < (RunOptions->writeFrequency); iTime++)
+  for (int iTime = 0; iTime < (RunOptions->writeFrequency); iTime++)
   {
     fprintf(RunOptions->WaveResults, "%d", RunOptions->Probes.TimeIDs[iTime]);
     fprintf(RunOptions->WaveResults, "   ");
@@ -91,6 +89,7 @@ int IOWriteProbes(struct DNA_RunOptions *RunOptions)
 
   return 0;
 }
+
 int IOWriteProbes_dummy(struct DNA_RunOptions *RunOptions) { return 0; }
 
 int IOWriteHeader(struct DNA_RunOptions *RunOptions)
@@ -128,7 +127,6 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
 {
   if (RunOptions->statHorizon == 1)
   {
-    int iPoint;
     DNA_FLOAT rl;
     DNA_FLOAT rr;
     DNA_FLOAT rh;
@@ -140,7 +138,7 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
     DNA_FLOAT phirh;
     DNA_FLOAT horizonIndicator;
 
-    for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
+    for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
     {
       horizonIndicator = (RunOptions->radius_horizon - Fields->Grid.x[iPoint]) * (RunOptions->radius_horizon - Fields->Grid.x[iPoint + 1]);
 
@@ -181,13 +179,12 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
 
   return 0;
 }
+
 int IOWriteStatHorizon_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary) { return 0; }
 
 // Thi function identiies the sample IDs based on the user-specific sample locations
 int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
-  int iPoint;
-  int iSample;
   int success;
   DNA_FLOAT xl;
   DNA_FLOAT xr;
@@ -195,12 +192,12 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
   DNA_FLOAT dxr;
   DNA_FLOAT xtarg;
 
-  for (iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
+  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
   {
     xtarg = RunOptions->Probes.SamplePoints[iSample];
     success = 0;
 
-    for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
+    for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
     {
       xl = Fields->Grid.x[iPoint];
       xr = Fields->Grid.x[iPoint + 1];
@@ -239,21 +236,21 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
 
   printf("+ Pressure probes are taken at:\n");
   printf("+ IDs:   ");
-  for (iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
+  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
   {
     printf("%d", RunOptions->Probes.SampleIDs[iSample]);
     printf("   ");
   }
   printf("\n");
   printf("+ Target locations:   ");
-  for (iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
+  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
   {
     printf("%.6e", RunOptions->Probes.SamplePoints[iSample]);
     printf("   ");
   }
   printf("\n");
   printf("+ Actual locations:   ");
-  for (iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
+  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
   {
     printf("%.6e", Fields->Grid.x[RunOptions->Probes.SampleIDs[iSample]]);
     printf("   ");
@@ -277,4 +274,5 @@ int IOUpdateProbes(int id, struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
   return 0;
 }
+
 int IOUpdateProbes_dummy(int id, struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields) { return 0; }

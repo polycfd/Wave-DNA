@@ -41,8 +41,6 @@ from this procedure.
 int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
                            struct DNA_FluidProperties *FluidProperties)
 {
-  int iPoint;
-
   /** This flag is equal to 0 if local nonlinearities are not taken into account
   (optins file setting <LocalNonlinearity> set to <False>) and 1 otherwise 
   (optins file setting <LocalNonlinearity> set to <True>). **/
@@ -104,7 +102,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
   /** In the coefficient names, "1" and "2" refers to the order of the partial
   time-derivatives to which the coefficients belong, and "G", "L", and "M" means
   "gradient", "Laplacian", and "Mixed" (derivative), respectively. **/
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     q = Fields->Grid.q[iPoint];
     dqdt = Fields->Grid.dtq[iPoint];
@@ -185,8 +183,6 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
 int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties)
 {
-  int iPoint;
-
   DNA_FLOAT NLflag = RunOptions->LagrangianDensityFlag;
 
   DNA_FLOAT geometryFactor;
@@ -206,7 +202,7 @@ int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
   DNA_FLOAT detJ = Fields->Grid.detJacobi;
 
-  for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
     q = Fields->Grid.q[iPoint];
 

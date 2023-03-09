@@ -53,8 +53,6 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 
 int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
 {
-  int corrNo;
-
   /** Sum over previous function values times corresponding FD coefficients **/
   SolveSumAy_dt(RunOptions, Fields);
 
@@ -79,7 +77,7 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   SolveStoreInitialGuess(RunOptions, Fields);
 
   /** Loop over the corrector steps **/
-  for (corrNo = 0; corrNo < RunOptions->NumericsFD.nCorrectors; corrNo++)
+  for (int corrNo = 0; corrNo < RunOptions->NumericsFD.nCorrectors; corrNo++)
   {
     SolveCorrectLaplacian(RunOptions, Fields);
     TransformEqn_Corrector(RunOptions, Fields, FluidProperties);
@@ -111,9 +109,11 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
       RunOptions->IOWriteProbesOption(RunOptions);
     }
   }
+
   RunOptions->IOUpdateProbesOption(RunOptions->writeCount, RunOptions, Fields);
   RunOptions->IOWriteStatHorizonOption(RunOptions, Fields, MovingBoundary);
   RunOptions->writeCount++;
+
   if (RunOptions->writeCount == RunOptions->writeFrequency)
   {
     RunOptions->writeCount = 0;

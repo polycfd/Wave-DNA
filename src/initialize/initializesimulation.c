@@ -18,8 +18,6 @@ be moving.
 
 int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary)
 {
-  int iPoint;
-
   // Generate results directory if it does not yet exist.
   struct stat st = {0};
   if (stat("./results", &st) == -1) mkdir("results", 0700);
@@ -44,7 +42,7 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   GridPhysicalDomain(&(RunOptions->NumericsFD), &(Fields->Grid));
   GridMotion(RunOptions, Fields, MovingBoundary);
 
-  for (iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
+  for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     Fields->Grid.q[iPoint] = 0.0;
     Fields->Grid.dtq[iPoint] = 0.0;
