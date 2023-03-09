@@ -185,77 +185,74 @@ int IOWriteStatHorizon_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Field
 // Thi function identiies the sample IDs based on the user-specific sample locations
 int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
-  int success;
-  DNA_FLOAT xl;
-  DNA_FLOAT xr;
-  DNA_FLOAT dxl;
-  DNA_FLOAT dxr;
-  DNA_FLOAT xtarg;
-
-  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
+  if (RunOptions->Probes.nSamplePoints)
   {
-    xtarg = RunOptions->Probes.SamplePoints[iSample];
-    success = 0;
-
-    for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
+    for (int iSample = 0; iSample < RunOptions->Probes.nSamplePoints; iSample++)
     {
-      xl = Fields->Grid.x[iPoint];
-      xr = Fields->Grid.x[iPoint + 1];
+      DNA_FLOAT xtarg = RunOptions->Probes.SamplePoints[iSample];
+      int success = 0;
 
-      if ((xl <= xtarg) & (xr >= xtarg))
+      for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
       {
-        dxl = xtarg - xl;
-        dxr = xr - xtarg;
+        DNA_FLOAT xl = Fields->Grid.x[iPoint];
+        DNA_FLOAT xr = Fields->Grid.x[iPoint + 1];
 
-        if (dxl < dxr)
+        if ((xl <= xtarg) & (xr >= xtarg))
         {
-          RunOptions->Probes.SampleIDs[iSample] = iPoint;
+          DNA_FLOAT dxl = xtarg - xl;
+          DNA_FLOAT dxr = xr - xtarg;
+
+          if (dxl < dxr)
+          {
+            RunOptions->Probes.SampleIDs[iSample] = iPoint;
+          }
+          else
+          {
+            RunOptions->Probes.SampleIDs[iSample] = iPoint + 1;
+          }
+          success = 1;
+        }
+      }
+
+      if (!success)
+      {
+        printf("+ WARNING: sample point no %d has no proper nearest neighbour!\n", iSample + 1);
+
+        if (xtarg < Fields->Grid.xmov)
+        {
+          RunOptions->Probes.SampleIDs[iSample] = 0;
         }
         else
         {
-          RunOptions->Probes.SampleIDs[iSample] = iPoint + 1;
+          RunOptions->Probes.SampleIDs[iSample] = RunOptions->NumericsFD.NPoints - 1;
         }
-        success = 1;
       }
     }
 
-    if (!success)
+    printf("+ Pressure probes are taken at:\n");
+    printf("+ IDs:   ");
+    for (int iSample = 0; iSample < RunOptions->Probes.nSamplePoints; iSample++)
     {
-      printf("+ WARNING: sample point no %d has no proper nearest neighbour!\n", iSample + 1);
-
-      if (xtarg < Fields->Grid.xmov)
-      {
-        RunOptions->Probes.SampleIDs[iSample] = 0;
-      }
-      else
-      {
-        RunOptions->Probes.SampleIDs[iSample] = RunOptions->NumericsFD.NPoints - 1;
-      }
+      printf("%d", RunOptions->Probes.SampleIDs[iSample]);
+      printf("   ");
     }
-  }
+    printf("\n");
 
-  printf("+ Pressure probes are taken at:\n");
-  printf("+ IDs:   ");
-  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
-  {
-    printf("%d", RunOptions->Probes.SampleIDs[iSample]);
-    printf("   ");
+    printf("+ Target locations:   ");
+    for (int iSample = 0; iSample < RunOptions->Probes.nSamplePoints; iSample++)
+    {
+      printf("%.6e", RunOptions->Probes.SamplePoints[iSample]);
+      printf("   ");
+    }
+    printf("\n");
+    printf("+ Actual locations:   ");
+    for (int iSample = 0; iSample < RunOptions->Probes.nSamplePoints; iSample++)
+    {
+      printf("%.6e", Fields->Grid.x[RunOptions->Probes.SampleIDs[iSample]]);
+      printf("   ");
+    }
+    printf("\n");
   }
-  printf("\n");
-  printf("+ Target locations:   ");
-  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
-  {
-    printf("%.6e", RunOptions->Probes.SamplePoints[iSample]);
-    printf("   ");
-  }
-  printf("\n");
-  printf("+ Actual locations:   ");
-  for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
-  {
-    printf("%.6e", Fields->Grid.x[RunOptions->Probes.SampleIDs[iSample]]);
-    printf("   ");
-  }
-  printf("\n");
 
   return 0;
 }
