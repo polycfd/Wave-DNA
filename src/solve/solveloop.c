@@ -22,7 +22,7 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
     /** Calling the function to prescribe the boundary motion **/
     if ((RunOptions->t >= RunOptions->WaveExcitation.BoundaryMotionStartTime) && (RunOptions->t <= RunOptions->WaveExcitation.BoundaryMotionEndTime))
     {
-      (*RunOptions->BoundaryMotion)(RunOptions, MovingBoundary, FluidProperties, RunOptions->t);
+      RunOptions->BoundaryMotion(RunOptions, MovingBoundary, FluidProperties, RunOptions->t);
     }
     else
     {
@@ -32,11 +32,11 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
     }
 
     /** Value by which the pressure excitation signal is Gauss convoluted **/
-    RunOptions->WaveExcitation.GaussConvolutionFactor = (*RunOptions->GaussEnvelope)(
+    RunOptions->WaveExcitation.GaussConvolutionFactor = RunOptions->GaussEnvelope(
         RunOptions->WaveExcitation.EnvelopedPeriod, RunOptions->WaveExcitation.ExcitationFrequency, RunOptions->t, RunOptions->WaveExcitation.GaussShapeCoeff);
 
     /** setting the (periodic) excitation pressure as given by a predefined function **/
-    RunOptions->pExcitation = (*RunOptions->PeriodicPressureExcitation)(RunOptions);
+    RunOptions->pExcitation = RunOptions->PeriodicPressureExcitation(RunOptions);
 
     Solve(RunOptions, Fields, MovingBoundary, FluidProperties);
 
@@ -62,9 +62,9 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   GridMotion(RunOptions, Fields, MovingBoundary);
 
   /** Background motion at the wall and in the entire field **/
-  MovingBoundary->U_backgroundAtWall = (*RunOptions->WaveBackgroundVelocityAtWall)(RunOptions, MovingBoundary, RunOptions->t);
-  MovingBoundary->Udot_backgroundAtWall = (*RunOptions->WaveBackgroundAccelerationAtWall)(RunOptions, MovingBoundary, RunOptions->t);
-  (*RunOptions->WaveBackgroundMotion)(RunOptions, Fields, MovingBoundary, RunOptions->t);
+  MovingBoundary->U_backgroundAtWall = RunOptions->WaveBackgroundVelocityAtWall(RunOptions, MovingBoundary, RunOptions->t);
+  MovingBoundary->Udot_backgroundAtWall = RunOptions->WaveBackgroundAccelerationAtWall(RunOptions, MovingBoundary, RunOptions->t);
+  RunOptions->WaveBackgroundMotion(RunOptions, Fields, MovingBoundary, RunOptions->t);
 
   /** The term qphi represents the product of the acoustic perturbation potential phi
   and the velocity q = dXI/dt of the grid points in the computational domain as viewed

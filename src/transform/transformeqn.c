@@ -118,7 +118,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
     u = Fields->BackgroundVelocity.val[iPoint];
     dudx = Fields->GradBackgroundVelocity.val[iPoint];
     DuDt = Fields->dt1material_BackgroundVelocity.val[iPoint];
-    geometryFactor = (*RunOptions->GeometricalDecay)(Fields->Grid.x[iPoint]);
+    geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
     /** The prefix "transformed_" indicates that the corresponding terms are
     discretized ones but treated explicitly, either because they only involve spatial
@@ -142,7 +142,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
     Uterm = UM * Fields->dt1_dXI1_phi.val[iPoint] + UG * Fields->dXI1_phi.val[iPoint] + DuDt * transformed_dXI1_phi;
 
-    Agrav = (*RunOptions->WaveCalcGravitationalPotential)(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
+    Agrav = RunOptions->WaveCalcGravitationalPotential(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
 
     AG = dudx * transformed_dXI1_phi * NLflag + 2.0 * transformed_MixedDerivative * NLflag + K * u * Uterm + Agrav;
 
@@ -202,11 +202,11 @@ int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
   DNA_FLOAT detJ = Fields->Grid.detJacobi;
 
-  for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
+  for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
     q = Fields->Grid.q[iPoint];
 
-    geometryFactor = (*RunOptions->GeometricalDecay)(Fields->Grid.x[iPoint]);
+    geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
     u = Fields->BackgroundVelocity.val[iPoint];
 
