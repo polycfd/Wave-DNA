@@ -1,30 +1,20 @@
 #include "DNA.h"
 #include "DNA-functions.h"
 
-int IOInfoOnScreen(int Priority, int PriorityOption, char* str)
-{
-  if (Priority & PriorityOption) printf("+ %s\n", str);
-  return 0;
-}
-
 int IOErrorOnScreen(int num, char* message)
 {
-  char str[DNA_STRINGLENGTH_SPRINTF];
-
   if (num != 0) /* Terminal error. Stop program and exit */
   {
     printf("+\n");
     printf("+ --------------------------------------------------------------------------- \n");
-    sprintf(str, "ERROR: %s", message);
-    IOInfoOnScreen(DNA_HIGHPRIO, DNA_HIGHPRIO, str);
+    printf("+ ERROR: %s", message);
     printf("+ --------------------------------------------------------------------------- \n");
     exit(1);
   }
   else
   {
     printf("+ --------------------------------------------------------------------------- \n");
-    sprintf(str, "WARNING: %s", message);
-    IOInfoOnScreen(DNA_HIGHPRIO, DNA_HIGHPRIO, str);
+    printf("+ WARNING: %s", message);
     printf("+ --------------------------------------------------------------------------- \n+\n");
   }
 
@@ -89,6 +79,6 @@ int IOProgressUpdate(int* prog, DNA_FLOAT elapsedtime, DNA_FLOAT totaltime)
 
 int IOProgressFinal()
 {
-  fprintf(stderr, "100\n");
+  fprintf(stderr, "100\n+\n");
   return (0);
 }

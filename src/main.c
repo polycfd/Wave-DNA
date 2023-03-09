@@ -3,8 +3,6 @@
 
 int main(int argc, char **args)
 {
-  char str[DNA_STRINGLENGTH_SPRINTF];
-
   /** See <DNA.h> for the declaration and content of the following structure.
   They may contain nested structures. **/
   struct DNA_RunOptions RunOptions;
@@ -22,8 +20,8 @@ int main(int argc, char **args)
   /** Run and process options **/
   IODefaultOptions(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
-  snprintf(str, sizeof(str), "Reading options file %s\n+", RunOptions.OptionsDir);
-  IOInfoOnScreen(DNA_HIGHPRIO, RunOptions.OnScreenIOPriority, str);
+  printf("+ Reading options file %s\n+\n", RunOptions.OptionsDir);
+
   IOReadOptionsFile(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
 
   clock_t startTime = clock();
@@ -32,8 +30,7 @@ int main(int argc, char **args)
   InitializeSimulation(&RunOptions, &Fields, &MovingBoundary);
   InitializeProcessOptions(&RunOptions, &Fields, &MovingBoundary);
 
-  sprintf(str, "Executing solver.");
-  IOInfoOnScreen(DNA_MEDIUMPRIO, RunOptions.OnScreenIOPriority, str);
+  printf("+ Executing solver.\n+\n");
 
   /** Time loop of the numerical simulation **/
   SolveTimeLoop(&RunOptions, &Fields, &MovingBoundary, &FluidProperties);
@@ -41,8 +38,7 @@ int main(int argc, char **args)
   /** Free all allocated memory **/
   MemoryFreeFields(&RunOptions, &Fields);
 
-  sprintf(str, "Solver has concluded in %.3f s.\n+", (double) (clock() - startTime) / CLOCKS_PER_SEC);
-  IOInfoOnScreen(DNA_HIGHPRIO, RunOptions.OnScreenIOPriority, str);
+  printf("+ Solver has concluded in %.3f s.\n+\n", (double) (clock() - startTime) / CLOCKS_PER_SEC);
 
   IOExitScreen((double) (clock() - starttime) / CLOCKS_PER_SEC);
 

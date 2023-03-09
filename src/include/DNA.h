@@ -120,7 +120,6 @@ struct DNA_NumericsFD
 /** Run options of the simulation **/
 struct DNA_RunOptions
 {
-  int OnScreenIOPriority;
   char OptionsDir[DNA_STRINGLENGTH];
 
   int dimension;

@@ -9,8 +9,6 @@ options file.
 int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
                      struct DNA_FluidProperties *FluidProperties)
 {
-  RunOptions->OnScreenIOPriority = DNA_LOWPRIO + DNA_MEDIUMPRIO + DNA_HIGHPRIO;
-
   /** Fluid properties **/
   FluidProperties->c0 = 1500.0;
   FluidProperties->rho0 = 1000.0;

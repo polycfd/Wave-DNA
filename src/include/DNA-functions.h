@@ -110,7 +110,6 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
 /** In put and output on screen and writing to disk **/
 int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary,
                      struct DNA_FluidProperties *FluidProperties);
-int IOInfoOnScreen(int Priority, int PriorityOption, char *str);
 int IOErrorOnScreen(int num, char *message);
 int IOWelcomeScreen();
 int IOExitScreen(double totaltime);
