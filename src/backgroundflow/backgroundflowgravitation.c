@@ -7,12 +7,12 @@ It includes the effect of a gravitational potential on the background flow field
 If not applicable or if not acitvated in the options file, the pointer refers to the dummy.
 ---------------------------------------------------------**/
 
-double BackgroundFlowGravitationalPotential(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
+DNA_FLOAT BackgroundFlowGravitationalPotential(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
 {
   return (DNA_FLOAT) 2.0 * DNA_POW2(FluidProperties->c0) * RunOptions->radius_horizon / DNA_POW2(x);
 }
 
-double BackgroundFlowGravitationalPotential_dummy(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
+DNA_FLOAT BackgroundFlowGravitationalPotential_dummy(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x)
 {
   return (DNA_FLOAT) 0.0;
 }

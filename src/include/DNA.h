@@ -162,15 +162,15 @@ struct DNA_RunOptions
                    struct DNA_ScalarField *OldField);
 
   // Pointer to the function describing the decay/amplification due to the geometry of the problem
-  double (*GeometricalDecay)(DNA_FLOAT x);
+  DNA_FLOAT (*GeometricalDecay)(DNA_FLOAT x);
 
   // Pointers to the boundary and background flow motion functions
   int (*BoundaryMotion)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                         DNA_FLOAT time);
   int (*WaveBackgroundMotion)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  double (*WaveBackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  double (*WaveBackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  double (*WaveCalcGravitationalPotential)(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
+  DNA_FLOAT (*WaveBackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*WaveBackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*WaveCalcGravitationalPotential)(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
 };
 
 /** Fluid properties **/
