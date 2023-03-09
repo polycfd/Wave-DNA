@@ -70,3 +70,7 @@ dkms.conf
 CMakeCache.txt
 CMakeFiles/
 Makefile
+
+# Wave-DNA
+WaveDNA
+*.dat
