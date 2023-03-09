@@ -127,34 +127,23 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
 {
   if (RunOptions->statHorizon == 1)
   {
-    DNA_FLOAT rl;
-    DNA_FLOAT rr;
-    DNA_FLOAT rh;
-    DNA_FLOAT pl;
-    DNA_FLOAT pr;
-    DNA_FLOAT prh;
-    DNA_FLOAT phil;
-    DNA_FLOAT phir;
-    DNA_FLOAT phirh;
-    DNA_FLOAT horizonIndicator;
-
     for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
     {
-      horizonIndicator = (RunOptions->radius_horizon - Fields->Grid.x[iPoint]) * (RunOptions->radius_horizon - Fields->Grid.x[iPoint + 1]);
+      DNA_FLOAT horizonIndicator = (RunOptions->radius_horizon - Fields->Grid.x[iPoint]) * (RunOptions->radius_horizon - Fields->Grid.x[iPoint + 1]);
 
       if (horizonIndicator < 0.0)
       {
-        rh = RunOptions->radius_horizon;
-        rl = Fields->Grid.x[iPoint];
-        rr = Fields->Grid.x[iPoint + 1];
+        DNA_FLOAT rh = RunOptions->radius_horizon;
+        DNA_FLOAT rl = Fields->Grid.x[iPoint];
+        DNA_FLOAT rr = Fields->Grid.x[iPoint + 1];
 
-        pl = Fields->PressureField.val[iPoint];
-        pr = Fields->PressureField.val[iPoint + 1];
-        prh = (pr - pl) / (rr - rl) * (rh - rl) + pl;
+        DNA_FLOAT pl = Fields->PressureField.val[iPoint];
+        DNA_FLOAT pr = Fields->PressureField.val[iPoint + 1];
+        DNA_FLOAT prh = (pr - pl) / (rr - rl) * (rh - rl) + pl;
 
-        phil = Fields->phi.val[iPoint];
-        phir = Fields->phi.val[iPoint + 1];
-        phirh = (phir - phil) / (rr - rl) * (rh - rl) + phil;
+        DNA_FLOAT phil = Fields->phi.val[iPoint];
+        DNA_FLOAT phir = Fields->phi.val[iPoint + 1];
+        DNA_FLOAT phirh = (phir - phil) / (rr - rl) * (rh - rl) + phil;
 
         RunOptions->WaveResults = fopen("results/horizon.dat", "a");
         fprintf(RunOptions->WaveResults, "%d", RunOptions->NumericsFD.dtNumber);
