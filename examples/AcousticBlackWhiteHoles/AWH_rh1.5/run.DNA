@@ -7,23 +7,23 @@
 FLUID
 SoundSpeed 1500.0
 Density 1000.0
-FluidNonLinearity 3.5
-LocalNonlinearity True
+FluidNonLinearity 0.0
+LocalNonlinearity False
 END
 
 RUNOPTIONS
 TimeStart 0.0
 TimeEnd 1.501e-4
 WriteFrequency 200
-SamplePoints 2 0.9 1.0
+#SamplePoints 2 0.9 1.0
 END
 
 BOUNDARYMOTION
-BoundaryMotionType stationaryBlackHole
+BoundaryMotionType stationaryWhiteHole
 BoundaryMotionStartTime 0.0e-4
 BoundaryMotionEndTime 2.3e10
-InitialMovingBoundaryPosition 1.60175
-FixedBoundaryPosition 1.75175
+InitialMovingBoundaryPosition 1.3824
+FixedBoundaryPosition 1.2359
 MovingBoundaryVelocityAmplitude 2250.0
 MovingBoundaryFrequency 5.0e3
 END

@@ -205,7 +205,7 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
 
       if (!success)
       {
-        printf("+ WARNING: sample point no %d has no proper nearest neighbour!\n", iSample + 1);
+        printf("+ INFO: sample point no %d is a domain boundary\n", iSample + 1);
 
         if (xtarg < Fields->Grid.xmov)
         {

@@ -7,23 +7,23 @@
 FLUID
 SoundSpeed 1500.0
 Density 1000.0
-FluidNonLinearity 3.5
-LocalNonlinearity True
+FluidNonLinearity 0.0
+LocalNonlinearity False
 END
 
 RUNOPTIONS
 TimeStart 0.0
-TimeEnd 1.501e-2
+TimeEnd 1.501e-4
 WriteFrequency 200
-SamplePoints 2 0.9 1.0
+#SamplePoints 2 0.9 1.0
 END
 
 BOUNDARYMOTION
 BoundaryMotionType stationaryBlackHole
 BoundaryMotionStartTime 0.0e-4
 BoundaryMotionEndTime 2.3e10
-InitialMovingBoundaryPosition 160.175
-FixedBoundaryPosition 175.175
+InitialMovingBoundaryPosition 1.60175
+FixedBoundaryPosition 1.75175
 MovingBoundaryVelocityAmplitude 2250.0
 MovingBoundaryFrequency 5.0e3
 END
@@ -31,7 +31,7 @@ END
 BACKGROUNDFLOW
 Geometry 3dSphericallySymmetric
 BackgroundMotionMode coupledToMovingBoundary
-HorizonRadius 150.0
+HorizonRadius 1.5
 BackgroundVelocityScalingFactor 2.0
 GravitationalPotential False
 END
@@ -42,7 +42,7 @@ ExcitationEnd 1e10
 ExcitationNode 0
 ExcitationFunctionType sine
 PressureAmplitude 2.92325405715e6
-ExcitationFrequency 1e3
+ExcitationFrequency 1e5
 PhaseShiftAngle 0.0
 PowerCoeff 1
 GaussEnvelope False
@@ -51,7 +51,7 @@ GaussShapeCoeff 0.15
 END
 
 FINITEDIFFERENCE
-TimeStepSize 2.5e-7
+TimeStepSize 2.5e-9
 NPoints 9001
 nCorrectors 1
 correctorWeight 1.0 

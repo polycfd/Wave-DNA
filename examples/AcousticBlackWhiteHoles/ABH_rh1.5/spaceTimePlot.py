@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 #===================================================================
 preamble='\\usepackage{amsmath}\n\\usepackage{amsfonts}'
-plt.rcParams['mathtext.fontset']='cm'
+plt.rcParams['mathtext.fontset']='cm' 
 fig, ax = plt.subplots(1, 1, sharey=False, figsize=(6,3))
 useMathText=True
 fontsize = 20
@@ -89,9 +89,9 @@ cb.ax.set_title(r'$p_1/\Delta p_{\mathrm{a}}$', fontsize=fontsize, pad=15)
 plt.xlabel(r'$r/r_{\mathrm{h}}$')
 plt.ylabel(r'$f_{\mathrm{a}}t$')
 
-plt.xlim((0.999,1.001))
+plt.xlim((0.9,1.1))
 plt.ylim((0, 15.0))
-plt.xticks([0.999, 1.000, 1.001], ['$0.999$', '$1.000$', '$1.001$'], fontsize=fontsize)
+plt.xticks([0.90, 0.95, 1.00, 1.05, 1.10], ['$0.90$', '$0.95$', '$1.00$', '$1.05$', '$1.10$'], fontsize=fontsize)
 plt.yticks([0, 5, 10, 15], ['$0$', '$5$', '$10$', '$15$'], fontsize=fontsize)
 cb.set_ticks([-1, 0, 1])
 cb.set_ticklabels(['$-1$', '$0$', '$1$'])
@@ -100,6 +100,7 @@ im.set_clim(-1,1)
 plt.legend(fontsize=fontsize, loc='lower right', ncol=1, frameon=False)
 ax.set_facecolor('grey')
 plt.grid(color='black')
-#plt.savefig("../../figures/rt_largeABH.pdf", bbox_inches = "tight", dpi=400)
+#plt.savefig("plot.pdf", bbox_inches = "tight", dpi=400)
 #plt.close()
 plt.show()
+  
