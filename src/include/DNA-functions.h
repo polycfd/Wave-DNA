@@ -52,7 +52,6 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveCalcqphi(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveSumAy_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
-int SolveSumAy_dx(struct DNA_RunOptions *RunOptions);
 int SolveExplicitDerivatives_dx(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveExplicitDerivatives_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveExplicit_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
