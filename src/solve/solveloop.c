@@ -20,7 +20,8 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
   while (RunOptions->t < (RunOptions->tEnd + DNA_EPS))
   {
     /** Calling the function to prescribe the boundary motion **/
-    if ((RunOptions->t >= RunOptions->WaveExcitation.BoundaryMotionStartTime) && (RunOptions->t <= RunOptions->WaveExcitation.BoundaryMotionEndTime))
+    if ((RunOptions->t > (RunOptions->WaveExcitation.BoundaryMotionStartTime - DNA_SMALL)) &&
+        (RunOptions->t < (RunOptions->WaveExcitation.BoundaryMotionEndTime + DNA_SMALL)))
     {
       RunOptions->BoundaryMotion(RunOptions, MovingBoundary, FluidProperties, RunOptions->t);
     }
