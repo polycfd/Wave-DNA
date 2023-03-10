@@ -44,35 +44,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
   /** This flag is equal to 0 if local nonlinearities are not taken into account
   (optins file setting <LocalNonlinearity> set to <False>) and 1 otherwise 
   (optins file setting <LocalNonlinearity> set to <True>). **/
-  DNA_FLOAT NLflag = RunOptions->LagrangianDensityFlag;
-
-  DNA_FLOAT transformed_dXI1_phi;
-  DNA_FLOAT transformed_dXI2_phi;
-  DNA_FLOAT transformed_MixedDerivative;
-  DNA_FLOAT geometryFactor;
-  DNA_FLOAT transformed_dt1;
-  DNA_FLOAT transformed_dt2;
-  DNA_FLOAT q;
-  DNA_FLOAT dqdt;
-  DNA_FLOAT A1;
-  DNA_FLOAT A2;
-  DNA_FLOAT AG;
-  DNA_FLOAT AL;
-  DNA_FLOAT Agrav;
-  DNA_FLOAT B1;
-  DNA_FLOAT B2;
-  DNA_FLOAT BM;
-  DNA_FLOAT BG;
-  DNA_FLOAT BL;
-  DNA_FLOAT BLr;
-  DNA_FLOAT N;
-  DNA_FLOAT Uterm;
-  DNA_FLOAT UM;
-  DNA_FLOAT UG;
-  DNA_FLOAT UL;
-  DNA_FLOAT u;
-  DNA_FLOAT dudx;
-  DNA_FLOAT DuDt;
+  DNA_FLOAT NLflag = (DNA_FLOAT) RunOptions->LagrangianDensityFlag;
 
   /** The following variables are not space-dependent. **/
 
@@ -104,8 +76,8 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
   "gradient", "Laplacian", and "Mixed" (derivative), respectively. **/
   for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
-    q = Fields->Grid.q[iPoint];
-    dqdt = Fields->Grid.dtq[iPoint];
+    DNA_FLOAT q = Fields->Grid.q[iPoint];
+    DNA_FLOAT dqdt = Fields->Grid.dtq[iPoint];
 
     /** The derivatives of the backgroiund flow velocity field are expressed
     in terms of the physical coordinates (x,t) and not transformed! This is convenient
@@ -115,10 +87,10 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
     mapping, so that this approach is formally valid. The same applied to the geometry
     factor that accounts for the surface area of the curved wavefront due to the 
     flow geometry. **/
-    u = Fields->BackgroundVelocity.val[iPoint];
-    dudx = Fields->GradBackgroundVelocity.val[iPoint];
-    DuDt = Fields->dt1material_BackgroundVelocity.val[iPoint];
-    geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
+    DNA_FLOAT u = Fields->BackgroundVelocity.val[iPoint];
+    DNA_FLOAT dudx = Fields->GradBackgroundVelocity.val[iPoint];
+    DNA_FLOAT DuDt = Fields->dt1material_BackgroundVelocity.val[iPoint];
+    DNA_FLOAT geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
     /** The prefix "transformed_" indicates that the corresponding terms are
     discretized ones but treated explicitly, either because they only involve spatial
@@ -126,44 +98,44 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
     explicitly as part of the coefficients of the transformed wave equation. Therefore,
     there is no need to split the corresponding discrete approximations for the time
     integration scheme so that they can be constructed rightaway. **/
-    transformed_dXI1_phi = detJ * Fields->dXI1_phi.val[iPoint];
-    transformed_dXI2_phi = detJ * (ddetJdxi * Fields->dXI1_phi.val[iPoint] + detJ * Fields->dXI2_phi.val[iPoint]);
+    DNA_FLOAT transformed_dXI1_phi = detJ * Fields->dXI1_phi.val[iPoint];
+    DNA_FLOAT transformed_dXI2_phi = detJ * (ddetJdxi * Fields->dXI1_phi.val[iPoint] + detJ * Fields->dXI2_phi.val[iPoint]);
 
-    transformed_MixedDerivative =
+    DNA_FLOAT transformed_MixedDerivative =
         detJ * (q * Fields->dXI2_phi.val[iPoint] + Fields->dt1_dXI1_phi.val[iPoint] + Fields->Grid.divq * Fields->dXI1_phi.val[iPoint]);
 
-    transformed_dt1 = Fields->dt1_phi.val[iPoint] + q * Fields->dXI1_phi.val[iPoint];
-    transformed_dt2 = Fields->dt2_phi.val[iPoint] + 2.0 * q * Fields->dt1_dXI1_phi.val[iPoint] + (dqdt + q * divq) * Fields->dXI1_phi.val[iPoint] +
-                      DNA_POW2(q) * Fields->dXI2_phi.val[iPoint];
+    DNA_FLOAT transformed_dt1 = Fields->dt1_phi.val[iPoint] + q * Fields->dXI1_phi.val[iPoint];
+    DNA_FLOAT transformed_dt2 = Fields->dt2_phi.val[iPoint] + 2.0 * q * Fields->dt1_dXI1_phi.val[iPoint] + (dqdt + q * divq) * Fields->dXI1_phi.val[iPoint] +
+                                DNA_POW2(q) * Fields->dXI2_phi.val[iPoint];
 
-    UM = 2.0 * u * detJ;
-    UG = 2.0 * u * detJ * Fields->Grid.divq;
-    UL = 2.0 * u * detJ * q;
+    DNA_FLOAT UM = 2.0 * u * detJ;
+    DNA_FLOAT UG = 2.0 * u * detJ * Fields->Grid.divq;
+    DNA_FLOAT UL = 2.0 * u * detJ * q;
 
-    Uterm = UM * Fields->dt1_dXI1_phi.val[iPoint] + UG * Fields->dXI1_phi.val[iPoint] + DuDt * transformed_dXI1_phi;
+    DNA_FLOAT Uterm = UM * Fields->dt1_dXI1_phi.val[iPoint] + UG * Fields->dXI1_phi.val[iPoint] + DuDt * transformed_dXI1_phi;
 
-    Agrav = RunOptions->WaveCalcGravitationalPotential(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
+    DNA_FLOAT Agrav = RunOptions->WaveCalcGravitationalPotential(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
 
-    AG = dudx * transformed_dXI1_phi * NLflag + 2.0 * transformed_MixedDerivative * NLflag + K * u * Uterm + Agrav;
+    DNA_FLOAT AG = dudx * transformed_dXI1_phi * NLflag + 2.0 * transformed_MixedDerivative * NLflag + K * u * Uterm + Agrav;
 
-    AL = DNA_POW2(u) - pow2_c0 + 2.0 * u * transformed_dXI1_phi * NLflag + K * DNA_POW3(u) * transformed_dXI1_phi;
+    DNA_FLOAT AL = DNA_POW2(u) - pow2_c0 + 2.0 * u * transformed_dXI1_phi * NLflag + K * DNA_POW3(u) * transformed_dXI1_phi;
 
-    A1 = K * (Uterm + DNA_POW2(u) * transformed_dXI2_phi);
-    A2 = 1.0 + K * u * transformed_dXI1_phi;
+    DNA_FLOAT A1 = K * (Uterm + DNA_POW2(u) * transformed_dXI2_phi);
+    DNA_FLOAT A2 = 1.0 + K * u * transformed_dXI1_phi;
 
-    N = -K * transformed_dt1 * transformed_dt2;
+    DNA_FLOAT N = -K * transformed_dt1 * transformed_dt2;
 
-    B1 = A1 + K * transformed_dt2;
-    B2 = A2 + K * transformed_dt1;
+    DNA_FLOAT B1 = A1 + K * transformed_dt2;
+    DNA_FLOAT B2 = A2 + K * transformed_dt1;
 
-    BM = 2.0 * B2;
+    DNA_FLOAT BM = 2.0 * B2;
 
-    BG = B1 * q + B2 * (dqdt + q * divq) + AG * detJ + AL * detJ * ddetJdxi;
+    DNA_FLOAT BG = B1 * q + B2 * (dqdt + q * divq) + AG * detJ + AL * detJ * ddetJdxi;
 
-    BL = B2 * DNA_POW2(q) + AL * DNA_POW2(detJ) + UL;
+    DNA_FLOAT BL = B2 * DNA_POW2(q) + AL * DNA_POW2(detJ) + UL;
 
     /** Gradient contribution to the Laplacian for curved wavefronts **/
-    BLr = -pow2_c0 * geometryFactor * detJ;
+    DNA_FLOAT BLr = -pow2_c0 * geometryFactor * detJ;
 
     /** Assembling the terms for the predictor step (BB, AA, RHS) **/
     Fields->BB.val[iPoint] =
@@ -183,19 +155,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
 int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties)
 {
-  DNA_FLOAT NLflag = RunOptions->LagrangianDensityFlag;
-
-  DNA_FLOAT geometryFactor;
-  DNA_FLOAT transformed_dXI1_phi;
-  DNA_FLOAT transformed_dt1;
-  DNA_FLOAT q;
-  DNA_FLOAT A2;
-  DNA_FLOAT B2;
-  DNA_FLOAT AL;
-  DNA_FLOAT BL;
-  DNA_FLOAT BLr;
-  DNA_FLOAT UL;
-  DNA_FLOAT u;
+  DNA_FLOAT NLflag = (DNA_FLOAT) RunOptions->LagrangianDensityFlag;
 
   DNA_FLOAT pow2_c0 = DNA_POW2(FluidProperties->c0);
   DNA_FLOAT K = 2.0 * (FluidProperties->beta - 1.0 * NLflag) / pow2_c0;
@@ -204,26 +164,26 @@ int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
   for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
-    q = Fields->Grid.q[iPoint];
+    DNA_FLOAT q = Fields->Grid.q[iPoint];
 
-    geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
+    DNA_FLOAT geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
-    u = Fields->BackgroundVelocity.val[iPoint];
+    DNA_FLOAT u = Fields->BackgroundVelocity.val[iPoint];
 
-    transformed_dXI1_phi = detJ * Fields->Old_dXI1_phi.o[0].val[iPoint];
-    transformed_dt1 = Fields->dt1_phi.val[iPoint] + q * Fields->Old_dXI1_phi.o[0].val[iPoint];
+    DNA_FLOAT transformed_dXI1_phi = detJ * Fields->Old_dXI1_phi.o[0].val[iPoint];
+    DNA_FLOAT transformed_dt1 = Fields->dt1_phi.val[iPoint] + q * Fields->Old_dXI1_phi.o[0].val[iPoint];
 
-    UL = 2.0 * u * detJ * q;
+    DNA_FLOAT UL = 2.0 * u * detJ * q;
 
-    A2 = 1.0 + K * u * transformed_dXI1_phi;
+    DNA_FLOAT A2 = 1.0 + K * u * transformed_dXI1_phi;
 
-    B2 = A2 + K * transformed_dt1;
+    DNA_FLOAT B2 = A2 + K * transformed_dt1;
 
-    AL = DNA_POW2(u) - pow2_c0 + 2.0 * u * transformed_dXI1_phi * NLflag + K * DNA_POW3(u) * transformed_dXI1_phi;
+    DNA_FLOAT AL = DNA_POW2(u) - pow2_c0 + 2.0 * u * transformed_dXI1_phi * NLflag + K * DNA_POW3(u) * transformed_dXI1_phi;
 
-    BL = B2 * DNA_POW2(q) + AL * DNA_POW2(detJ) + UL;
+    DNA_FLOAT BL = B2 * DNA_POW2(q) + AL * DNA_POW2(detJ) + UL;
 
-    BLr = -pow2_c0 * geometryFactor * detJ;
+    DNA_FLOAT BLr = -pow2_c0 * geometryFactor * detJ;
 
     /** Assembling new RHS for the corrector step (involving the upated Laplacian) **/
     Fields->RHS.val[iPoint] = -BL * Fields->dXI2_phi.val[iPoint] - BLr * Fields->dXI1_phi.val[iPoint];

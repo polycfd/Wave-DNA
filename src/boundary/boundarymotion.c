@@ -22,7 +22,7 @@ int BoundaryMotionLinear(struct DNA_RunOptions *RunOptions, struct DNA_MovingBou
 int BoundaryMotionOscillating(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                               DNA_FLOAT time)
 {
-  DNA_FLOAT Omega = (DNA_FLOAT) 2.0 * DNA_PI * RunOptions->WaveExcitation.MovingBoundaryFrequency;
+  DNA_FLOAT Omega = 2.0 * DNA_PI * RunOptions->WaveExcitation.MovingBoundaryFrequency;
 
   MovingBoundary->R = MovingBoundary->R0 + RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude / (Omega + DNA_SMALL) *
                                                DNA_SIN((time - RunOptions->WaveExcitation.BoundaryMotionStartTime) * Omega);
