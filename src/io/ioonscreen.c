@@ -58,7 +58,8 @@ int IOExitScreen(double totaltime)
 
 int IOProgressInitial()
 {
-  fprintf(stderr, "+ Progress %%: ");
+  fprintf(stdout, "+ Progress %%: ");
+  fflush(stdout);
   return (0);
 }
 
@@ -67,9 +68,15 @@ int IOProgressUpdate(int* prog, DNA_FLOAT elapsedtime, DNA_FLOAT totaltime)
   if (elapsedtime > (DNA_FLOAT) *prog * 0.02 * totaltime)
   {
     if (!(*prog % 5) && *prog != 50)
-      fprintf(stderr, "%i", *prog * 2);
+    {
+      fprintf(stdout, "%i", *prog * 2);
+      fflush(stdout);
+    }
     else
-      fprintf(stderr, ".");
+    {
+      fprintf(stdout, ".");
+      fflush(stdout);
+    }
 
     (*prog)++;
   }
@@ -79,6 +86,6 @@ int IOProgressUpdate(int* prog, DNA_FLOAT elapsedtime, DNA_FLOAT totaltime)
 
 int IOProgressFinal()
 {
-  fprintf(stderr, "100\n+\n");
+  fprintf(stdout, "100\n+\n");
   return (0);
 }
