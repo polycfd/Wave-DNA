@@ -1,21 +1,19 @@
 \chapter{About Wave-DNA}
 \label{chap:About Wave-DNA}
 
-\section{Purpose}
-\label{sec:Purpose}
+{\tt Wave-DNA} is a simulation tool for one-dimensional and spherically-symmetric nonlinear acoustic waves in transient and spatially variable background flow fields. The motion of the background medium is accounted for by considering a convective form of the lossless Kuznetsov wave equation, derived from first principles based on perturbations of the continuity equation and the transient Bernoulli equation. The background flow field in which the acoustic waves propagate is treated as an input to the wave solver. In principle, the background flow field my be obtained from analytical considerations, numerical simulations, or experimental measurements.
 
-{\tt Wave-DNA} is a simulation tool for one-dimensional and spherically symmetric nonlinear acoustic waves in transient and spatially variable background flow fields. The motion of the background medium is accounted for by considering a convective form of the lossless Kuznetsov wave equation, derived from the first principles based on perturbations of the continuity equation and the transient Bernoulli equation. The method is optimized for boundary value problems. The background flow field, in which the acoustic wave propagates, is treated as an input to the wave solver. In principle, the background flow field my be obtained from analytical considerations, numerical simulations, or experimental measurements.
-
-The moving boundary may represent a moving wave emitter or scatterer, and it may move relative to the medium or displace the surrounding fluid. This allows the user to study nonlinear Doppler effects associated with moving wave emitters/scatterers and/or non-uniform background accelerating flow fields. The motion of the domain boundary is conveniently taken into account by a generic coordinate transformation of the governing wave equation, where the transformed wave equation is solved in a fixed computational domain. This technique enables accurate numerical solutions of the combined wave-flow problem without the necessity to interpolate data between the moving grid points in the physical domain. The numerical technique is based on explicit finite differences, and it is equipped with a predictor-corrector method to counteract the onset and growth of dispersive numerical noise in the cases of broad frequency bands or shock formation. Furthermore, absorbing boundary conditions can be imposed in order to let the acoustic waves pass the domain boundaries without reflection.
+The moving boundary may represent a moving wave emitter or scatterer, and it may move relative to the fluid or displace the surrounding fluid. This allows the user to study nonlinear Doppler effects associated with moving wave emitters/scatterers and/or non-uniform background flow fields. The motion of the domain boundary is conveniently taken into account by a generic coordinate transformation of the governing wave equation, where the transformed wave equation is solved in a fixed computational domain. This technique enables accurate numerical solutions of the combined wave-flow problem without the necessity to interpolate data between the moving grid points in the physical domain. The numerical technique is based on explicit finite differences, and it is equipped with a predictor-corrector method to counteract the onset and growth of dispersive numerical noise in the cases of broad frequency bands or shock formation \citep{Schenke_et_al_2022}. Furthermore, absorbing boundary conditions can be imposed in order to let the acoustic waves pass the domain boundaries without reflection.
 
 A particularly well-suited example to demonstrate the capability of the simulation framework is the so-called acoustic black hole analogue as presented in \citep{Schenke_et_al_2022_PoF}. The present documentation provides detailed instructions on how to conduct acoustic black and white hole simulations using {\tt Wave-DNA}, as well as other examples to demonstrate the capabilities and functionalities of the tool.
 
-It is important to note that rather than representing compressible background flow fields with variable $\rho_0$ and $c_0$, the acoustic black/white hole configurations are model systems for acoustic waves propagating in accelerating flow fields of any (also subsonic) velocity magnitude. The reason for the acoustic black/white hole being such a convenient system for the computational study of acoustic waves in accelerating flow fields lies in the fact that they allow to trap a wave characteristic at the point of sonic transition, the sonic horizon, where it is subject to both a constant background flow velocity and a constant background flow acceleration. Due to the non-zero acceleration, the neighbouring characteristics are either converging towards or diverging away from the sonic horizon.
+The {\tt Wave-DNA} repository is located at \href{https://github.com/polycfd/Wave-DNA}{\texttt{https://github.com/polycfd/Wave-DNA}}, is under the copyright of its developers and made available as open-source software under the terms of the \href{https://opensource.org/license/mit/}{MIT License}. The development of {\tt Wave-DNA} has directly benefitted from research funding provided by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation), grant number 441063377.
+
 
 \section{Underlying theory}
 \label{sec:Underlying theory}
 
-The theoretical framework is based on a previously derived lossless and quasi one-dimensional convective form of the Kuznetsov equation for planar waves and curved wavefronts with variable cross-sectional area $A$, i.e.
+The theoretical framework is based on a lossless and quasi one-dimensional convective form of the Kuznetsov equation for planar waves and curved wavefronts with variable cross-sectional area $A$, given as
 \begin{equation}
     \left(1 + \dfrac{2\beta - 1}{c_0^2}\dfrac{\mathrm{D}\phi_1}{\mathrm{D}t}\right)\dfrac{\mathrm{D}^2\phi_1}{\mathrm{D}t^2}
     - c_0^2\left(\dfrac{\partial^2}{\partial r^2} + \dfrac{1}{A}\dfrac{\partial A}{\partial
@@ -24,7 +22,7 @@ The theoretical framework is based on a previously derived lossless and quasi on
     + \dfrac{\partial \phi_1}{\partial r}\dfrac{\partial}{\partial r}\left(\dfrac{\mathrm{D}\phi_1}{\mathrm{D}t}\right) = 0,
     \label{eq:convectiveKuznetsov}
 \end{equation}
-where $\phi_1$ is the acoustic velocity potential. The equation is derived based on a perturbation of the continuity equation and the transient Bernoulli equation. In this framework, the subscript ``0'' indicates the background state and ``1'' the acoustic perturbation. In particular, the density $\rho_0$ and the speed of sound $c_0$ act as constant background quantities. The derivation of the wave equation points towards an extension to variable background state variables, which, however, would generate additional terms that are neglected here. The material derivative operator is defined based on the background flow velocity $u_0$, i.e.
+where $\phi_1$ is the acoustic velocity potential and $r$ the generic spatial coordinate. The equation is derived based on a perturbation of the continuity equation and the transient Bernoulli equation. In this framework, the subscript ``0'' indicates the background state and ``1'' the acoustic perturbation. In particular, the density $\rho_0$ and the speed of sound $c_0$ act as constant background quantities.\footnote{The derivation of the wave equation points towards an extension to variable background state variables, which, however, would generate additional terms that are neglected here.} The material derivative operator is defined based on the background flow velocity $u_0$ as
 \begin{equation}
     \dfrac{\mathrm{D}}{\mathrm{D}t} = \dfrac{\partial}{\partial t} + u_0 \dfrac{\partial}{\partial r}.
     \label{eq:MaterialDerivative}
@@ -34,7 +32,7 @@ The background flow velocity $u_0\left(r,t\right)$ can be both time-dependent an
     \dfrac{p_1}{\rho_0} = - \dfrac{\mathrm{D}\phi_1}{\mathrm{D}t} - \dfrac{\mathcal{L}}{\rho_0} - \dfrac{\beta - 1}{c_0^2}\left(\dfrac{\mathrm{D}\phi_1}{\mathrm{D}t}\right)^2,
     \label{eq:p1pi1}
 \end{equation}
-which is needed to convert between the perturbation potential $\phi_1$ and the acoustic pressure $p_1$.
+which is required to convert between the perturbation potential $\phi_1$ and the acoustic pressure $p_1$.
 
 Eq. \eqref{eq:convectiveKuznetsov} admits two sources of nonlinear wave propagation. One is related to the nonlinearity coefficient $\beta$ and manifests in cumulative wave-steepening and shock formation at high amplitudes, where the nonlinearity coefficient beta $\beta$ is representative of how strongly the local speed of sound is modified by the acoustic pressure. The second source of nonlinearity stems from a non-zero Lagrangian density \citep{Zhong_et_al_2021}
 \begin{equation}
@@ -57,19 +55,18 @@ $\phi_1\left(r\left(\xi,t\right),t\right)=\Phi_1\left(\xi,t\right)$ and, therefo
      & \dfrac{\partial^k \phi_1}{\partial t^k} = \left(\dfrac{\partial \xi}{\partial t} \dfrac{\partial}{\partial \xi} + \dfrac{\partial}{\partial t}\right)^k\Phi_1.
     \label{eq:transDerivativeOp_time}
 \end{align}
-Due to Eqs. \eqref{eq:transDerivativeOp_space} and \eqref{eq:transDerivativeOp_time}, additional terms are generated in the computational domain with coordinates $\left(\xi, t\right)$, in which the transformed governing equation is discretized and solved as illustrated by Fig. \ref{fig:domains}. The derivation of the transformed wave equation is provided in Appx. \ref{chap:Appendix}.
-
+Due to Eqs. \eqref{eq:transDerivativeOp_space} and \eqref{eq:transDerivativeOp_time}, additional terms are generated in the computational domain with coordinates $\left(\xi, t\right)$, in which the transformed governing equation is discretized and solved as illustrated by Fig. \ref{fig:domain3}. The derivation of the transformed wave equation is provided in Appendix \ref{chap:Appendix}.
 
 \begin{figure}
-    {\includegraphics[width=0.8\textwidth]{figures/domains.pdf}}
-    \caption{Schematic of the physical domain $\Omega\left(t\right)$, with moving wave-emitting boundary and fixed wave absorbing boundary, and the fixed computational domain $\Theta$. The coordinate transformation specifies a mapping between the domains.}
-    \label{fig:domains}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/domain3.pdf}
+    \caption{Illustration of the physical domain $\Omega\left(t\right)$ with moving wave-emitting boundary $R\left(t\right)$ and fixed boundary $R_{\mathrm{stat}}$, and the fixed computational domain $\Theta$.}
+    \label{fig:domain3}
 \end{figure}
-
 
 \section{Importance of the coordinate transformation}
 \label{sec:Importance of the coordinate transformation}
 
-The coordinate transformation is not only a convenient means to model the moving domain boundary. In the acoustic black/white hole scenario, it also plays a key role in establishing a well-posed formulation of the governing wave equation.
+The coordinate transformation is not only a convenient means to model the moving domain boundary. In the acoustic black/white hole scenario (see Section \ref{sec:Acoustic black and white holes}), it also plays a key role in establishing a well-posed formulation of the governing wave equation.
 
-The importance of the coordinate transformation can be illustrated at the example of the standard convective wave equation of the form $\mathrm{D}^2\phi_1/\mathrm{D}t^2 = c_0^2\partial^2\phi_1/\partial x^2$ with material derivative operator $\mathrm{D}/\mathrm{D}t = \partial/\partial t + u_0\partial/\partial x$. This equation is easily shown to loose its well-posedness as $u_0$ approaches the sonic speed $c_0$. This is because the second material derivative generates another Laplacian term with coefficient $u_0^2$ so that the Laplacian coefficient effectively becomes $c_0^2-u_0^2$ and changes its sign as $u_0$ exceeds the sonic speed, thus rendering the equation ill-posed. With the coordinate transformation, which can be seen as a Galilean-type transformation in physical space, this problem is circumvented by locally switching into a reference frame that moves, at least approximately, along with the fluid flow. This has the effect that the additional terms arising from the coordinate transformation preserve the sign of the Laplacian coefficient.
+The importance of the coordinate transformation can be illustrated at the example of the standard convective wave equation of the form $\mathrm{D}^2\phi_1/\mathrm{D}t^2 = c_0^2\partial^2\phi_1/\partial x^2$ with material derivative operator $\mathrm{D}/\mathrm{D}t = \partial/\partial t + u_0\partial/\partial x$. This equation is easily shown to loose its well-posedness as $u_0$ approaches the sonic speed $c_0$. This is because the second material derivative generates another Laplacian term with coefficient $u_0^2$ so that the Laplacian coefficient effectively becomes $c_0^2-u_0^2$ and changes its sign as $u_0$ exceeds the sonic speed \citep{Schenke_et_al_2022_PoF}, thus rendering the equation ill-posed. With the coordinate transformation, which can be seen as a Galilean-type transformation in physical space, this problem is circumvented by locally switching into a reference frame that moves, at least approximately, along with the fluid flow. This has the effect that the additional terms arising from the coordinate transformation preserve the sign of the Laplacian coefficient.
