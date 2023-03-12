@@ -4,26 +4,23 @@
 \section{Header files}
 \label{sec:Header files}
 
-The header files ({\tt *.h}) are located in {\tt src/include}. In {\tt DNA-functions.h}, the function prototypes are defined. The file {\tt DNA-constants.h} includes hash functions of constants (such as $\pi$) and mathematical operators (such as trigonometric functions or $\mathrm{min/max}$ operators). In the {\tt DNA.h} file, all structures used throughout the program are declared. There are four main structures, namely {\tt struct DNA\_RunOptions}, {\tt struct DNA\_FluidProperties}, {\tt struct DNA\_Fields} and {\tt struct DNA\_MovingBoundary}. The instances of these structures are created in {\tt main.c}. Their content, including nested structures, is as follows:
+The header files ({\tt *.h}) are located in {\tt src/include}. In {\tt DNA-functions.h}, the function prototypes are defined. The file {\tt DNA-constants.h} contains macros of constants (such as $\pi$) and mathematical operators (such as trigonometric functions or $\mathrm{min/max}$ operators). In the {\tt DNA.h} file, all structures used throughout the program are declared. There are four main structures, the instances of which are created in {\tt main.c}:
 
 \begin{compactitem}
-\item {\tt struct DNA\_RunOptions}: Structure containing variables and function pointers regarding the run options. Nested structures:
+\item {\tt struct DNA\_RunOptions}: Structure containing variables and function pointers associated with the run options. Nested structures:
 \begin{compactitem}
-\item {\tt struct DNA\_NumericsFD}: Structure containing variables regarding the temporal and spatial discretization, such as $\Delta t$, $\Delta x$, etc., as well as function pointers associated with the boundary conditions. Nested structures:
-\begin{compactitem}
-\item {\tt struct DNA\_FDCoeffs}: Finite difference coefficients.
+\item {\tt struct DNA\_NumericsFD}: Structure containing variables used for the temporal and spatial discretization (e.g.~$\Delta t$, $\Delta x$, etc.) and function pointers associated with the boundary conditions. Nested structure: \item {\tt struct DNA\_FDCoeffs}: Finite-difference coefficients.
+\item {\tt struct DNA\_WaveExcitation}: Variables of the wave excitation functions (see Eqs.~\eqref{eq:ExcitationSine} and \eqref{eq:GaussEnvelope}).
+\item {\tt struct DNA\_Probes}: Variables specifying the acoustic pressure probes (see Section \ref{sec:Run options and fluid properties}).
 \end{compactitem}
-\item {\tt struct DNA\_WaveExcitation}: Variables of the wave excitation functions (see Eqs. \eqref{eq:ExcitationSine} and \eqref{eq:GaussEnvelope}).
-\item {\tt struct DNA\_Probes}: Variables specifying the acoustic pressure probes (see Sec. \ref{sec:Run options and fluid properties}).
-\end{compactitem}
-\item {\tt struct DNA\_FluidProperties}: Fluid properties such as the background density and speed of sound or the fluid nonlinearity.
+\item {\tt struct DNA\_FluidProperties}: Fluid properties such as the background density and speed of sound, as well as the fluid nonlinearity.
 \item {\tt struct DNA\_Fields}: Structure comprising all scalar fields. Nested structures:
 \begin{compactitem}
-\item {\tt struct DNA\_Grid}: Scalars and scalar fields representing the dependent coordinates $x\left(\xi,t\right)$ of the time-dependent physical domain $\Omega\left(t\right)$, the fixed computational domain $\Theta$, and the metrics of the coordinate transformation according to Eqs. \eqref{eq:linJacobian} to \eqref{eq:lindqdt}.
-\item {\tt struct DNA\_ScalarField}: Several instances of this structure representing the field data such grid point coordinates, velocity fields, etc. Each of the individual scalar fields is an instance of this structure, which contains a pointer to the field.
-\item {\tt struct DNA\_OldScalarFields}: Similar to the previous, but containing the data from the two preceding time steps. This information is needed for the time integration.
+\item {\tt struct DNA\_Grid}: Scalars and scalar fields representing the dependent coordinates $x\left(\xi,t\right)$ of the time-dependent physical domain $\Omega\left(t\right)$, the fixed computational domain $\Theta$, and the metrics of the coordinate transformation according to Eqs.~\eqref{eq:linJacobian} to \eqref{eq:lindqdt}.
+\item {\tt struct DNA\_ScalarField}: Several instances of this structure representing the field data such as grid point coordinates, velocity fields, etc. Each of the individual scalar fields is an instance of this structure, which contains a pointer to the field.
+\item {\tt struct DNA\_OldScalarFields}: Similar to the previous, but containing the data from the two preceding time steps. This information is required for the time integration.
 \end{compactitem}
-\item {\tt struct DNA\_MovingBoundary}: Variables regarding the moving boundary of the physical domain $\Omega\left(t\right)$.
+\item {\tt struct DNA\_MovingBoundary}: Variables associated with the moving boundary of the physical domain $\Omega\left(t\right)$.
 \end{compactitem}
 
 
@@ -31,68 +28,68 @@ The header files ({\tt *.h}) are located in {\tt src/include}. In {\tt DNA-funct
 \section{Source files}
 \label{sec:Source files}
 
-The core of the computational method evolves around solving the lossless convective Kuznetsov equation, Eq. \eqref{eq:convectiveKuznetsov}, however in the coordinates $\left(\xi,t\right)$ of the fixed computational domain $\Theta$. Therefore, the coordinate transformation is briefly repeated in Appx. \ref{chap:Appendix}. The following table provides an overview of the source files.
+The core of the computational method evolves around solving the lossless convective Kuznetsov equation, Eq.~\eqref{eq:convectiveKuznetsov}, in the coordinates $\left(\xi,t\right)$ of the fixed computational domain $\Theta$. Therefore, the coordinate transformation is briefly repeated in Appendix \ref{chap:Appendix}. The following table provides an overview and brief description of the source files.
 
 \noindent
 \begin{longtable}{p{0.4\textwidth} p{0.55\textwidth}}
 \textbf{Source file} & \textbf{Description}
 \vspace{1mm} \\
-\hline Directory {\tt include} &\\ \hline
-{\tt DNA.h} & See Sec. \ref{sec:Header files}. \\
-{\tt DNA-functions.h} & See Sec. \ref{sec:Header files}. \\
-{\tt DNA-constants.h} & See Sec. \ref{sec:Header files}. \\
+\hline Directory {\tt backgroundflow} &\\ \hline
+{\tt backgroundflowgravitation.c} & Function to compute the gravitational potential if applicable. \\
+{\tt backgroundflowmotion.c} & Functions to compute the background flow velocity field $u_0$ and its spatial and temporal derivatives. \\
 \\
-\hline Directory {\tt io} &\\ \hline
-{\tt ioreadoptionsfile.c} & Function that reads the {\tt wave-DNA} options file. \\
-{\tt ioreadoneoption.c} & Called in {\tt ioreadoptionsfile.c} to read a single option the {\tt wave-DNA} options file. \\
-{\tt ioreadcommandlineoptions.c} & Function to read command line options. \\
-{\tt ioonscreen.c} & Functions for output on screen during the run time of the simulation. \\
-{\tt iodefaultoptions.c} & Defaults for the options that can be set in the {\tt wave-DNA} options file. A simulation is performed even with an empty options file (see Sec. \ref{sec:Default run}). \\
-{\tt ioresults.c} & Functions to write ouput data to disk. \\
+\hline Directory {\tt boundary} &\\ \hline
+{\tt boundaryconditions.c} & Calling the functions to set the boundary conditions. \\
+{\tt boundarymotion.c} & Functions to describe the motion of the moving domain boundary. \\
 \\
-\hline Directory {\tt initialize} &\\ \hline
-{\tt initializesimulation.c} & Routine that allocates memory for all scalar fields and results vectors by calling functions in {\tt memoryallocfields.c} (see below). Initial values are set and the grid point IDs corresponding to the coordinates of the probe sample locations (IDs of the nearest neighbours are taken) specified in the {\tt wave-DNA} options file are identified. \\
-{\tt initializeprocessoptions.c} & Setting all function pointers based on the specifications in the {\tt wave-DNA} options file or the default options. \\
-{\tt initializefield.c} & Routines to initialize single fields of the type {\tt struct DNA\_ScalarField} or {\tt struct DNA\_OldScalarFields}. \\
-\\
-\hline Directory {\tt memory} &\\ \hline
-{\tt memoryalloc.c} & Function to allocate memory (RAM) for fields of the types {\tt struct DNA\_ScalarField} or {\tt struct DNA\_OldScalarFields}, for the computational grid, and the probe sample points and vecotrs. \\
-{\tt memoryallocfields.c} & Routine calling {\tt memoryalloc.c} to allocate all fields. \\
-{\tt memoryfreefields.c} & Routine called in {\tt main.c} to free all fields upon termination of the prgramme. \\
+\hline Directory {\tt fd} &\\ \hline
+{\tt fdboundaryconditions.c} & Functions to apply the boundary conditions. The functions for the West and East boundaries are called by reference. The corresponding pointers are {\tt int (*FDBC\_West)(...)} and {\tt int (*FDBC\_East)(...)}, respectively.  \\
+{\tt fdcoeffs.c} & Finite difference coefficients for the spatial and temporal discretization. \\
+{\tt fddt.c} & Functions to construct the explicit finite difference approximations of the time derivatives. \\
+{\tt fddx.c} & Functions to construct the explicit finite difference approximations of the spatial derivatives.  \\
+{\tt fdsumay.c} & Functions to compute the sums over previous time-steps needed for the finite difference discretiztion, see Eq.~\eqref{eq:fddt_compact}. \\
 \\
 \hline Directory {\tt grid} &\\ \hline
 {\tt gridmakegrid.c} & Functions to create the time-dependent grid for the physical domain $\Omega\left(t\right)$ and the fixed grid for the computational domain $\Theta$. \\
-{\tt gridmotion.c} & Updating the derivatives of the dependent coordinate $\xi\left(r,t\right)$ as given by by Eqs. \eqref{eq:linJacobian} to \eqref{eq:lindqdt}. \\
+{\tt gridmotion.c} & Updating the derivatives of the dependent coordinate $\xi\left(r,t\right)$ as given by Eqs.~\eqref{eq:linJacobian} to \eqref{eq:lindqdt}. \\
 \\
-\hline Directory {\tt fd} &\\ \hline
-{\tt fdcoeffs.c} & Finite difference coefficients for the spatial and temporal discretization. \\
-{\tt fddx.c} & Functions to construct the explicit finite difference approximations of the spatial derivatives.  \\
-{\tt fddt.c} & Functions to construct the explicit finite difference approximations of the time derivatives. \\
-{\tt fdsumay.c} & Functions to compute the sums over previous time-steps needed for the finite difference discretiztion (see Eq. \eqref{eq:fddt_compact}). \\
-{\tt fdboundaryconditions.c} & Functions to apply the boundary conditions. The functions for the West and East boundaries are called by reference. The corresponding pointers are {\tt int (*FDBC\_West)(...)} and {\tt int (*FDBC\_East)(...)}, respectively.  \\
+\hline Directory {\tt include} &\\ \hline
+{\tt DNA.h} & See Section \ref{sec:Header files}. \\
+{\tt DNA-constants.h} & See Section \ref{sec:Header files}. \\
+{\tt DNA-functions.h} & See Section \ref{sec:Header files}. \\
+\\
+\hline Directory {\tt initialize} &\\ \hline
+{\tt initializefield.c} & Routines to initialize single fields of the type {\tt struct DNA\_ScalarField} or {\tt struct DNA\_OldScalarFields}. \\
+{\tt initializeprocessoptions.c} & Setting all function pointers based on the specifications in the {\tt Wave-DNA} options file or the default options. \\
+{\tt initializesimulation.c} & Routine that allocates memory for all scalar fields and results vectors by calling functions in {\tt memoryallocfields.c} (see below). Initial values are set and the grid point IDs corresponding to the coordinates of the probe sample locations (IDs of the nearest neighbours are taken) specified in the {\tt Wave-DNA} options file are identified. \\
+\\
+\hline Directory {\tt io} &\\ \hline
+{\tt iodefaultoptions.c} & Defaults for the options that can be set in the {\tt Wave-DNA} options file. A simulation is performed even with an empty options file (see Section \ref{sec:Default run}). \\
+{\tt ioonscreen.c} & Functions for output on screen during the run time of the simulation. \\
+{\tt ioreadcommandlineoptions.c} & Function to read command line options. \\
+{\tt ioreadoneoption.c} & Called in {\tt ioreadoptionsfile.c} to read a single option the {\tt Wave-DNA} options file. \\
+{\tt ioreadoptionsfile.c} & Function that reads the {\tt Wave-DNA} options file. \\
+{\tt ioresults.c} & Functions to write ouput data to disk. \\
+\\
+\hline Directory {\tt memory} &\\ \hline
+{\tt memoryalloc.c} & Function to allocate memory for fields of the types {\tt struct DNA\_ScalarField} or {\tt struct DNA\_OldScalarFields}, for the computational grid, and the probe sample points and vectors. \\
+{\tt memoryallocfields.c} & Routine calling {\tt memoryalloc.c} to allocate all fields. \\
+{\tt memoryfreefields.c} & Routine called in {\tt main.c} to free all fields upon termination of the programme. \\
+\\
+\hline Directory {\tt solve} &\\ \hline
+{\tt solveexplicitderivatives.c} & Routine calling the functions in {\tt fddx.c} and {\tt fddt.c} to construct the finite difference approximations explicit temporal, spatial, and mixed derivatives. \\
+{\tt solveloop.c} & This file contains the function {\tt SolveTimeLoop}, representing the time loop of the simulation, and the function {\tt Solve}, which is called in {\tt {\tt SolveTimeLoop}} at each time step and which calls the functions relevant to the numerical algorithm. \\
+{\tt solvepredictorcorrector.c} & Routines to apply the predictor (see Eq.~\eqref{eq:discreteEqn}) and the corrector steps (see Eq.~\eqref{eq:corrector}). Additional routines are to update the Laplacian prior to the corrector step and to store the initial guess $\widetilde{\Phi_{1,i}}$ computed based on Eq.~\eqref{eq:discreteEqn} and required in Eq.~\eqref{eq:corrector}. \\
+{\tt solvesumay.c} & Routine calling the functions in {\tt fdsumay.c} to compute the sums over the previous time steps required for the explicit finite difference approximations of the time-derivatives. \\
+{\tt solveupdatefields.c} & Contains the function that updates the old fields and the term $\Phi_1\partial \xi/\partial t$ in Eq.~\eqref{eq:mixedTerm}. \\
+\\
+\hline Directory {\tt transform} &\\ \hline
+{\tt transformeqn.c} & Functions to compute the space- and time-dependent coefficients of the transformed wave equation, Eq.~\eqref{eq:convectiveKuznetsov_BBB}  and to assemble the terms of the discretized equation. The file contains the function {\tt TransformEqn\_Predictor} to assemble the terms for the predictor step of the predictor-corrector method (see Eq.~\eqref{eq:discreteEqn}), and the function {\tt TransformEqn\_Corrector}, which only updates the coefficients and terms that are relevant for the corrector step, see Eq.~\eqref{eq:corrector}.\\
+{\tt transformgeometricaldecay.c} & Function to account for the change of the cross-sectional area $A$ in the Laplacian, see Eq.~\eqref{eq:convectiveKuznetsov}, in the case of spherical symmetry. \\
+{\tt transformpotential.c} & Routines to convert the acoustic pressure $p_1$ into the perturbation potential $\Phi_1$ (required at the excitation node) and vice versa (required to reconstruct the acoustic pressure field from the solution for $\Phi_1$). \\
 \\
 \hline Directory {\tt waveexcitation} &\\ \hline
 {\tt waveexcitation.c} & Functions to excite the acoustic pressure wave at the specified excitation node. \\
-\\
-\hline Directory {\tt boundary} &\\ \hline
-{\tt boundarymotion.c} & Functions to describe the motion of the moving domain boundary. \\
-{\tt boundaryconditions.c} & Calling the functions to set the boundary conditions. \\
-\\
-\hline Directory {\tt backgroundflow} &\\ \hline
-{\tt backgroundflowmotion.c} & Functions to compute the background flow velocity field $u_0$ and its spatial and temporal derivatives. \\
-{\tt backgroundflowgravitation.c} & Function to compute the gravitational potential if applicable. \\
-\\
-\hline Directory {\tt transform} &\\ \hline
-{\tt transformeqn.c} & Functions to compute the space- and time-dependent coefficients of the transformed wave equation, Eq. \eqref{eq:convectiveKuznetsov_BBB}  and to assemble the terms of the discretized equation. The file contains the function {\tt TransformEqn\_Predictor} to assemble the terms for the predictor step of the predictor-corrector method (see Eq. \eqref{eq:discreteEqn}), and the function {\tt TransformEqn\_Corrector}, which only updates the coefficients and terms that are relevant for the corrector step (see Eq. \eqref{eq:corrector}).\\
-{\tt transformpotential.c} & Routines to convert the acoustic pressure $p_1$ into the perturbation potential $\Phi_1$ (needed at the excitation node) and vice versa (needed to reconstruct the acoustic pressure field from the solution for $\Phi_1$). \\
-{\tt transformgeometricaldecay.c} & Function to account for the change of the cross-sectional area $A$ in the Laplacian (see Eq. \eqref{eq:convectiveKuznetsov}) in the case of spherical symmetry. \\
-\\
-\hline Directory {\tt solve} &\\ \hline
-{\tt solveloop.c} & This file contains the function {\tt SolveTimeLoop}, representing the time loop of the simulation, and the function {\tt Solve}, which is called in {\tt {\tt SolveTimeLoop}} at each time step and which calls the functions relevant to the numerical algorithm. \\
-{\tt solveexplicitderivatives.c} & Routine calling the functions in {\tt fddx.c} and {\tt fddt.c} to construct the finite difference approximations explicit temporal, spatial, and mixed derivatives. \\
-{\tt solvesumay.c} & Routine calling the functions in {\tt fdsumay.c} to compute the sums over the previous time steps needed for the explicit finite difference approximations of the time-derivatives. \\
-{\tt solveupdatefields.c} & Contains the function that updates the old fields and the term $\Phi_1\partial \xi/\partial t$ in Eq. \eqref{eq:mixedTerm}. \\
-{\tt solvepredictorcorrector.c} & Routines to apply the predictor (see Eq. \eqref{eq:discreteEqn}) and the corrector steps (see Eq. \eqref{eq:corrector}). Additional routines are to update the Laplacian prior to the corrector step and to store the initial guess $\widetilde{\Phi_{1,i}}$ computed based on Eq. \eqref{eq:discreteEqn} and needed in Eq. \eqref{eq:corrector}. \\
  \hline
 \end{longtable} \vspace{1em}
 
