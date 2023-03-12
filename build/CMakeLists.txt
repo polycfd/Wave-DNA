@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 3.12)
 
 project (WaveDNA)
 set(CMAKE_C_COMPILER /usr/bin/gcc)
@@ -6,13 +6,7 @@ set(CMAKE_C_COMPILER /usr/bin/gcc)
 include_directories($ENV{WaveDNA_DIR}/src/include)
 FILE (GLOB_RECURSE MYFILES ABSOLUTE  $ENV{WaveDNA_DIR}/src/*.c)
 
-if(APPLE)
-	message(STATUS "Operating system: MacOSX")
-	set (mylibs m)
-else()
-	message(STATUS "Operating system: Linux")
-	set (mylibs m quadmath)
-endif()
+set (mylibs m)
 
 foreach(arg ${myincludes})
   IF (arg MATCHES "-I")
@@ -34,17 +28,16 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-   message(STATUS "Optimisation: Debug")
+   message(STATUS "Optimization: Debug")
    set(CMAKE_C_FLAGS_DEBUG "-Wall -g")
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-   message(STATUS "Optimisation: Release")
+   message(STATUS "Optimization: Release")
    add_definitions(-DNDEBUG)
    set(CMAKE_C_FLAGS_RELEASE "-Wall -Werror -O3")
-   set(CMAKE_C_FLAGS_RELEASE "-Wall")
 endif()
+
 
 set(mylibdirs ${mylibdirs} /usr/lib64/)
 link_directories(${mylibdirs})
-
 add_executable(WaveDNA ${MYFILES})
 target_link_libraries(WaveDNA ${mylibs})
