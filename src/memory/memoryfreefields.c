@@ -25,28 +25,28 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   free((Fields->BackgroundFlowField).dt1_BackgroundVelocity);
   free((Fields->BackgroundFlowField).dt1material_BackgroundVelocity);
 
-  free((Fields->phi).val);
-  free((Fields->qphi).val);
-  free((Fields->dXI2_phi).val);
-  free((Fields->dXI1_phi).val);
-  free((Fields->dXI1_qphi).val);
-  free((Fields->dt1_phi).val);
-  free((Fields->dt2_phi).val);
-  free((Fields->dt1_dXI1_qphi).val);
-  free((Fields->dt1_dXI1_phi).val);
+  free((Fields->PhiField).phi);
+  free((Fields->PhiField).qphi);
+  free((Fields->PhiField).dXI2_phi);
+  free((Fields->PhiField).dXI1_phi);
+  free((Fields->PhiField).dXI1_qphi);
+  free((Fields->PhiField).dt1_phi);
+  free((Fields->PhiField).dt2_phi);
+  free((Fields->PhiField).dt1_dXI1_qphi);
+  free((Fields->PhiField).dt1_dXI1_phi);
 
-  free((Fields->sum_aphi_dt1).val);
-  free((Fields->sum_aphi_dt2).val);
-  free((Fields->sum_adXI1_phi_dt1).val);
-  free((Fields->sum_adXI1_qphi_dt1).val);
+  free((Fields->PhiField).sum_aphi_dt1);
+  free((Fields->PhiField).sum_aphi_dt2);
+  free((Fields->PhiField).sum_adXI1_phi_dt1);
+  free((Fields->PhiField).sum_adXI1_qphi_dt1);
 
-  free((Fields->RHS).val);
-  free((Fields->AA).val);
-  free((Fields->BB).val);
-  free((Fields->BBbyAA).val);
-  free((Fields->phi1_initGuess).val);
+  free((Fields->PhiField).RHS);
+  free((Fields->PhiField).AA);
+  free((Fields->PhiField).BB);
+  free((Fields->PhiField).BBbyAA);
+  free((Fields->PhiField).phi1_initGuess);
 
-  free((Fields->PressureField).val);
+  free((Fields->PhiField).PressureField);
 
   MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_phi);
   MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_phi);

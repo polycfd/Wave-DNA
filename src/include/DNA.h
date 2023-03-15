@@ -66,6 +66,40 @@ struct DNA_BackgroundFlowField
   DNA_FLOAT *dt1material_BackgroundVelocity;
 };
 
+/** Acoustic potential and pressure field (and derivatives thereof) **/
+struct DNA_PhiField
+{
+  DNA_FLOAT *phi;
+  DNA_FLOAT *qphi;
+  DNA_FLOAT *dXI1_phi;
+  DNA_FLOAT *dXI2_phi;
+  DNA_FLOAT *dXI1_qphi;
+  DNA_FLOAT *dt1_phi;
+  DNA_FLOAT *dt2_phi;
+  DNA_FLOAT *dt1_dXI1_phi;
+  DNA_FLOAT *dt1_dXI1_qphi;
+  DNA_FLOAT *PressureField;
+
+  DNA_FLOAT *sum_aphi_dt1;
+  DNA_FLOAT *sum_aphi_dt2;
+  DNA_FLOAT *sum_adXI1_phi_dt1;
+  DNA_FLOAT *sum_adXI1_qphi_dt1;
+
+  DNA_FLOAT *phi1_initGuess;
+  DNA_FLOAT *RHS;
+  DNA_FLOAT *AA;
+  DNA_FLOAT *BB;
+  DNA_FLOAT *BBbyAA;
+};
+
+struct DNA_OldPhiField
+{
+  struct DNA_OldScalarFields *Old_phio[2];
+  struct DNA_OldScalarFields *Old_dXI1_phio[2];
+  struct DNA_OldScalarFields *Old_dXI2_phio[2];
+  struct DNA_OldScalarFields *Old_dXI1_qphio[2];
+};
+
 /** Local time-signals of the acoustic pressure can be taken at sample points **/
 struct DNA_Probes
 {
@@ -236,6 +270,9 @@ struct DNA_Fields
 
   struct DNA_Grid Grid;
   struct DNA_BackgroundFlowField BackgroundFlowField;
+  struct DNA_PhiField PhiField;
+
+  struct DNA_OldPhiField OldPhiField;
 };
 
 #endif /* DNA_H_ */

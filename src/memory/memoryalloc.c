@@ -25,6 +25,33 @@ int MemoryAllocBackgroundFlowField(int NPoints, struct DNA_BackgroundFlowField *
   return 0;
 }
 
+int MemoryAllocPhiField(int NPoints, struct DNA_PhiField *PhiField)
+{
+  PhiField->phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->qphi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dXI1_phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dXI2_phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dXI1_qphi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dt1_phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dt2_phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dt1_dXI1_phi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->dt1_dXI1_qphi = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->PressureField = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  PhiField->sum_aphi_dt1 = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->sum_aphi_dt2 = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->sum_adXI1_phi_dt1 = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->sum_adXI1_qphi_dt1 = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  PhiField->phi1_initGuess = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->RHS = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->AA = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->BB = malloc(NPoints * sizeof(DNA_FLOAT));
+  PhiField->BBbyAA = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  return 0;
+}
+
 /**--------------------------------------------------------- 
 Allocate memeory for DNA_Scalarfield such as pressure field etc
 ---------------------------------------------------------**/
