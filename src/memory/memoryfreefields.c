@@ -20,6 +20,11 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   free((Fields->Grid).q);
   free((Fields->Grid).dtq);
 
+  free((Fields->BackgroundFlowField).BackgroundVelocity);
+  free((Fields->BackgroundFlowField).GradBackgroundVelocity);
+  free((Fields->BackgroundFlowField).dt1_BackgroundVelocity);
+  free((Fields->BackgroundFlowField).dt1material_BackgroundVelocity);
+
   free((Fields->phi).val);
   free((Fields->qphi).val);
   free((Fields->dXI2_phi).val);
@@ -40,11 +45,6 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   free((Fields->BB).val);
   free((Fields->BBbyAA).val);
   free((Fields->phi1_initGuess).val);
-
-  free((Fields->BackgroundVelocity).val);
-  free((Fields->GradBackgroundVelocity).val);
-  free((Fields->dt1_BackgroundVelocity).val);
-  free((Fields->dt1material_BackgroundVelocity).val);
 
   free((Fields->PressureField).val);
 

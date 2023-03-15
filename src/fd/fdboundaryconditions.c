@@ -25,7 +25,7 @@ int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
   DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
-  DNA_FLOAT vrel = Fields->BackgroundVelocity.val[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
+  DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
   NewField->val[iBC] =
@@ -43,7 +43,7 @@ int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
   DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
-  DNA_FLOAT vrel = Fields->BackgroundVelocity.val[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
+  DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
   NewField->val[iBC] = OldField->val[1] + (CFL + 1.0) / (CFL - 1.0) * (NewField->val[1] - OldField->val[iBC]);
@@ -60,7 +60,7 @@ int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
   DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
-  DNA_FLOAT vrel = Fields->BackgroundVelocity.val[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
+  DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
   NewField->val[iBC] = OldField->val[1] + (CFL - 1.0) / (CFL + 1.0) * (NewField->val[1] - OldField->val[iBC]);
@@ -77,7 +77,7 @@ int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
   DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
-  DNA_FLOAT vrel = Fields->BackgroundVelocity.val[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
+  DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
   NewField->val[iBC] =

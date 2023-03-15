@@ -12,10 +12,10 @@ int BackgroundFlowMotion_const(struct DNA_RunOptions *RunOptions, struct DNA_Fie
 {
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundVelocity.val[iPoint] = MovingBoundary->U_backgroundAtWall;
-    Fields->GradBackgroundVelocity.val[iPoint] = 0.0;
-    Fields->dt1_BackgroundVelocity.val[iPoint] = 0.0;
-    Fields->dt1material_BackgroundVelocity.val[iPoint] = 0.0;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] = 0.0;
+    Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] = 0.0;
+    Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] = 0.0;
   }
 
   return 0;
@@ -28,21 +28,23 @@ int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundVelocity.val[iPoint] = DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->U_backgroundAtWall;
   }
 
   for (register int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->GradBackgroundVelocity.val[iPoint] = -k * Fields->BackgroundVelocity.val[iPoint] / (Fields->Grid.x[iPoint]);
+    Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] = -k * Fields->BackgroundFlowField.BackgroundVelocity[iPoint] / (Fields->Grid.x[iPoint]);
 
-    Fields->dt1_BackgroundVelocity.val[iPoint] = DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->Udot +
-                                                 k * MovingBoundary->U_backgroundAtWall / MovingBoundary->R * Fields->BackgroundVelocity.val[iPoint];
+    Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] =
+        DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->Udot +
+        k * MovingBoundary->U_backgroundAtWall / MovingBoundary->R * Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
   }
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->dt1material_BackgroundVelocity.val[iPoint] =
-        Fields->dt1_BackgroundVelocity.val[iPoint] + Fields->GradBackgroundVelocity.val[iPoint] * Fields->BackgroundVelocity.val[iPoint];
+    Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] =
+        Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] +
+        Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] * Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
   }
 
   return 0;
@@ -53,20 +55,21 @@ int BackgroundFlowMotion_Cartesian(struct DNA_RunOptions *RunOptions, struct DNA
 {
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundVelocity.val[iPoint] = MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtWall;
   }
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->GradBackgroundVelocity.val[iPoint] = 0.0;
+    Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] = 0.0;
 
-    Fields->dt1_BackgroundVelocity.val[iPoint] = MovingBoundary->Udot;
+    Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] = MovingBoundary->Udot;
   }
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->dt1material_BackgroundVelocity.val[iPoint] =
-        Fields->dt1_BackgroundVelocity.val[iPoint] + Fields->GradBackgroundVelocity.val[iPoint] * Fields->BackgroundVelocity.val[iPoint];
+    Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] =
+        Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] +
+        Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] * Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
   }
 
   return 0;

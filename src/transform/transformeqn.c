@@ -87,9 +87,9 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
     mapping, so that this approach is formally valid. The same applied to the geometry
     factor that accounts for the surface area of the curved wavefront due to the 
     flow geometry. **/
-    DNA_FLOAT u = Fields->BackgroundVelocity.val[iPoint];
-    DNA_FLOAT dudx = Fields->GradBackgroundVelocity.val[iPoint];
-    DNA_FLOAT DuDt = Fields->dt1material_BackgroundVelocity.val[iPoint];
+    DNA_FLOAT u = Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
+    DNA_FLOAT dudx = Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint];
+    DNA_FLOAT DuDt = Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint];
     DNA_FLOAT geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
     /** The prefix "transformed_" indicates that the corresponding terms are
@@ -168,7 +168,7 @@ int TransformEqn_Corrector(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
     DNA_FLOAT geometryFactor = RunOptions->GeometricalDecay(Fields->Grid.x[iPoint]);
 
-    DNA_FLOAT u = Fields->BackgroundVelocity.val[iPoint];
+    DNA_FLOAT u = Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
 
     DNA_FLOAT transformed_dXI1_phi = detJ * Fields->Old_dXI1_phi.o[0].val[iPoint];
     DNA_FLOAT transformed_dt1 = Fields->dt1_phi.val[iPoint] + q * Fields->Old_dXI1_phi.o[0].val[iPoint];

@@ -14,6 +14,7 @@ int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
   }
 
   MemoryAllocGrid(RunOptions->NumericsFD.NPoints, &Fields->Grid);
+  MemoryAllocBackgroundFlowField(RunOptions->NumericsFD.NPoints, &Fields->BackgroundFlowField);
 
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->phi);
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->qphi);
@@ -35,11 +36,6 @@ int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->AA);
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->BB);
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->BBbyAA);
-
-  MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->BackgroundVelocity);
-  MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->GradBackgroundVelocity);
-  MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->dt1_BackgroundVelocity);
-  MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->dt1material_BackgroundVelocity);
 
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->PressureField);
 

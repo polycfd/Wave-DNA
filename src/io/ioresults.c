@@ -58,7 +58,7 @@ int IOWriteToDisc(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
     fprintf(RunOptions->WaveResults, "   ");
     fprintf(RunOptions->WaveResults, "%.6e", Fields->phi.val[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->BackgroundVelocity.val[iPoint]);
+    fprintf(RunOptions->WaveResults, "%.6e", Fields->BackgroundFlowField.BackgroundVelocity[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
     fprintf(RunOptions->WaveResults, "\n");
   }

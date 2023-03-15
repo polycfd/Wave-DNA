@@ -57,6 +57,15 @@ struct DNA_Grid
   DNA_FLOAT dxidetJacobi;
 };
 
+/** Background flow field and derivatives thereof **/
+struct DNA_BackgroundFlowField
+{
+  DNA_FLOAT *BackgroundVelocity;
+  DNA_FLOAT *GradBackgroundVelocity;
+  DNA_FLOAT *dt1_BackgroundVelocity;
+  DNA_FLOAT *dt1material_BackgroundVelocity;
+};
+
 /** Local time-signals of the acoustic pressure can be taken at sample points **/
 struct DNA_Probes
 {
@@ -220,17 +229,13 @@ struct DNA_Fields
   struct DNA_ScalarField BB;
   struct DNA_ScalarField BBbyAA;
 
-  struct DNA_ScalarField BackgroundVelocity;
-  struct DNA_ScalarField GradBackgroundVelocity;
-  struct DNA_ScalarField dt1_BackgroundVelocity;
-  struct DNA_ScalarField dt1material_BackgroundVelocity;
-
   struct DNA_OldScalarFields Old_phi;
   struct DNA_OldScalarFields Old_dXI1_phi;
   struct DNA_OldScalarFields Old_dXI2_phi;
   struct DNA_OldScalarFields Old_dXI1_qphi;
 
   struct DNA_Grid Grid;
+  struct DNA_BackgroundFlowField BackgroundFlowField;
 };
 
 #endif /* DNA_H_ */

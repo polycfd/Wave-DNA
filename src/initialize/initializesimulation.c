@@ -46,6 +46,11 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   {
     Fields->Grid.q[iPoint] = 0.0;
     Fields->Grid.dtq[iPoint] = 0.0;
+
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = 0.0;
+    Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] = 0.0;
+    Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] = 0.0;
+    Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] = 0.0;
   }
 
   InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->phi, 0.0);
@@ -58,11 +63,6 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt2_phi, 0.0);
   InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_dXI1_phi, 0.0);
   InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_dXI1_qphi, 0.0);
-
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->BackgroundVelocity, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->GradBackgroundVelocity, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_BackgroundVelocity, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1material_BackgroundVelocity, 0.0);
 
   InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->PressureField, 0.0);
 

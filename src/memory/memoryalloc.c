@@ -15,6 +15,16 @@ int MemoryAllocGrid(int NPoints, struct DNA_Grid *Grid)
   return 0;
 }
 
+int MemoryAllocBackgroundFlowField(int NPoints, struct DNA_BackgroundFlowField *BackgroundFlowField)
+{
+  BackgroundFlowField->BackgroundVelocity = malloc(NPoints * sizeof(DNA_FLOAT));
+  BackgroundFlowField->GradBackgroundVelocity = malloc(NPoints * sizeof(DNA_FLOAT));
+  BackgroundFlowField->dt1_BackgroundVelocity = malloc(NPoints * sizeof(DNA_FLOAT));
+  BackgroundFlowField->dt1material_BackgroundVelocity = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  return 0;
+}
+
 /**--------------------------------------------------------- 
 Allocate memeory for DNA_Scalarfield such as pressure field etc
 ---------------------------------------------------------**/
