@@ -7,26 +7,26 @@ first (FDdt1) and the second (FDdt1) partial time derivative based on the sum
 over the previous time steps (SumAY). SumAy is computed in fdsumay.c.
 ---------------------------------------------------------**/
 
-int FDdt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt1Field)
+int FDdt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt1Field)
 {
   DNA_FLOAT a0 = NumericsFD->FDCoeffs.adt_order1.dt1[0];
 
   for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
-    dt1Field->val[iPoint] = (a0 * Y->val[iPoint] + SumAY->val[iPoint]) / NumericsFD->dt;
+    dt1Field[iPoint] = (a0 * Y[iPoint] + SumAY[iPoint]) / NumericsFD->dt;
   }
 
   return 0;
 }
 
-int FDdt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt2Field)
+int FDdt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt2Field)
 {
   DNA_FLOAT dtPow2 = DNA_POW2(NumericsFD->dt);
   DNA_FLOAT a0 = NumericsFD->FDCoeffs.adt_order1.dt2[0];
 
   for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
-    dt2Field->val[iPoint] = (a0 * Y->val[iPoint] + SumAY->val[iPoint]) / dtPow2;
+    dt2Field[iPoint] = (a0 * Y[iPoint] + SumAY[iPoint]) / dtPow2;
   }
 
   return 0;

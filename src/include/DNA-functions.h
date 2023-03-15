@@ -14,8 +14,8 @@ based on the settings specified in the options file.
 /** Initializion of the simulation **/
 int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
-int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *ScalarField, DNA_FLOAT val);
-int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, int sizeof_OldScalarFields, struct DNA_OldScalarFields *OldScalarFields, DNA_FLOAT val);
+int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *ScalarField, DNA_FLOAT val);
+int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT **OldScalarFields, DNA_FLOAT val);
 
 /** Wave excitation **/
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions);
@@ -61,22 +61,22 @@ int SolveStoreInitialGuess(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
 /** Functions related to the finite difference discretization **/
 int FDFiniteDifferenceCoeffs(struct DNA_NumericsFD *NumericsFD);
-int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *gradField);
-int FDLaplacian(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *gradField);
-int FDdt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt1Field);
-int FDdt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_ScalarField *Y, struct DNA_ScalarField *dt2Field);
-int FDSumAY_dt1(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_OldScalarFields *OldScalarFields);
-int FDSumAY_dt2(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *SumAY, struct DNA_OldScalarFields *OldScalarFields);
-int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                  struct DNA_ScalarField *OldField);
-int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                  struct DNA_ScalarField *OldField);
-int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
-                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
-                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField);
-int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                   struct DNA_ScalarField *OldField);
+int FDGradient(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *gradField);
+int FDLaplacian(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *gradField);
+int FDdt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt1Field);
+int FDdt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt2Field);
+int FDSumAY_dt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT **OldScalarFields);
+int FDSumAY_dt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT **OldScalarFields);
+int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                  DNA_FLOAT *OldField);
+int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                  DNA_FLOAT *OldField);
+int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                      DNA_FLOAT *OldField);
+int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                      DNA_FLOAT *OldField);
+int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                   DNA_FLOAT *OldField);
 
 /** Functions to set the boundary conditions and to describe the motion of the moving domain boundary **/
 int BoundaryConditions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties);
@@ -97,15 +97,11 @@ int GridMotion(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, str
 /** Field Memory Allocation **/
 int MemoryAllocSamplePoints(int NPoints, struct DNA_Probes *Probes);
 int MemoryAllocSampleVectors(int writeFrequency, struct DNA_Probes *Probes);
-int MemoryFreeSampleVectors(int writeFrequency, struct DNA_Probes *Probes);
 int MemoryAllocGrid(int NPoints, struct DNA_Grid *Grid);
 int MemoryAllocBackgroundFlowField(int NPoints, struct DNA_BackgroundFlowField *BackgroundFlowField);
 int MemoryAllocPhiField(int NPoints, struct DNA_PhiField *PhiField);
 int MemoryAllocOldPhiField(int NPoints, struct DNA_OldPhiField *OldPhiField);
-int MemoryAllocScalarField(int NPoints, struct DNA_ScalarField *ScalarField);
-int MemoryAllocOldScalarFields(int NPoints, int structSize, struct DNA_OldScalarFields *OldScalarFields);
 int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
-int MemoryFreeOldScalarFields(int structSize, struct DNA_OldScalarFields *OldScalarFields);
 int MemoryFreeSampleVectors(int writeFrequency, struct DNA_Probes *Probes);
 int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 

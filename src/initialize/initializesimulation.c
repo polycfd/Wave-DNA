@@ -33,8 +33,6 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
 
   FDFiniteDifferenceCoeffs(&RunOptions->NumericsFD);
 
-  Fields->sizeof_OldScalarFields = sizeof(struct DNA_OldScalarFields) / sizeof(DNA_FLOAT);
-
   MemoryAllocFields(RunOptions, Fields);
 
   GridComputationalDomain(&RunOptions->NumericsFD, &Fields->Grid);
@@ -53,29 +51,28 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
     Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] = 0.0;
   }
 
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->phi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->qphi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dXI1_phi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dXI1_qphi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dXI2_phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.qphi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dXI1_phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dXI1_qphi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dXI2_phi, 0.0);
 
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_phi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt2_phi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_dXI1_phi, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->dt1_dXI1_qphi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dt1_phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dt2_phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dt1_dXI1_phi, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.dt1_dXI1_qphi, 0.0);
 
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->PressureField, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.PressureField, 0.0);
 
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->phi1_initGuess, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->RHS, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->AA, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->BB, 0.0);
-  InitializeConstScalarField(&RunOptions->NumericsFD, &Fields->BBbyAA, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.phi1_initGuess, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.RHS, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.AA, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.BB, 0.0);
+  InitializeConstScalarField(&RunOptions->NumericsFD, Fields->PhiField.BBbyAA, 0.0);
 
-  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->sizeof_OldScalarFields, &Fields->Old_phi, 0.0);
-  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_qphi, 0.0);
-  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_phi, 0.0);
-  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->sizeof_OldScalarFields, &Fields->Old_dXI2_phi, 0.0);
+  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_phi, 0.0);
+  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI1_qphi, 0.0);
+  InitializeConstOldScalarFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI2_phi, 0.0);
 
   SolveSumAy_dt(RunOptions, Fields);
 

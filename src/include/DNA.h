@@ -18,8 +18,6 @@ Declaration of all structures and (function) pointers.
 struct DNA_FDCoeffs;
 struct DNA_Grid;
 struct DNA_Probes;
-struct DNA_ScalarField;
-struct DNA_OldScalarFields;
 struct DNA_MovingBoundary;
 struct DNA_RunOptions;
 struct DNA_Fields;
@@ -45,16 +43,16 @@ struct DNA_FDCoeffs
 /** Physical and computational grids and metrics of the coordinate transformation **/
 struct DNA_Grid
 {
-  DNA_FLOAT *x;
-  DNA_FLOAT *XI;
   DNA_FLOAT wallDisplacement;
   DNA_FLOAT xmov;
-  DNA_FLOAT xfix;
-  DNA_FLOAT *q;
-  DNA_FLOAT *dtq;
   DNA_FLOAT divq;
   DNA_FLOAT detJacobi;
   DNA_FLOAT dxidetJacobi;
+  DNA_FLOAT xfix;
+  DNA_FLOAT *x;
+  DNA_FLOAT *XI;
+  DNA_FLOAT *q;
+  DNA_FLOAT *dtq;
 };
 
 /** Background flow field and derivatives thereof **/
@@ -92,12 +90,13 @@ struct DNA_PhiField
   DNA_FLOAT *BBbyAA;
 };
 
+/** Old fields of the acoustic potential needed for time integration **/
 struct DNA_OldPhiField
 {
-  struct DNA_OldScalarFields *Old_phi[2];
-  struct DNA_OldScalarFields *Old_dXI1_phi[2];
-  struct DNA_OldScalarFields *Old_dXI2_phi[2];
-  struct DNA_OldScalarFields *Old_dXI1_qphi[2];
+  DNA_FLOAT **Old_phi;
+  DNA_FLOAT **Old_dXI1_phi;
+  DNA_FLOAT **Old_dXI2_phi;
+  DNA_FLOAT **Old_dXI1_qphi;
 };
 
 /** Local time-signals of the acoustic pressure can be taken at sample points **/
@@ -109,18 +108,6 @@ struct DNA_Probes
   DNA_FLOAT *SamplePoints;
   DNA_FLOAT *SampleTime;
   DNA_FLOAT **SamplePressure;
-};
-
-/** All fields (pressure or velocity field etc) are instances of this struct **/
-struct DNA_ScalarField
-{
-  DNA_FLOAT *val;
-};
-
-/** Similar to the above, but contains information of the old time steps **/
-struct DNA_OldScalarFields
-{
-  struct DNA_ScalarField o[2];
 };
 
 /** Parameters of the acoustic pressure wave excitation **/
@@ -199,10 +186,10 @@ struct DNA_RunOptions
   DNA_FLOAT (*GaussEnvelope)(DNA_FLOAT periodNo, DNA_FLOAT frequ, DNA_FLOAT time, DNA_FLOAT shapeCoeff);
 
   /** Pointers to the boundary condition functions **/
-  int (*FDBC_East)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                   struct DNA_ScalarField *OldField);
-  int (*FDBC_West)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                   struct DNA_ScalarField *OldField);
+  int (*FDBC_East)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                   DNA_FLOAT *OldField);
+  int (*FDBC_West)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                   DNA_FLOAT *OldField);
 
   // Pointer to the function describing the decay/amplification due to the geometry of the problem
   DNA_FLOAT (*GeometricalDecay)(DNA_FLOAT x);
@@ -239,35 +226,6 @@ struct DNA_MovingBoundary
 /** Struct containing all fields **/
 struct DNA_Fields
 {
-  int sizeof_OldScalarFields;
-
-  struct DNA_ScalarField phi;
-  struct DNA_ScalarField qphi;
-  struct DNA_ScalarField dXI1_phi;
-  struct DNA_ScalarField dXI2_phi;
-  struct DNA_ScalarField dXI1_qphi;
-  struct DNA_ScalarField dt1_phi;
-  struct DNA_ScalarField dt2_phi;
-  struct DNA_ScalarField dt1_dXI1_phi;
-  struct DNA_ScalarField dt1_dXI1_qphi;
-  struct DNA_ScalarField PressureField;
-
-  struct DNA_ScalarField sum_aphi_dt1;
-  struct DNA_ScalarField sum_aphi_dt2;
-  struct DNA_ScalarField sum_adXI1_phi_dt1;
-  struct DNA_ScalarField sum_adXI1_qphi_dt1;
-
-  struct DNA_ScalarField phi1_initGuess;
-  struct DNA_ScalarField RHS;
-  struct DNA_ScalarField AA;
-  struct DNA_ScalarField BB;
-  struct DNA_ScalarField BBbyAA;
-
-  struct DNA_OldScalarFields Old_phi;
-  struct DNA_OldScalarFields Old_dXI1_phi;
-  struct DNA_OldScalarFields Old_dXI2_phi;
-  struct DNA_OldScalarFields Old_dXI1_qphi;
-
   struct DNA_Grid Grid;
   struct DNA_BackgroundFlowField BackgroundFlowField;
   struct DNA_PhiField PhiField;

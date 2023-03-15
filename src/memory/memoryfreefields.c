@@ -60,21 +60,6 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   free((Fields->OldPhiField).Old_dXI1_qphi[0]);
   free((Fields->OldPhiField).Old_dXI1_qphi[1]);
 
-  MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_phi);
-  MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_phi);
-  MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI2_phi);
-  MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_qphi);
-
-  return 0;
-}
-
-int MemoryFreeOldScalarFields(int structSize, struct DNA_OldScalarFields *OldScalarFields)
-{
-  for (int iStruct = 0; iStruct < structSize; iStruct++)
-  {
-    free((OldScalarFields->o[iStruct]).val);
-  }
-
   return 0;
 }
 

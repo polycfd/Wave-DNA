@@ -54,9 +54,9 @@ int IOWriteToDisc(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
     fprintf(RunOptions->WaveResults, "   ");
     fprintf(RunOptions->WaveResults, "%.6e", Fields->Grid.x[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->PressureField.val[iPoint]);
+    fprintf(RunOptions->WaveResults, "%.6e", Fields->PhiField.PressureField[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->phi.val[iPoint]);
+    fprintf(RunOptions->WaveResults, "%.6e", Fields->PhiField.phi[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
     fprintf(RunOptions->WaveResults, "%.6e", Fields->BackgroundFlowField.BackgroundVelocity[iPoint]);
     fprintf(RunOptions->WaveResults, "   ");
@@ -137,12 +137,12 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
         DNA_FLOAT rl = Fields->Grid.x[iPoint];
         DNA_FLOAT rr = Fields->Grid.x[iPoint + 1];
 
-        DNA_FLOAT pl = Fields->PressureField.val[iPoint];
-        DNA_FLOAT pr = Fields->PressureField.val[iPoint + 1];
+        DNA_FLOAT pl = Fields->PhiField.PressureField[iPoint];
+        DNA_FLOAT pr = Fields->PhiField.PressureField[iPoint + 1];
         DNA_FLOAT prh = (pr - pl) / (rr - rl) * (rh - rl) + pl;
 
-        DNA_FLOAT phil = Fields->phi.val[iPoint];
-        DNA_FLOAT phir = Fields->phi.val[iPoint + 1];
+        DNA_FLOAT phil = Fields->PhiField.phi[iPoint];
+        DNA_FLOAT phir = Fields->PhiField.phi[iPoint + 1];
         DNA_FLOAT phirh = (phir - phil) / (rr - rl) * (rh - rl) + phil;
 
         RunOptions->WaveResults = fopen("results/horizon.dat", "a");
@@ -255,7 +255,7 @@ int IOUpdateProbes(int id, struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
   for (int i = 0; i < RunOptions->Probes.nSamplePoints; i++)
   {
-    RunOptions->Probes.SamplePressure[id][i] = Fields->PressureField.val[RunOptions->Probes.SampleIDs[i]];
+    RunOptions->Probes.SamplePressure[id][i] = Fields->PhiField.PressureField[RunOptions->Probes.SampleIDs[i]];
   }
 
   return 0;

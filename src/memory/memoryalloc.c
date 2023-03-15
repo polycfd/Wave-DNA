@@ -54,45 +54,21 @@ int MemoryAllocPhiField(int NPoints, struct DNA_PhiField *PhiField)
 
 int MemoryAllocOldPhiField(int NPoints, struct DNA_OldPhiField *OldPhiField)
 {
-  OldPhiField->Old_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
-  OldPhiField->Old_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_phi = (DNA_FLOAT **) malloc((int) 2 * sizeof(DNA_FLOAT *));
+  OldPhiField->Old_phi[0] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_phi[1] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
 
-  OldPhiField->Old_dXI1_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
-  OldPhiField->Old_dXI1_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI1_phi = (DNA_FLOAT **) malloc((int) 2 * sizeof(DNA_FLOAT *));
+  OldPhiField->Old_dXI1_phi[0] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI1_phi[1] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
 
-  OldPhiField->Old_dXI2_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
-  OldPhiField->Old_dXI2_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI2_phi = (DNA_FLOAT **) malloc((int) 2 * sizeof(DNA_FLOAT *));
+  OldPhiField->Old_dXI2_phi[0] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI2_phi[1] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
 
-  OldPhiField->Old_dXI1_qphi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
-  OldPhiField->Old_dXI1_qphi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
-
-  return 0;
-}
-
-/**--------------------------------------------------------- 
-Allocate memeory for DNA_Scalarfield such as pressure field etc
----------------------------------------------------------**/
-
-int MemoryAllocScalarField(int NPoints, struct DNA_ScalarField *ScalarField)
-{
-  ScalarField->val = malloc(NPoints * sizeof(DNA_FLOAT));
-
-  return 0;
-}
-
-/**--------------------------------------------------------- 
-Memory allocation for old scalar fields (previous time steps)
-needed for the time integration scheme
----------------------------------------------------------**/
-
-int MemoryAllocOldScalarFields(int NPoints, int structSize, struct DNA_OldScalarFields *OldScalarFields)
-{
-  int iStruct;
-
-  for (iStruct = 0; iStruct < structSize; iStruct++)
-  {
-    (OldScalarFields->o[iStruct]).val = malloc(NPoints * sizeof(DNA_FLOAT));
-  }
+  OldPhiField->Old_dXI1_qphi = (DNA_FLOAT **) malloc((int) 2 * sizeof(DNA_FLOAT *));
+  OldPhiField->Old_dXI1_qphi[0] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI1_qphi[1] = (DNA_FLOAT *) malloc(NPoints * sizeof(DNA_FLOAT));
 
   return 0;
 }

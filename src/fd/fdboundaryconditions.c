@@ -18,78 +18,76 @@ FDBC_Mur_West_inv). Each of these configurations requires slightly different
 variants of the Mur BC.
 ---------------------------------------------------------**/
 
-int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                  struct DNA_ScalarField *OldField)
+int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                  DNA_FLOAT *OldField)
 {
   int iBC = RunOptions->NumericsFD.NPoints - 1;
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
-  DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
+  DNA_FLOAT grad = Fields->PhiField.dXI1_phi[iBC] * Fields->Grid.detJacobi;
   DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
-  NewField->val[iBC] =
-      OldField->val[RunOptions->NumericsFD.NPoints - 2] + (CFL - 1.0) / (CFL + 1.0) * (NewField->val[RunOptions->NumericsFD.NPoints - 2] - OldField->val[iBC]);
+  NewField[iBC] = OldField[RunOptions->NumericsFD.NPoints - 2] + (CFL - 1.0) / (CFL + 1.0) * (NewField[RunOptions->NumericsFD.NPoints - 2] - OldField[iBC]);
 
-  NewField->val[iBC] -= adv * 2.0;
+  NewField[iBC] -= adv * 2.0;
 
   return 0;
 }
 
-int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
-                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField)
+int FDBC_Mur_East_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                      DNA_FLOAT *OldField)
 {
   int iBC = 0;
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
-  DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
+  DNA_FLOAT grad = Fields->PhiField.dXI1_phi[iBC] * Fields->Grid.detJacobi;
   DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
-  NewField->val[iBC] = OldField->val[1] + (CFL + 1.0) / (CFL - 1.0) * (NewField->val[1] - OldField->val[iBC]);
+  NewField[iBC] = OldField[1] + (CFL + 1.0) / (CFL - 1.0) * (NewField[1] - OldField[iBC]);
 
-  NewField->val[iBC] -= adv * 2.0;
+  NewField[iBC] -= adv * 2.0;
 
   return 0;
 }
 
-int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                  struct DNA_ScalarField *OldField)
+int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                  DNA_FLOAT *OldField)
 {
   int iBC = 0;
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
-  DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
+  DNA_FLOAT grad = Fields->PhiField.dXI1_phi[iBC] * Fields->Grid.detJacobi;
   DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
-  NewField->val[iBC] = OldField->val[1] + (CFL - 1.0) / (CFL + 1.0) * (NewField->val[1] - OldField->val[iBC]);
+  NewField[iBC] = OldField[1] + (CFL - 1.0) / (CFL + 1.0) * (NewField[1] - OldField[iBC]);
 
-  NewField->val[iBC] -= adv * 2.0;
+  NewField[iBC] -= adv * 2.0;
 
   return 0;
 }
 
-int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties,
-                      struct DNA_ScalarField *NewField, struct DNA_ScalarField *OldField)
+int FDBC_Mur_West_inv(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                      DNA_FLOAT *OldField)
 {
   int iBC = RunOptions->NumericsFD.NPoints - 1;
 
   DNA_FLOAT CFL = FluidProperties->c0 * RunOptions->NumericsFD.dt / RunOptions->NumericsFD.dx;
-  DNA_FLOAT grad = Fields->dXI1_phi.val[iBC] * Fields->Grid.detJacobi;
+  DNA_FLOAT grad = Fields->PhiField.dXI1_phi[iBC] * Fields->Grid.detJacobi;
   DNA_FLOAT vrel = Fields->BackgroundFlowField.BackgroundVelocity[iBC] + Fields->Grid.q[iBC] / Fields->Grid.detJacobi;
   DNA_FLOAT adv = grad * vrel * RunOptions->NumericsFD.dt;
 
-  NewField->val[iBC] =
-      OldField->val[RunOptions->NumericsFD.NPoints - 2] + (CFL + 1.0) / (CFL - 1.0) * (NewField->val[RunOptions->NumericsFD.NPoints - 2] - OldField->val[iBC]);
+  NewField[iBC] = OldField[RunOptions->NumericsFD.NPoints - 2] + (CFL + 1.0) / (CFL - 1.0) * (NewField[RunOptions->NumericsFD.NPoints - 2] - OldField[iBC]);
 
-  NewField->val[iBC] -= adv * 2.0;
+  NewField[iBC] -= adv * 2.0;
 
   return 0;
 }
 
-int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, struct DNA_ScalarField *NewField,
-                   struct DNA_ScalarField *OldField)
+int FDBC_Mur_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
+                   DNA_FLOAT *OldField)
 {
   return 0;
 }

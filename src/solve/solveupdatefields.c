@@ -10,17 +10,17 @@ int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
 {
   for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
-    Fields->Old_phi.o[1].val[iPoint] = Fields->Old_phi.o[0].val[iPoint];
-    Fields->Old_phi.o[0].val[iPoint] = Fields->phi.val[iPoint];
+    Fields->OldPhiField.Old_phi[1][iPoint] = Fields->OldPhiField.Old_phi[0][iPoint];
+    Fields->OldPhiField.Old_phi[0][iPoint] = Fields->PhiField.phi[iPoint];
 
-    Fields->Old_dXI1_qphi.o[1].val[iPoint] = Fields->Old_dXI1_qphi.o[0].val[iPoint];
-    Fields->Old_dXI1_qphi.o[0].val[iPoint] = Fields->dXI1_qphi.val[iPoint];
+    Fields->OldPhiField.Old_dXI1_qphi[1][iPoint] = Fields->OldPhiField.Old_dXI1_qphi[0][iPoint];
+    Fields->OldPhiField.Old_dXI1_qphi[0][iPoint] = Fields->PhiField.dXI1_qphi[iPoint];
 
-    Fields->Old_dXI1_phi.o[1].val[iPoint] = Fields->Old_dXI1_phi.o[0].val[iPoint];
-    Fields->Old_dXI1_phi.o[0].val[iPoint] = Fields->dXI1_phi.val[iPoint];
+    Fields->OldPhiField.Old_dXI1_phi[1][iPoint] = Fields->OldPhiField.Old_dXI1_phi[0][iPoint];
+    Fields->OldPhiField.Old_dXI1_phi[0][iPoint] = Fields->PhiField.dXI1_phi[iPoint];
 
-    Fields->Old_dXI2_phi.o[1].val[iPoint] = Fields->Old_dXI2_phi.o[0].val[iPoint];
-    Fields->Old_dXI2_phi.o[0].val[iPoint] = Fields->dXI2_phi.val[iPoint];
+    Fields->OldPhiField.Old_dXI2_phi[1][iPoint] = Fields->OldPhiField.Old_dXI2_phi[0][iPoint];
+    Fields->OldPhiField.Old_dXI2_phi[0][iPoint] = Fields->PhiField.dXI2_phi[iPoint];
   }
 
   return 0;
@@ -33,7 +33,7 @@ int SolveCalcqphi(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
   for (int iPoint = 0; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
-    Fields->qphi.val[iPoint] = Fields->Grid.q[iPoint] * Fields->phi.val[iPoint];
+    Fields->PhiField.qphi[iPoint] = Fields->Grid.q[iPoint] * Fields->PhiField.phi[iPoint];
   }
 
   return 0;

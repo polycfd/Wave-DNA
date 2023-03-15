@@ -10,7 +10,7 @@ spatial derivatives to be discretized in the present modeling framework indeed
 represent gradients.
 ---------------------------------------------------------**/
 
-int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *gradField)
+int FDGradient(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *gradField)
 {
   int endID = NumericsFD->NPoints - 1;
 
@@ -21,17 +21,17 @@ int FDGradient(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, str
   // Compute gradient in internal field:
   for (int iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
   {
-    gradField->val[iPoint] = (amin1 * Y->val[iPoint - 1] + a0 * Y->val[iPoint] + aplus1 * Y->val[iPoint + 1]) / NumericsFD->dXI;
+    gradField[iPoint] = (amin1 * Y[iPoint - 1] + a0 * Y[iPoint] + aplus1 * Y[iPoint + 1]) / NumericsFD->dXI;
   }
 
   // Compute gradients at left and right domain boundaries
-  gradField->val[0] = (Y->val[1] - Y->val[0]) / NumericsFD->dXI;
-  gradField->val[endID] = (Y->val[endID] - Y->val[endID - 1]) / NumericsFD->dXI;
+  gradField[0] = (Y[1] - Y[0]) / NumericsFD->dXI;
+  gradField[endID] = (Y[endID] - Y[endID - 1]) / NumericsFD->dXI;
 
   return 0;
 }
 
-int FDLaplacian(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, struct DNA_ScalarField *LaplacianField)
+int FDLaplacian(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *LaplacianField)
 {
   int endID = NumericsFD->NPoints - 1;
   DNA_FLOAT dxPow2 = DNA_POW2(NumericsFD->dXI);
@@ -43,11 +43,11 @@ int FDLaplacian(struct DNA_NumericsFD *NumericsFD, struct DNA_ScalarField *Y, st
   // Compute Laplacian in internal field:
   for (int iPoint = 1; iPoint < (NumericsFD->NPoints - 1); iPoint++)
   {
-    LaplacianField->val[iPoint] = (amin1 * Y->val[iPoint - 1] + a0 * Y->val[iPoint] + aplus1 * Y->val[iPoint + 1]) / dxPow2;
+    LaplacianField[iPoint] = (amin1 * Y[iPoint - 1] + a0 * Y[iPoint] + aplus1 * Y[iPoint + 1]) / dxPow2;
   }
 
   // The Laplacian is not required in the BCs but arbitrarily set to zero:
-  LaplacianField->val[endID] = 0.0;
+  LaplacianField[endID] = 0.0;
 
   return 0;
 }
