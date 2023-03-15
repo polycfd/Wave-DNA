@@ -101,6 +101,7 @@ int MemoryFreeSampleVectors(int writeFrequency, struct DNA_Probes *Probes);
 int MemoryAllocGrid(int NPoints, struct DNA_Grid *Grid);
 int MemoryAllocBackgroundFlowField(int NPoints, struct DNA_BackgroundFlowField *BackgroundFlowField);
 int MemoryAllocPhiField(int NPoints, struct DNA_PhiField *PhiField);
+int MemoryAllocOldPhiField(int NPoints, struct DNA_OldPhiField *OldPhiField);
 int MemoryAllocScalarField(int NPoints, struct DNA_ScalarField *ScalarField);
 int MemoryAllocOldScalarFields(int NPoints, int structSize, struct DNA_OldScalarFields *OldScalarFields);
 int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);

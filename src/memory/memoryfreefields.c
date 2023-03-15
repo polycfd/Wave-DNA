@@ -48,6 +48,18 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
 
   free((Fields->PhiField).PressureField);
 
+  free((Fields->OldPhiField).Old_phi[0]);
+  free((Fields->OldPhiField).Old_phi[1]);
+
+  free((Fields->OldPhiField).Old_dXI1_phi[0]);
+  free((Fields->OldPhiField).Old_dXI1_phi[1]);
+
+  free((Fields->OldPhiField).Old_dXI2_phi[0]);
+  free((Fields->OldPhiField).Old_dXI2_phi[1]);
+
+  free((Fields->OldPhiField).Old_dXI1_qphi[0]);
+  free((Fields->OldPhiField).Old_dXI1_qphi[1]);
+
   MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_phi);
   MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI1_phi);
   MemoryFreeOldScalarFields(Fields->sizeof_OldScalarFields, &Fields->Old_dXI2_phi);

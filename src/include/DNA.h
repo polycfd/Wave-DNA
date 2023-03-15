@@ -94,10 +94,10 @@ struct DNA_PhiField
 
 struct DNA_OldPhiField
 {
-  struct DNA_OldScalarFields *Old_phio[2];
-  struct DNA_OldScalarFields *Old_dXI1_phio[2];
-  struct DNA_OldScalarFields *Old_dXI2_phio[2];
-  struct DNA_OldScalarFields *Old_dXI1_qphio[2];
+  struct DNA_OldScalarFields *Old_phi[2];
+  struct DNA_OldScalarFields *Old_dXI1_phi[2];
+  struct DNA_OldScalarFields *Old_dXI2_phi[2];
+  struct DNA_OldScalarFields *Old_dXI1_qphi[2];
 };
 
 /** Local time-signals of the acoustic pressure can be taken at sample points **/
@@ -271,7 +271,6 @@ struct DNA_Fields
   struct DNA_Grid Grid;
   struct DNA_BackgroundFlowField BackgroundFlowField;
   struct DNA_PhiField PhiField;
-
   struct DNA_OldPhiField OldPhiField;
 };
 

@@ -16,6 +16,7 @@ int MemoryAllocFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fiel
   MemoryAllocGrid(RunOptions->NumericsFD.NPoints, &Fields->Grid);
   MemoryAllocBackgroundFlowField(RunOptions->NumericsFD.NPoints, &Fields->BackgroundFlowField);
   MemoryAllocPhiField(RunOptions->NumericsFD.NPoints, &Fields->PhiField);
+  MemoryAllocOldPhiField(RunOptions->NumericsFD.NPoints, &Fields->OldPhiField);
 
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->phi);
   MemoryAllocScalarField(RunOptions->NumericsFD.NPoints, &Fields->qphi);

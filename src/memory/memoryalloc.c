@@ -52,6 +52,23 @@ int MemoryAllocPhiField(int NPoints, struct DNA_PhiField *PhiField)
   return 0;
 }
 
+int MemoryAllocOldPhiField(int NPoints, struct DNA_OldPhiField *OldPhiField)
+{
+  OldPhiField->Old_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  OldPhiField->Old_dXI1_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI1_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  OldPhiField->Old_dXI2_phi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI2_phi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  OldPhiField->Old_dXI1_qphi[0] = malloc(NPoints * sizeof(DNA_FLOAT));
+  OldPhiField->Old_dXI1_qphi[1] = malloc(NPoints * sizeof(DNA_FLOAT));
+
+  return 0;
+}
+
 /**--------------------------------------------------------- 
 Allocate memeory for DNA_Scalarfield such as pressure field etc
 ---------------------------------------------------------**/
