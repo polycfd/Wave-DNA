@@ -34,9 +34,14 @@ The latter option requires to set the environmental variable {\tt \$WaveDNA\_DIR
 \section{Running a simulation}
 \label{sec:Running a simulation}
 
-The simulation case directory needs to have an options file called {\tt run.DNA}, which contains the user options\footnote{If the file is empty, a default run is performed based on the default options as indicated in Section \ref{sec:Default settings} (also see {\tt src/io/iodefaultoptions.c})}, and a {\tt results} directory is generated upon executing {\tt Wave-DNA}, in which the the output files are written. The simulation is run in the case directory by executing the following command:
+The simulation case directory needs to have an options file, called {\tt run.DNA} by default, which contains the user options\footnote{If the file is empty, a default run is performed based on the default options as indicated in Section \ref{sec:Default settings} (also see {\tt src/io/iodefaultoptions.c})}, and a {\tt results} directory is generated upon executing {\tt Wave-DNA}, in which the the output files are written. The simulation is run in the case directory by executing the following command:
 \\[8pt]
 {\tt /path/to/some/arbitrary/build/directory/WaveDNA}
+\\[8pt]
+The options file may also take another name different from {\tt run.DNA}. In that case, the simulation must be executed with the following command line option:
+\\[8pt]
+{\tt /path/to/some/arbitrary/build/directory/WaveDNA -options optionsFileName}
+\\[8pt]
 
 
 \section{Run options and fluid properties}

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import sys
 
 #===================================================================
 preamble='\\usepackage{amsmath}\n\\usepackage{amsfonts}'
@@ -19,8 +19,26 @@ plt.setp(ax.get_xticklabels(), fontsize=fontsize)
 plt.setp(ax.get_yticklabels(), fontsize=fontsize)
 #===================================================================
 
-pa = 1.0e3
-Ldomain = 0.18
+optionsfile = 'run.DNA' # default if no command line option (plot *.py optionsfile) is given
+if len(sys.argv) > 1:
+    optionsfile = sys.argv[1]
+fo = open(optionsfile, "r")
+for line in fo:
+  if "InitialMovingBoundaryPosition" in line:
+    splitline = line.split()
+    Xmin = float(splitline[1])
+  if "FixedBoundaryPosition" in line:
+    splitline = line.split()
+    Xmax = float(splitline[1])
+  if "ExcitationFrequency" in line:
+    splitline = line.split()
+    fa = float(splitline[1])
+  if "PressureAmplitude" in line:
+    splitline = line.split()
+    pa = float(splitline[1])
+fo.close()
+
+Ldomain = Xmax - Xmin
 
 def _read(filename, timestep):
 

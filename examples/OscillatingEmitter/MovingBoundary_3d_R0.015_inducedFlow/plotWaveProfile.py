@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import sys
 
 #===================================================================
 preamble='\\usepackage{amsmath}\n\\usepackage{amsfonts}'
@@ -19,8 +19,10 @@ plt.setp(ax.get_xticklabels(), fontsize=fontsize)
 plt.setp(ax.get_yticklabels(), fontsize=fontsize)
 #===================================================================
 
-fo = open("run.DNA", "r")
-for line in fo:
+fo = open("run.DNA", "r")optionsfile = 'run.DNA' # default if no command line option (plot *.py optionsfile) is given
+if len(sys.argv) > 1:
+    optionsfile = sys.argv[1]
+fo = open(optionsfile, "r")for line in fo:
   if "ExcitationFrequency" in line:
     splitline = line.split()
     fa = float(splitline[1])

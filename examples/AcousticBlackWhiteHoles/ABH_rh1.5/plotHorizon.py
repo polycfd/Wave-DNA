@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 
 #===================================================================
@@ -80,7 +81,10 @@ def _AWH_analytical_O2(t,rh,la,fa):
 
 
 
-fo = open("run.DNA", "r")
+optionsfile = 'run.DNA' # default if no command line option (plot *.py optionsfile) is given
+if len(sys.argv) > 1:
+    optionsfile = sys.argv[1]
+fo = open(optionsfile, "r")
 for line in fo:
   if "SoundSpeed" in line:
     splitline = line.split()
