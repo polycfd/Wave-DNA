@@ -29,7 +29,7 @@ The header files ({\tt *.h}) are located in {\tt src/include}. In {\tt DNA-funct
 \section{Source files}
 \label{sec:Source files}
 
-The core of the computational method evolves around solving the lossless convective Kuznetsov equation, Eq.~\eqref{eq:convectiveKuznetsov}, in the coordinates $\left(\xi,t\right)$ of the fixed computational domain $\Theta$. Therefore, the coordinate transformation is briefly repeated in Appendix \ref{chap:Appendix}. The following table provides an overview and brief description of the source files.
+The core of the computational method evolves around solving the lossless convective Kuznetsov equation in the coordinates of the fixed computational domain. The following table provides an overview and brief description of the source files.
 
 \noindent
 \begin{longtable}{p{0.4\textwidth} p{0.55\textwidth}}
@@ -82,11 +82,11 @@ The core of the computational method evolves around solving the lossless convect
 {\tt solveloop.c} & This file contains the function {\tt SolveTimeLoop}, representing the time loop of the simulation, and the function {\tt Solve}, which is called in {\tt {\tt SolveTimeLoop}} at each time step and which calls the functions relevant to the numerical algorithm. \\
 {\tt solvepredictorcorrector.c} & Routines to apply the predictor (see Eq.~\eqref{eq:discreteEqn}) and the corrector steps (see Eq.~\eqref{eq:corrector}). Additional routines are to update the Laplacian prior to the corrector step and to store the initial guess $\widetilde{\Phi_{1,i}}$ computed based on Eq.~\eqref{eq:discreteEqn} and required in Eq.~\eqref{eq:corrector}. \\
 {\tt solvesumaphi.c} & Routine calling the functions in {\tt fdsumaphi.c} to compute the sums over the previous time steps required for the explicit finite difference approximations of the time-derivatives. \\
-{\tt solveupdatefields.c} & Contains the function that updates the old fields and the term $\Phi_1\partial \xi/\partial t$ in Eq.~\eqref{eq:mixedTerm}. \\
+{\tt solveupdatefields.c} & Contains the function that updates the old fields. \\
 \\
 \hline Directory {\tt transform} &\\ \hline
-{\tt transformeqn.c} & Functions to compute the space- and time-dependent coefficients of the transformed wave equation, Eq.~\eqref{eq:convectiveKuznetsov_BBB}  and to assemble the terms of the discretized equation. The file contains the function {\tt TransformEqn\_Predictor} to assemble the terms for the predictor step of the predictor-corrector method (see Eq.~\eqref{eq:discreteEqn}), and the function {\tt TransformEqn\_Corrector}, which only updates the coefficients and terms that are relevant for the corrector step, see Eq.~\eqref{eq:corrector}.\\
-{\tt transformgeometricaldecay.c} & Function to account for the change of the cross-sectional area $A$ in the Laplacian, see Eq.~\eqref{eq:convectiveKuznetsov}, in the case of spherical symmetry. \\
+{\tt transformeqn.c} & Functions to compute the space- and time-dependent coefficients of the transformed wave equation, and to assemble the terms of the discretized equation. The file contains the function {\tt TransformEqn\_Predictor} to assemble the terms for the predictor step of the predictor-corrector method (see Eq.~\eqref{eq:discreteEqn}), and the function {\tt TransformEqn\_Corrector}, which only updates the coefficients and terms that are relevant for the corrector step, see Eq.~\eqref{eq:corrector}.\\
+{\tt transformgeometricaldecay.c} & Function to account for the change of the cross-sectional area $A$ in the Laplacian in the case of spherical symmetry. \\
 {\tt transformpotential.c} & Routines to convert the acoustic pressure $p_1$ into the perturbation potential $\Phi_1$ (required at the excitation node) and vice versa (required to reconstruct the acoustic pressure field from the solution for $\Phi_1$). \\
 \\
 \hline Directory {\tt waveexcitation} &\\ \hline
