@@ -55,7 +55,7 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties)
 {
   /** Sum over previous function values times corresponding FD coefficients **/
-  SolveSumAy_dt(RunOptions, Fields);
+  SolveSumFDcoeffTimesPhi_dt(RunOptions, Fields);
 
   /** Updating the position of the excitation boundary and the uniform grid (metrics) **/
   Fields->Grid.xmov = MovingBoundary->R;

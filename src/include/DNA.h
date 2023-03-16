@@ -17,6 +17,9 @@ Declaration of all structures and (function) pointers.
 (needed as there are some nested structs) **/
 struct DNA_FDCoeffs;
 struct DNA_Grid;
+struct DNA_BackgroundFlowField;
+struct DNA_PhiField;
+struct DNA_OldPhiField;
 struct DNA_Probes;
 struct DNA_MovingBoundary;
 struct DNA_RunOptions;

@@ -7,7 +7,7 @@ latter include the fields for the preceding time steps, needed to the
 temporal discretization.
 ---------------------------------------------------------**/
 
-int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *ScalarField, DNA_FLOAT val)
+int InitializeScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *ScalarField, DNA_FLOAT val)
 {
   for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
@@ -17,12 +17,12 @@ int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Sca
   return 0;
 }
 
-int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT **OldScalarFields, DNA_FLOAT val)
+int InitializeOldPhiFields(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT **OldPhiFields, DNA_FLOAT val)
 {
   for (int iPoint = 0; iPoint < NumericsFD->NPoints; iPoint++)
   {
-    OldScalarFields[0][iPoint] = val;
-    OldScalarFields[1][iPoint] = val;
+    OldPhiFields[0][iPoint] = val;
+    OldPhiFields[1][iPoint] = val;
   }
 
   return 0;

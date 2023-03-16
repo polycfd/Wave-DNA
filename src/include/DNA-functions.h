@@ -14,8 +14,8 @@ based on the settings specified in the options file.
 /** Initializion of the simulation **/
 int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
-int InitializeConstScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *ScalarField, DNA_FLOAT val);
-int InitializeConstOldScalarFields(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT **OldScalarFields, DNA_FLOAT val);
+int InitializeScalarField(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *ScalarField, DNA_FLOAT val);
+int InitializeOldPhiFields(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT **OldPhiFields, DNA_FLOAT val);
 
 /** Wave excitation **/
 DNA_FLOAT WaveExcitationSineModulated(struct DNA_RunOptions *RunOptions);
@@ -51,7 +51,7 @@ int SolveTimeLoop(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
                   struct DNA_FluidProperties *FluidProperties);
 int SolveUpdateOldFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveCalcqphi(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
-int SolveSumAy_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
+int SolveSumFDcoeffTimesPhi_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveExplicitDerivatives_dx(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveExplicitDerivatives_dt(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int SolveExplicit_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
@@ -63,10 +63,10 @@ int SolveStoreInitialGuess(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 int FDFiniteDifferenceCoeffs(struct DNA_NumericsFD *NumericsFD);
 int FDGradient(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *gradField);
 int FDLaplacian(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *Y, DNA_FLOAT *gradField);
-int FDdt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt1Field);
-int FDdt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT *Y, DNA_FLOAT *dt2Field);
-int FDSumAY_dt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT **OldScalarFields);
-int FDSumAY_dt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumAY, DNA_FLOAT **OldScalarFields);
+int FDdt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumFDcoeffTimesPhi, DNA_FLOAT *Y, DNA_FLOAT *dt1Field);
+int FDdt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumFDcoeffTimesPhi, DNA_FLOAT *Y, DNA_FLOAT *dt2Field);
+int FDSumFDcoeffTimesPhi_dt1(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumFDcoeffTimesPhi, DNA_FLOAT **OldPhiFields);
+int FDSumFDcoeffTimesPhi_dt2(struct DNA_NumericsFD *NumericsFD, DNA_FLOAT *SumFDcoeffTimesPhi, DNA_FLOAT **OldPhiFields);
 int FDBC_Mur_East(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
                   DNA_FLOAT *OldField);
 int FDBC_Mur_West(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT *NewField,
