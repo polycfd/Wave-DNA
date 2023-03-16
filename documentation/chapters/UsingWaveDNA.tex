@@ -207,8 +207,8 @@ for the acoustic white hole scenario.
 \hline Section {\tt BACKGROUNDFLOW} &\\ \hline
 {\tt BackgroundMotionMode <string>} & Specifies whether the background flow field is unconditionally quiescent (option {\tt <quiescent>}), regardless of the motion of the moving domain boundary, or whether the background flow field is coupled to the moving domain boundary (option {\tt <coupledToMovingBoundary>}). \\
 {\tt Geometry <string>} & Specifies whether the flow field is spatially homogeneous (option {\tt <1dCartesian>}) or satisfying the continuity equation of a spherically symmetric flow (option {\tt <3dSphericallySymmetric>}). \\
-{\tt HorizonRadius <float>} & Point of sonic transition if {\tt BoundaryMotionType} is set to {\tt <stationaryHorizon>}. \\
-{\tt GravitationalPotential <string>} & If set to {\tt True} and if {\tt BackgroundMotionMode} is set to {\tt <stationaryHorizon>}, a gravitational potential is included to mimic a simplified Bondi-Parker-type flow. \\
+{\tt HorizonRadius <float>} & Point of sonic transition if {\tt BoundaryMotionType} is set to {\tt <stationaryBlackHole>} or {\tt <stationaryWhiteHole>}. \\
+{\tt GravitationalPotential <string>} & If set to {\tt True} and if {\tt BackgroundMotionMode} is set to {\tt <stationaryBlackHole>} or {\tt <stationaryWhiteHole>}, a gravitational potential is included to mimic a simplified Bondi-Parker-type flow. \\
  \hline
 \end{longtable} \vspace{1em}
 
@@ -389,7 +389,7 @@ The output file {\tt probes.dat} is only written if a non-zero number $N_{\mathr
 \end{equation}
 The grid nodes may be moving if one of the domain boundaries is in motion.
 
-The output file {\tt horizon.dat} is only written if the parameter {\tt BoundaryMotionType} is set to {\tt stationaryHorizon} as described in Section \ref{sec:Boundary, grid, and background flow motion}. The outfile contains time signals recorded at the sonic horizon of the acoustic black hole, representing
+The output file {\tt horizon.dat} is only written if the parameter {\tt BoundaryMotionType} is set to {\tt stationaryBlackHole} or {\tt stationaryWhiteHole} as described in Section \ref{sec:Boundary, grid, and background flow motion}. The outfile contains time signals recorded at the sonic horizon of the acoustic black hole, representing
 \begin{equation}
 \begin{array}{lllllll}
   \mathrm{Time\:step\:\left[-\right]},
