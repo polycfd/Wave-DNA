@@ -114,7 +114,7 @@ int TransformEqn_Predictor(struct DNA_RunOptions *RunOptions, struct DNA_Fields 
 
     DNA_FLOAT Uterm = UM * Fields->PhiField.dt1_dXI1_phi[iPoint] + UG * Fields->PhiField.dXI1_phi[iPoint] + DuDt * transformed_dXI1_phi;
 
-    DNA_FLOAT Agrav = RunOptions->WaveCalcGravitationalPotential(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
+    DNA_FLOAT Agrav = RunOptions->CalcGravitationalPotential(RunOptions, FluidProperties, Fields->Grid.x[iPoint]);
 
     DNA_FLOAT AG = dudx * transformed_dXI1_phi * NLflag + 2.0 * transformed_MixedDerivative * NLflag + K * u * Uterm + Agrav;
 

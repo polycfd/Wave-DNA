@@ -34,58 +34,58 @@ int IOWriteToDisc(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, 
 {
   int iPoint;
 
-  RunOptions->WaveResults = fopen("results/fields.dat", "a");
-  fprintf(RunOptions->WaveResults, "===============================\n");
-  fprintf(RunOptions->WaveResults, "time   ");
-  fprintf(RunOptions->WaveResults, "%.6e", RunOptions->t);
-  fprintf(RunOptions->WaveResults, "\n");
-  fprintf(RunOptions->WaveResults, "timeStep   ");
-  fprintf(RunOptions->WaveResults, "%d", RunOptions->NumericsFD.dtNumber);
-  fprintf(RunOptions->WaveResults, "\n");
-  fprintf(RunOptions->WaveResults, "R   ");
-  fprintf(RunOptions->WaveResults, "%.6e", MovingBoundary->R);
-  fprintf(RunOptions->WaveResults, "\n");
-  fprintf(RunOptions->WaveResults, "dotR   ");
-  fprintf(RunOptions->WaveResults, "%.6e", MovingBoundary->U);
-  fprintf(RunOptions->WaveResults, "\n");
+  RunOptions->Results = fopen("results/fields.dat", "a");
+  fprintf(RunOptions->Results, "===============================\n");
+  fprintf(RunOptions->Results, "time   ");
+  fprintf(RunOptions->Results, "%.6e", RunOptions->t);
+  fprintf(RunOptions->Results, "\n");
+  fprintf(RunOptions->Results, "timeStep   ");
+  fprintf(RunOptions->Results, "%d", RunOptions->NumericsFD.dtNumber);
+  fprintf(RunOptions->Results, "\n");
+  fprintf(RunOptions->Results, "R   ");
+  fprintf(RunOptions->Results, "%.6e", MovingBoundary->R);
+  fprintf(RunOptions->Results, "\n");
+  fprintf(RunOptions->Results, "dotR   ");
+  fprintf(RunOptions->Results, "%.6e", MovingBoundary->U);
+  fprintf(RunOptions->Results, "\n");
   for (iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    fprintf(RunOptions->WaveResults, "%d", iPoint);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->Grid.x[iPoint]);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->PhiField.PressureField[iPoint]);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->PhiField.phi[iPoint]);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", Fields->BackgroundFlowField.BackgroundVelocity[iPoint]);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "\n");
+    fprintf(RunOptions->Results, "%d", iPoint);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "%.6e", Fields->Grid.x[iPoint]);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "%.6e", Fields->PhiField.PressureField[iPoint]);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "%.6e", Fields->PhiField.phi[iPoint]);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "%.6e", Fields->BackgroundFlowField.BackgroundVelocity[iPoint]);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "\n");
   }
-  fprintf(RunOptions->WaveResults, "EOS\n");
-  fprintf(RunOptions->WaveResults, "===============================\n");
-  fclose(RunOptions->WaveResults);
+  fprintf(RunOptions->Results, "EOS\n");
+  fprintf(RunOptions->Results, "===============================\n");
+  fclose(RunOptions->Results);
 
   return 0;
 }
 
 int IOWriteProbes(struct DNA_RunOptions *RunOptions)
 {
-  RunOptions->WaveResults = fopen("results/probes.dat", "a");
+  RunOptions->Results = fopen("results/probes.dat", "a");
   for (int iTime = 0; iTime < (RunOptions->writeFrequency); iTime++)
   {
-    fprintf(RunOptions->WaveResults, "%d", RunOptions->Probes.TimeIDs[iTime]);
-    fprintf(RunOptions->WaveResults, "   ");
-    fprintf(RunOptions->WaveResults, "%.6e", RunOptions->Probes.SampleTime[iTime]);
-    fprintf(RunOptions->WaveResults, "   ");
+    fprintf(RunOptions->Results, "%d", RunOptions->Probes.TimeIDs[iTime]);
+    fprintf(RunOptions->Results, "   ");
+    fprintf(RunOptions->Results, "%.6e", RunOptions->Probes.SampleTime[iTime]);
+    fprintf(RunOptions->Results, "   ");
     for (int i = 0; i < (RunOptions->Probes.nSamplePoints); i++)
     {
-      fprintf(RunOptions->WaveResults, "%.6e", RunOptions->Probes.SamplePressure[iTime][i]);
-      fprintf(RunOptions->WaveResults, "   ");
+      fprintf(RunOptions->Results, "%.6e", RunOptions->Probes.SamplePressure[iTime][i]);
+      fprintf(RunOptions->Results, "   ");
     }
-    fprintf(RunOptions->WaveResults, "\n");
+    fprintf(RunOptions->Results, "\n");
   }
-  fclose(RunOptions->WaveResults);
+  fclose(RunOptions->Results);
 
   return 0;
 }
@@ -94,30 +94,30 @@ int IOWriteProbes_dummy(struct DNA_RunOptions *RunOptions) { return 0; }
 
 int IOWriteHeader(struct DNA_RunOptions *RunOptions)
 {
-  RunOptions->WaveResults = fopen("results/fields.dat", "a");
-  fprintf(RunOptions->WaveResults, "iPoint; x[m]; p1[Pa]; phi1[m^2/s]; u0[m/s]\n\n");
-  fclose(RunOptions->WaveResults);
+  RunOptions->Results = fopen("results/fields.dat", "a");
+  fprintf(RunOptions->Results, "iPoint; x[m]; p1[Pa]; phi1[m^2/s]; u0[m/s]\n\n");
+  fclose(RunOptions->Results);
 
   if (RunOptions->Probes.nSamplePoints > 0)
   {
-    RunOptions->WaveResults = fopen("results/probes.dat", "a");
-    fprintf(RunOptions->WaveResults, "timeStep; time[s]; ");
+    RunOptions->Results = fopen("results/probes.dat", "a");
+    fprintf(RunOptions->Results, "timeStep; time[s]; ");
     for (int i = 0; i < (RunOptions->Probes.nSamplePoints); i++)
     {
-      fprintf(RunOptions->WaveResults, "p1(x=");
-      fprintf(RunOptions->WaveResults, "%.6e", RunOptions->Probes.SamplePoints[i]);
-      fprintf(RunOptions->WaveResults, "m)[Pa]; ");
+      fprintf(RunOptions->Results, "p1(x=");
+      fprintf(RunOptions->Results, "%.6e", RunOptions->Probes.SamplePoints[i]);
+      fprintf(RunOptions->Results, "m)[Pa]; ");
     }
-    fprintf(RunOptions->WaveResults, "\n");
-    fclose(RunOptions->WaveResults);
+    fprintf(RunOptions->Results, "\n");
+    fclose(RunOptions->Results);
   }
 
   if (RunOptions->BoundaryMotionType == 2 || RunOptions->BoundaryMotionType == 3)
   {
-    RunOptions->WaveResults = fopen("results/horizon.dat", "a");
-    fprintf(RunOptions->WaveResults, "# timeStep; time[s]; R[m]; dotR[m/s]; rh[m]; p1[Pa]; phi1[m^2/s]");
-    fprintf(RunOptions->WaveResults, "\n");
-    fclose(RunOptions->WaveResults);
+    RunOptions->Results = fopen("results/horizon.dat", "a");
+    fprintf(RunOptions->Results, "# timeStep; time[s]; R[m]; dotR[m/s]; rh[m]; p1[Pa]; phi1[m^2/s]");
+    fprintf(RunOptions->Results, "\n");
+    fclose(RunOptions->Results);
   }
 
   return 0;
@@ -145,23 +145,23 @@ int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fie
         DNA_FLOAT phir = Fields->PhiField.phi[iPoint + 1];
         DNA_FLOAT phirh = (phir - phil) / (rr - rl) * (rh - rl) + phil;
 
-        RunOptions->WaveResults = fopen("results/horizon.dat", "a");
-        fprintf(RunOptions->WaveResults, "%d", RunOptions->NumericsFD.dtNumber);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", RunOptions->t);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", MovingBoundary->R);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", MovingBoundary->U);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", rh);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", prh);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "%.6e", phirh);
-        fprintf(RunOptions->WaveResults, "   ");
-        fprintf(RunOptions->WaveResults, "\n");
-        fclose(RunOptions->WaveResults);
+        RunOptions->Results = fopen("results/horizon.dat", "a");
+        fprintf(RunOptions->Results, "%d", RunOptions->NumericsFD.dtNumber);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", RunOptions->t);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", MovingBoundary->R);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", MovingBoundary->U);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", rh);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", prh);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "%.6e", phirh);
+        fprintf(RunOptions->Results, "   ");
+        fprintf(RunOptions->Results, "\n");
+        fclose(RunOptions->Results);
       }
     }
   }

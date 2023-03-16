@@ -168,7 +168,7 @@ struct DNA_RunOptions
 
   int writeCount;
   int writeFrequency;
-  FILE *WaveResults;
+  FILE *Results;
   int (*IOWriteProbesOption)(struct DNA_RunOptions *RunOptions);
   int (*IOUpdateProbesOption)(int id, struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
   int (*IOWriteStatHorizonOption)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
@@ -197,10 +197,10 @@ struct DNA_RunOptions
   // Pointers to the boundary and background flow motion functions
   int (*BoundaryMotion)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                         DNA_FLOAT time);
-  int (*WaveBackgroundMotion)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  DNA_FLOAT (*WaveBackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  DNA_FLOAT (*WaveBackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  DNA_FLOAT (*WaveCalcGravitationalPotential)(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
+  int (*BackgroundMotion)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*BackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*BackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*CalcGravitationalPotential)(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
 };
 
 /** Fluid properties **/

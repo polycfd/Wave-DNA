@@ -79,7 +79,7 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
   RunOptions->dimension = 1;
   RunOptions->BoundaryMotionType = 0;
 
-  RunOptions->WaveCalcGravitationalPotential = &BackgroundFlowGravitationalPotential_dummy;
+  RunOptions->CalcGravitationalPotential = &BackgroundFlowGravitationalPotential_dummy;
 
   return 0;
 }

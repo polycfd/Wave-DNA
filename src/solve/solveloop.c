@@ -63,9 +63,9 @@ int Solve(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct D
   GridMotion(RunOptions, Fields, MovingBoundary);
 
   /** Background motion at the wall and in the entire field **/
-  MovingBoundary->U_backgroundAtWall = RunOptions->WaveBackgroundVelocityAtWall(RunOptions, MovingBoundary, RunOptions->t);
-  MovingBoundary->Udot_backgroundAtWall = RunOptions->WaveBackgroundAccelerationAtWall(RunOptions, MovingBoundary, RunOptions->t);
-  RunOptions->WaveBackgroundMotion(RunOptions, Fields, MovingBoundary, RunOptions->t);
+  MovingBoundary->U_backgroundAtWall = RunOptions->BackgroundVelocityAtWall(RunOptions, MovingBoundary, RunOptions->t);
+  MovingBoundary->Udot_backgroundAtWall = RunOptions->BackgroundAccelerationAtWall(RunOptions, MovingBoundary, RunOptions->t);
+  RunOptions->BackgroundMotion(RunOptions, Fields, MovingBoundary, RunOptions->t);
 
   /** The term qphi represents the product of the acoustic perturbation potential phi
   and the velocity q = dXI/dt of the grid points in the computational domain as viewed

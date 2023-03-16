@@ -73,41 +73,41 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
   {
     if (RunOptions->GravitationalPotentialOption == 0)
     {
-      RunOptions->WaveCalcGravitationalPotential = &BackgroundFlowGravitationalPotential_dummy;
+      RunOptions->CalcGravitationalPotential = &BackgroundFlowGravitationalPotential_dummy;
     }
     else if (RunOptions->GravitationalPotentialOption == 1)
     {
-      RunOptions->WaveCalcGravitationalPotential = &BackgroundFlowGravitationalPotential;
+      RunOptions->CalcGravitationalPotential = &BackgroundFlowGravitationalPotential;
     }
   }
 
   if (RunOptions->backgroundMotionMode == 0)
   {
-    RunOptions->WaveBackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_decoupled;
-    RunOptions->WaveBackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_decoupled;
+    RunOptions->BackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_decoupled;
+    RunOptions->BackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_decoupled;
   }
   else if (RunOptions->backgroundMotionMode == 1)
   {
-    RunOptions->WaveBackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_coupledToWall;
-    RunOptions->WaveBackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_coupledToWall;
+    RunOptions->BackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_coupledToWall;
+    RunOptions->BackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_coupledToWall;
   }
 
   if (RunOptions->dimension == 1)
   {
     if (RunOptions->backgroundMotionMode == 0)
     {
-      RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_const;
+      RunOptions->BackgroundMotion = &BackgroundFlowMotion_const;
     }
     else if (RunOptions->backgroundMotionMode == 1)
     {
-      RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_Cartesian;
+      RunOptions->BackgroundMotion = &BackgroundFlowMotion_Cartesian;
     }
 
     RunOptions->GeometricalDecay = &TransformNoGeometricalDecay;
   }
   else if (RunOptions->dimension == 3)
   {
-    RunOptions->WaveBackgroundMotion = &BackgroundFlowMotion_spherical;
+    RunOptions->BackgroundMotion = &BackgroundFlowMotion_spherical;
     RunOptions->GeometricalDecay = &TransformSphericalDecay;
   }
 
