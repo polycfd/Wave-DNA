@@ -49,8 +49,8 @@ int IODefaultOptions(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
 
   /** Boundary motion **/
   MovingBoundary->R0 = 0;
-  MovingBoundary->U_backgroundAtWall = 0;
-  MovingBoundary->Udot_backgroundAtWall = 0;
+  MovingBoundary->U_backgroundAtMovingBoundary = 0;
+  MovingBoundary->Udot_backgroundAtMovingBoundary = 0;
   RunOptions->WaveExcitation.MovingBoundaryVelocityAmplitude = 0;
   RunOptions->WaveExcitation.MovingBoundaryFrequency = 0.1 * RunOptions->WaveExcitation.ExcitationFrequency;
 

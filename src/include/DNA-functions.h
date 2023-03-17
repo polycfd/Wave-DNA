@@ -38,10 +38,11 @@ DNA_FLOAT TransformNoGeometricalDecay(DNA_FLOAT x);
 int BackgroundFlowMotion_const(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
 int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
 int BackgroundFlowMotion_Cartesian(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-DNA_FLOAT BackgroundFlowVelocityAtWall_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-DNA_FLOAT BackgroundFlowAccelerationAtWall_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-DNA_FLOAT BackgroundFlowAccelerationAtWall_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-DNA_FLOAT BackgroundFlowVelocityAtWall_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+DNA_FLOAT BackgroundFlowVelocityAtMovingBoundary_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+DNA_FLOAT BackgroundFlowAccelerationAtMovingBoundary_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+DNA_FLOAT BackgroundFlowAccelerationAtMovingBoundary_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary,
+                                                                   DNA_FLOAT time);
+DNA_FLOAT BackgroundFlowVelocityAtMovingBoundary_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
 DNA_FLOAT BackgroundFlowGravitationalPotential(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
 DNA_FLOAT BackgroundFlowGravitationalPotential_dummy(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
 

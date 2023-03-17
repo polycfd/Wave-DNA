@@ -201,8 +201,8 @@ struct DNA_RunOptions
   int (*BoundaryMotion)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, struct DNA_FluidProperties *FluidProperties,
                         DNA_FLOAT time);
   int (*BackgroundMotion)(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  DNA_FLOAT (*BackgroundVelocityAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
-  DNA_FLOAT (*BackgroundAccelerationAtWall)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*BackgroundVelocityAtMovingBoundary)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
+  DNA_FLOAT (*BackgroundAccelerationAtMovingBoundary)(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time);
   DNA_FLOAT (*CalcGravitationalPotential)(struct DNA_RunOptions *RunOptions, struct DNA_FluidProperties *FluidProperties, DNA_FLOAT x);
 };
 
@@ -222,8 +222,8 @@ struct DNA_MovingBoundary
   DNA_FLOAT R;
   DNA_FLOAT U;
   DNA_FLOAT Udot;
-  DNA_FLOAT U_backgroundAtWall;
-  DNA_FLOAT Udot_backgroundAtWall;
+  DNA_FLOAT U_backgroundAtMovingBoundary;
+  DNA_FLOAT Udot_backgroundAtMovingBoundary;
 };
 
 /** Struct containing all fields **/

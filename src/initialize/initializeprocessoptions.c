@@ -83,13 +83,13 @@ int InitializeProcessOptions(struct DNA_RunOptions *RunOptions, struct DNA_Field
 
   if (RunOptions->backgroundMotionMode == 0)
   {
-    RunOptions->BackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_decoupled;
-    RunOptions->BackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_decoupled;
+    RunOptions->BackgroundVelocityAtMovingBoundary = &BackgroundFlowVelocityAtMovingBoundary_decoupled;
+    RunOptions->BackgroundAccelerationAtMovingBoundary = &BackgroundFlowAccelerationAtMovingBoundary_decoupled;
   }
   else if (RunOptions->backgroundMotionMode == 1)
   {
-    RunOptions->BackgroundVelocityAtWall = &BackgroundFlowVelocityAtWall_coupledToWall;
-    RunOptions->BackgroundAccelerationAtWall = &BackgroundFlowAccelerationAtWall_coupledToWall;
+    RunOptions->BackgroundVelocityAtMovingBoundary = &BackgroundFlowVelocityAtMovingBoundary_coupledToWall;
+    RunOptions->BackgroundAccelerationAtMovingBoundary = &BackgroundFlowAccelerationAtMovingBoundary_coupledToWall;
   }
 
   if (RunOptions->dimension == 1)

@@ -12,7 +12,7 @@ int BackgroundFlowMotion_const(struct DNA_RunOptions *RunOptions, struct DNA_Fie
 {
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtMovingBoundary;
     Fields->BackgroundFlowField.GradBackgroundVelocity[iPoint] = 0.0;
     Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] = 0.0;
     Fields->BackgroundFlowField.dt1material_BackgroundVelocity[iPoint] = 0.0;
@@ -28,7 +28,8 @@ int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] =
+        DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->U_backgroundAtMovingBoundary;
   }
 
   for (register int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
@@ -37,7 +38,7 @@ int BackgroundFlowMotion_spherical(struct DNA_RunOptions *RunOptions, struct DNA
 
     Fields->BackgroundFlowField.dt1_BackgroundVelocity[iPoint] =
         DNA_POW(MovingBoundary->R / (Fields->Grid.x[iPoint]), k) * MovingBoundary->Udot +
-        k * MovingBoundary->U_backgroundAtWall / MovingBoundary->R * Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
+        k * MovingBoundary->U_backgroundAtMovingBoundary / MovingBoundary->R * Fields->BackgroundFlowField.BackgroundVelocity[iPoint];
   }
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
@@ -55,7 +56,7 @@ int BackgroundFlowMotion_Cartesian(struct DNA_RunOptions *RunOptions, struct DNA
 {
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
   {
-    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtWall;
+    Fields->BackgroundFlowField.BackgroundVelocity[iPoint] = MovingBoundary->U_backgroundAtMovingBoundary;
   }
 
   for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints); iPoint++)
@@ -84,19 +85,22 @@ is chosen to be decoupled, the domain boundary is a virtual boundary moving rela
 to the fluid. 
 ---------------------------------------------------------**/
 
-DNA_FLOAT BackgroundFlowVelocityAtWall_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
+DNA_FLOAT BackgroundFlowVelocityAtMovingBoundary_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
   return MovingBoundary->U;
 }
 
-DNA_FLOAT BackgroundFlowVelocityAtWall_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time) { return 0.0; }
+DNA_FLOAT BackgroundFlowVelocityAtMovingBoundary_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
+{
+  return 0.0;
+}
 
-DNA_FLOAT BackgroundFlowAccelerationAtWall_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
+DNA_FLOAT BackgroundFlowAccelerationAtMovingBoundary_coupledToWall(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
   return MovingBoundary->Udot;
 }
 
-DNA_FLOAT BackgroundFlowAccelerationAtWall_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
+DNA_FLOAT BackgroundFlowAccelerationAtMovingBoundary_decoupled(struct DNA_RunOptions *RunOptions, struct DNA_MovingBoundary *MovingBoundary, DNA_FLOAT time)
 {
   return 0.0;
 }
