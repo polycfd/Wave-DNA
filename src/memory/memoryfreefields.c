@@ -15,50 +15,52 @@ int MemoryFreeFields(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Field
     free(RunOptions->Probes.SampleIDs);
   }
 
-  free((Fields->Grid).x);
-  free((Fields->Grid).XI);
-  free((Fields->Grid).q);
-  free((Fields->Grid).dtq);
+  free(Fields->Grid.x);
+  free(Fields->Grid.XI);
+  free(Fields->Grid.q);
+  free(Fields->Grid.dtq);
 
-  free((Fields->BackgroundFlowField).BackgroundVelocity);
-  free((Fields->BackgroundFlowField).GradBackgroundVelocity);
-  free((Fields->BackgroundFlowField).dt1_BackgroundVelocity);
-  free((Fields->BackgroundFlowField).dt1material_BackgroundVelocity);
+  free(Fields->BackgroundFlowField.BackgroundVelocity);
+  free(Fields->BackgroundFlowField.GradBackgroundVelocity);
+  free(Fields->BackgroundFlowField.dt1_BackgroundVelocity);
+  free(Fields->BackgroundFlowField.dt1material_BackgroundVelocity);
 
-  free((Fields->PhiField).phi);
-  free((Fields->PhiField).qphi);
-  free((Fields->PhiField).dXI2_phi);
-  free((Fields->PhiField).dXI1_phi);
-  free((Fields->PhiField).dXI1_qphi);
-  free((Fields->PhiField).dt1_phi);
-  free((Fields->PhiField).dt2_phi);
-  free((Fields->PhiField).dt1_dXI1_qphi);
-  free((Fields->PhiField).dt1_dXI1_phi);
+  free(Fields->PhiField.phi);
+  free(Fields->PhiField.qphi);
+  free(Fields->PhiField.dXI2_phi);
+  free(Fields->PhiField.dXI1_phi);
+  free(Fields->PhiField.dXI1_qphi);
+  free(Fields->PhiField.dt1_phi);
+  free(Fields->PhiField.dt2_phi);
+  free(Fields->PhiField.dt1_dXI1_qphi);
+  free(Fields->PhiField.dt1_dXI1_phi);
 
-  free((Fields->PhiField).sum_aphi_dt1);
-  free((Fields->PhiField).sum_aphi_dt2);
-  free((Fields->PhiField).sum_adXI1_phi_dt1);
-  free((Fields->PhiField).sum_adXI1_qphi_dt1);
+  free(Fields->PhiField.sum_aphi_dt1);
+  free(Fields->PhiField.sum_aphi_dt2);
+  free(Fields->PhiField.sum_adXI1_phi_dt1);
+  free(Fields->PhiField.sum_adXI1_qphi_dt1);
 
-  free((Fields->PhiField).RHS);
-  free((Fields->PhiField).AA);
-  free((Fields->PhiField).BB);
-  free((Fields->PhiField).BBbyAA);
-  free((Fields->PhiField).phi1_initGuess);
+  free(Fields->PhiField.RHS);
+  free(Fields->PhiField.AA);
+  free(Fields->PhiField.BB);
+  free(Fields->PhiField.BBbyAA);
+  free(Fields->PhiField.phi1_initGuess);
 
-  free((Fields->PhiField).PressureField);
+  free(Fields->PhiField.PressureField);
 
-  free((Fields->OldPhiField).Old_phi[0]);
-  free((Fields->OldPhiField).Old_phi[1]);
+  free(Fields->OldPhiField.Old_phi[0]);
+  free(Fields->OldPhiField.Old_phi[1]);
+  free(Fields->OldPhiField.Old_dXI1_phi[0]);
+  free(Fields->OldPhiField.Old_dXI1_phi[1]);
+  free(Fields->OldPhiField.Old_dXI2_phi[0]);
+  free(Fields->OldPhiField.Old_dXI2_phi[1]);
+  free(Fields->OldPhiField.Old_dXI1_qphi[0]);
+  free(Fields->OldPhiField.Old_dXI1_qphi[1]);
 
-  free((Fields->OldPhiField).Old_dXI1_phi[0]);
-  free((Fields->OldPhiField).Old_dXI1_phi[1]);
-
-  free((Fields->OldPhiField).Old_dXI2_phi[0]);
-  free((Fields->OldPhiField).Old_dXI2_phi[1]);
-
-  free((Fields->OldPhiField).Old_dXI1_qphi[0]);
-  free((Fields->OldPhiField).Old_dXI1_qphi[1]);
+  free(Fields->OldPhiField.Old_phi);
+  free(Fields->OldPhiField.Old_dXI1_phi);
+  free(Fields->OldPhiField.Old_dXI2_phi);
+  free(Fields->OldPhiField.Old_dXI1_qphi);
 
   return 0;
 }

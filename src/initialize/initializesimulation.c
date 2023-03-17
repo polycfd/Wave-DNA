@@ -71,8 +71,9 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   InitializeScalarField(&RunOptions->NumericsFD, Fields->PhiField.BBbyAA, 0.0);
 
   InitializeOldPhiFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_phi, 0.0);
-  InitializeOldPhiFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI1_qphi, 0.0);
+  InitializeOldPhiFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI1_phi, 0.0);
   InitializeOldPhiFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI2_phi, 0.0);
+  InitializeOldPhiFields(&RunOptions->NumericsFD, Fields->OldPhiField.Old_dXI1_qphi, 0.0);
 
   SolveSumFDcoeffTimesPhi_dt(RunOptions, Fields);
 
