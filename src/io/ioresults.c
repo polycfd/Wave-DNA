@@ -92,7 +92,7 @@ int IOWriteProbes(struct DNA_RunOptions *RunOptions)
 
 int IOWriteProbes_dummy(struct DNA_RunOptions *RunOptions) { return 0; }
 
-int IOWriteHeader(struct DNA_RunOptions *RunOptions)
+int IOWriteHeader(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields)
 {
   RunOptions->Results = fopen("results/fields.dat", "a");
   fprintf(RunOptions->Results, "iPoint; x[m]; p1[Pa]; phi1[m^2/s]; u0[m/s]\n\n");
@@ -102,10 +102,10 @@ int IOWriteHeader(struct DNA_RunOptions *RunOptions)
   {
     RunOptions->Results = fopen("results/probes.dat", "a");
     fprintf(RunOptions->Results, "timeStep; time[s]; ");
-    for (int i = 0; i < (RunOptions->Probes.nSamplePoints); i++)
+    for (int iSample = 0; iSample < (RunOptions->Probes.nSamplePoints); iSample++)
     {
       fprintf(RunOptions->Results, "p1(x=");
-      fprintf(RunOptions->Results, "%.6e", RunOptions->Probes.SamplePoints[i]);
+      fprintf(RunOptions->Results, "%.6e", Fields->Grid.x[RunOptions->Probes.SampleIDs[iSample]]);
       fprintf(RunOptions->Results, "m)[Pa]; ");
     }
     fprintf(RunOptions->Results, "\n");

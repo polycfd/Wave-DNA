@@ -23,8 +23,6 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   if (stat("./results", &st) == -1) mkdir("results", 0700);
 
   RunOptions->writeCount = 0;
-  IOWriteHeader(RunOptions);
-
   RunOptions->pExcitation = 0;
 
   MovingBoundary->R = MovingBoundary->R0;
@@ -78,6 +76,10 @@ int InitializeSimulation(struct DNA_RunOptions *RunOptions, struct DNA_Fields *F
   SolveSumFDcoeffTimesPhi_dt(RunOptions, Fields);
 
   IOIdentifySampleIDs(RunOptions, Fields);
+
+  // This function writes the loctions of the sample points to the output file.
+  // Therefore, it must be called after the grid has been generated and after the sample IDs have been identified.
+  IOWriteHeader(RunOptions, Fields);
 
   return 0;
 }

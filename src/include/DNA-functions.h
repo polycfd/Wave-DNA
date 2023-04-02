@@ -119,7 +119,7 @@ int IOReadCommandLineOptions(int argc, char **args, struct DNA_RunOptions *RunOp
 int IOLineGet(char *ssring, FILE *fp);
 int IOLineGetSemi(char *ssring, FILE *fp);
 int IOLineGetSkip(char *ssring, FILE *fp);
-int IOWriteHeader(struct DNA_RunOptions *RunOptions);
+int IOWriteHeader(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields);
 int IOWriteToDisc(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int IOWriteStatHorizon(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
 int IOWriteStatHorizon_dummy(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fields, struct DNA_MovingBoundary *MovingBoundary);
