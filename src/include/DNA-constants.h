@@ -3,8 +3,8 @@
 #ifndef DNACONSTANTS_H_
 #define DNACONSTANTS_H_
 
-#define DNA_VERSION_NUM (0.31)
-static const char DNA_RELEASE_DATE[] = "17 Feb 2023";
+#define DNA_VERSION_NUM (1.0)
+static const char DNA_RELEASE_DATE[] = "7 Apr 2023";
 
 typedef double DNA_FLOAT;
 #define DNA_EPS (1.0e-15)
@@ -20,6 +20,7 @@ typedef double DNA_FLOAT;
 #define DNA_STRINGTOFLOAT(a) (strtod(a, &dummy))
 #define DNA_POW2(x) ((x) * (x))
 #define DNA_POW3(x) ((x) * (x) * (x))
+#define APECSS_MIN(a, b) ((a) < (b) ? (a) : (b))
 #define DNA_PI (3.1415926535897932384626433832795028841972)
 #define DNA_STRINGLENGTH (512)
 #define DNA_STRINGLENGTH_SPRINTF (1024)

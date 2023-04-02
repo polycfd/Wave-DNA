@@ -183,15 +183,17 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
 
       for (int iPoint = 0; iPoint < (RunOptions->NumericsFD.NPoints - 1); iPoint++)
       {
-        DNA_FLOAT xl = Fields->Grid.x[iPoint];
-        DNA_FLOAT xr = Fields->Grid.x[iPoint + 1];
+        DNA_FLOAT x1 = Fields->Grid.x[iPoint];
+        DNA_FLOAT x2 = Fields->Grid.x[iPoint + 1];
 
-        if ((xl <= xtarg) & (xr >= xtarg))
+        DNA_FLOAT dx1 = x1 - xtarg;
+        DNA_FLOAT dx2 = x2 - xtarg;
+
+        // If xtarg is betwen x1 and x2, then dx1*dx2 < 0.
+        // By checking for dx1*dx2 < DNA_SMALL, boundary points are identified as well (xtarg = x1 or xtarg = x2).
+        if (dx1 * dx2 < DNA_SMALL)
         {
-          DNA_FLOAT dxl = xtarg - xl;
-          DNA_FLOAT dxr = xr - xtarg;
-
-          if (dxl < dxr)
+          if (DNA_ABS(dx1) < DNA_ABS(dx2))
           {
             RunOptions->Probes.SampleIDs[iSample] = iPoint;
           }
@@ -207,13 +209,29 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
       {
         printf("+ INFO: sample point no %d is a domain boundary\n", iSample + 1);
 
-        if (xtarg < Fields->Grid.xmov)
+        DNA_FLOAT xmin = APECSS_MIN(Fields->Grid.xmov, Fields->Grid.xfix);
+
+        int xminID;
+        int xmaxID;
+
+        if (Fields->Grid.x[RunOptions->NumericsFD.NPoints - 1] > Fields->Grid.x[0])
         {
-          RunOptions->Probes.SampleIDs[iSample] = 0;
+          xminID = 0;
+          xmaxID = RunOptions->NumericsFD.NPoints - 1;
         }
         else
         {
-          RunOptions->Probes.SampleIDs[iSample] = RunOptions->NumericsFD.NPoints - 1;
+          xminID = RunOptions->NumericsFD.NPoints - 1;
+          xmaxID = 0;
+        }
+
+        if (xtarg < xmin)
+        {
+          RunOptions->Probes.SampleIDs[iSample] = xminID;
+        }
+        else
+        {
+          RunOptions->Probes.SampleIDs[iSample] = xmaxID;
         }
       }
     }
