@@ -205,10 +205,10 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
         }
       }
 
+      // The above routine fails to identify the sample IDs if sample points outside the physical domain are given.
+      // The following routine then identifies the ID and location of the West or East boundary as a sample point.
       if (!success)
       {
-        printf("+ INFO: sample point no %d is a domain boundary\n", iSample + 1);
-
         DNA_FLOAT xmin = APECSS_MIN(Fields->Grid.xmov, Fields->Grid.xfix);
 
         int xminID;
@@ -233,6 +233,14 @@ int IOIdentifySampleIDs(struct DNA_RunOptions *RunOptions, struct DNA_Fields *Fi
         {
           RunOptions->Probes.SampleIDs[iSample] = xmaxID;
         }
+      }
+    }
+
+    for (int iSample = 0; iSample < RunOptions->Probes.nSamplePoints; iSample++)
+    {
+      if ((RunOptions->Probes.SampleIDs[iSample] == 0) || (RunOptions->Probes.SampleIDs[iSample] == RunOptions->NumericsFD.NPoints - 1))
+      {
+        printf("+ INFO: sample point no %d is a domain boundary\n", iSample + 1);
       }
     }
 
