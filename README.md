@@ -6,7 +6,7 @@ Wave-DNA is a software tool for one-dimensional and spherically-symmetric nonlin
 - [Sören Schenke](mailto:soeren.schenke@ovgu.de) (principal developer)
 - [Fabian Sewerin](mailto:fabian.sewerin@ovgu.de)
 - [Berend van Wachem](mailto:berend.vanwachem@ovgu.de)
-- [Fabian Denner](mailto:fabian.denner@ovgu.de) (maintainer)
+- [Fabian Denner](mailto:fabian.denner@polymtl.ca) (maintainer)
 
 ## License and Copyright
 Wave-DNA is under the copyright of its developers and made available as open-source software under the terms of the [MIT License](LICENSE).
