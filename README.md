@@ -13,7 +13,7 @@ Wave-DNA is under the copyright of its developers and made available as open-sou
 
 ## Repository Structure
 The Wave-DNA repository is structured as follows:
-- The [documentation](/documentation/) folder contains a short [pdf](/documentation/WaveDNA-Documentation.pdf) documentation of Wave-DNA. The documentation discusses the theory behind Wave-DNA and the code structure, and explains how install and use Wave-DNA.
+- The [documentation](/documentation/) folder contains a short [pdf](/documentation/WaveDNA-Documentation.pdf) documentation of Wave-DNA. The documentation discusses the theory behind Wave-DNA and the code structure, and explains how to install and use Wave-DNA.
 - The [examples](/examples/) folder contains representative examples that show how to use Wave-DNA and demonstrate the most important features of Wave-DNA. 
 - The [src](/src/) folder contains all source files of Wave-DNA.
 - The [.clang-format](.clang-format) file, which defines the formatting rules for the source code.
