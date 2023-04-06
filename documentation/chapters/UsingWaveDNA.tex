@@ -218,7 +218,7 @@ for the acoustic white hole scenario.
 
 To be compatible with the predictor-corrector method and the wave-absorbing boundary conditions as explained further below, we use first-order finite differences in time. For the spatial discretization, second-order central differences are used. The Laplacian and the mixed spatial-temporal derivatives only have to be evaluated in the inner field, whereas the gradient also has to be evaluated at the boundary, to impose the wave-absorbing boundary condition. At the boundaries, a first-order finite difference stencil is used to compute the gradient. .
 
-Next to the time step size $\Delta t$ and the total number of grid points, one can specify the parameter $\gamma$ of a predictor-corrector method as developed by \citet{Dey_and_Dey_1983} and \citet{Nascimento_et_al_2010}, where the interim solution $\widetilde{\Phi_1}$, predicted by the explicit finite-difference integration, is weighted by $\left(1-\gamma\right)$, whereas the corrected solution is weighted by $\gamma$. With $i$ and $j$ indicating the grid point and the time step, respectively, the spatial and temporal finite-difference approximations are given by
+Next to the time step size $\Delta t$ and the total number of grid points, one can specify the parameter $\gamma$ of a predictor-corrector method as developed by \citet{Dey_and_Dey_1983} and \citet{Nascimento_et_al_2010}, where the interim solution $\widetilde{\Phi}_1$, predicted by the explicit finite-difference integration, is weighted by $\left(1-\gamma\right)$, whereas the corrected solution is weighted by $\gamma$. With $i$ and $j$ indicating the grid point and the time step, respectively, the spatial and temporal finite-difference approximations are given by
 \begin{align}
 &\left(\dfrac{\partial^k \Phi_1}{\partial t^k}\right)^{j}_{i}
 =
@@ -232,9 +232,9 @@ Next to the time step size $\Delta t$ and the total number of grid points, one c
 \dfrac{\displaystyle a_0^{\left(k\right)}\Phi^{j}_{1,i} + \sum_{n=1}^{\left(N-1\right)/2} \left( a_n^{\left(k\right)}\Phi^{j}_{1,i+n} + a_{n}^{\left(k\right)}\Phi^{j}_{1,i-n}\right)}{\Delta\xi^k}.
 \label{eq:fddxi_compact}
 \end{align}
-The predicted solution $\widetilde{\Phi_{1,i}}$ is obtained as
+The predicted solution $\widetilde{\Phi}_{1,i}$ is obtained as
 \begin{equation}
-\widetilde{\Phi_{1,i}}\underbrace{\sum_{k=1}^2\mathcal{A}_{k,i}^j \dfrac{a_0^{\left(k\right)}}{\Delta t^k}}_{\mathcal{H}^j_i}
+\widetilde{\Phi}_{1,i}\underbrace{\sum_{k=1}^2\mathcal{A}_{k,i}^j \dfrac{a_0^{\left(k\right)}}{\Delta t^k}}_{\mathcal{H}^j_i}
 +
 \underbrace{\mathcal{R}^j_i
 +
@@ -245,10 +245,10 @@ The predicted solution $\widetilde{\Phi_{1,i}}$ is obtained as
 \end{equation}
 where the term $\mathcal{R}_i^j$ involves the finite difference approximations of the gradient and mixed derivative terms. The new solution $\Phi^{j+1}_{1,i}$ is then obtained as
 \begin{equation}
-\Phi^{j+1}_{1,i} = \left(1-\gamma\right)\widetilde{\Phi_{1,i}} + \dfrac{\gamma}{\mathcal{H}^j_i\left(\Phi_{1,i}^{j}\right)}\left[\underbrace{\mathcal{A}^j_{L,i}\left(\Phi_{1,i}^{j}\right)\left(\dfrac{\partial^2\widetilde{\Phi_1}}{\partial \xi^2}\right)_i - \left(\dfrac{c_0^2}{A}\dfrac{\partial A}{\partial r} \dfrac{\partial \xi}{\partial r}\right)^j_i\left(\dfrac{\partial \widetilde{\Phi_1}}{\partial \xi}\right)_i}_{\textnormal{spherical Laplacian}} + \mathcal{S}^j_i\left(\Phi_{1,i}^{j}\right)\right],
+\Phi^{j+1}_{1,i} = \left(1-\gamma\right)\widetilde{\Phi}_{1,i} + \dfrac{\gamma}{\mathcal{H}^j_i\left(\Phi_{1,i}^{j}\right)}\left[\underbrace{\mathcal{A}^j_{L,i}\left(\Phi_{1,i}^{j}\right)\left(\dfrac{\partial^2\widetilde{\Phi}_1}{\partial \xi^2}\right)_i - \left(\dfrac{c_0^2}{A}\dfrac{\partial A}{\partial r} \dfrac{\partial \xi}{\partial r}\right)^j_i\left(\dfrac{\partial \widetilde{\Phi}_1}{\partial \xi}\right)_i}_{\textnormal{spherical Laplacian}} + \mathcal{S}^j_i\left(\Phi_{1,i}^{j}\right)\right],
 \label{eq:corrector}
 \end{equation}
-where the spherical Laplcian is updated based on the predicted solution $\widetilde{\Phi_1}$, whereas all remaining terms, summarized in the terms $\mathcal{H}$ and $\mathcal{S}$, and the time- and space-dependent coefficient $\mathcal{A}_L$, remain unchanged in the corrector step. The corrector step may be performed multiple times in a corrector loop. However, a single corrector step should serve the purpose of counteracting the dispersive noise. In fact, the value of $\gamma$ is more important. For $\gamma=0$, the standard explicit finite-difference time integration scheme is obtained. With increasing $\gamma$, the predictor-corrector method becomes increasingly diffusive. The resolution of the simulation must be increased at constant Courant-Friedrichs-Lewy (CFL) number to avoid excessive diffusion while preserving the stabilizing effect of the scheme. To this end, the CFL number is given by
+where the spherical Laplcian is updated based on the predicted solution $\widetilde{\Phi}_1$, whereas all remaining terms, summarized in the terms $\mathcal{H}$ and $\mathcal{S}$, and the time- and space-dependent coefficient $\mathcal{A}_L$, remain unchanged in the corrector step. The corrector step may be performed multiple times in a corrector loop. However, a single corrector step should serve the purpose of counteracting the dispersive noise. In fact, the value of $\gamma$ is more important. For $\gamma=0$, the standard explicit finite-difference time integration scheme is obtained. With increasing $\gamma$, the predictor-corrector method becomes increasingly diffusive. The resolution of the simulation must be increased at constant Courant-Friedrichs-Lewy (CFL) number to avoid excessive diffusion while preserving the stabilizing effect of the scheme. To this end, the CFL number is given by
 \begin{equation}
 \mathrm{CFL} = \dfrac{c_0\Delta t}{\Delta x} = \dfrac{c_0\Delta t\left(N_{\mathrm{points}-1}\right)}{L_{\mathrm{domain}}},
 \label{eq:CFL}
