@@ -35,10 +35,11 @@ int TransformExcitationPressureToExcitationPotential(struct DNA_RunOptions *RunO
 
   DNA_FLOAT rho0 = FluidProperties->rho0;
   DNA_FLOAT pow2_c0 = DNA_POW2(FluidProperties->c0);
+  DNA_FLOAT K = (3.0 - 2.0 * FluidProperties->beta)/pow2_c0;
 
-  DNA_FLOAT A1 = 1.0 - (transformed_dt1 + u0 * transformed_dXI1_phi) / pow2_c0 * NLflag;
-  DNA_FLOAT AG = u0 + 0.5 * (1.0 - DNA_POW2(u0) / pow2_c0) * transformed_dXI1_phi * NLflag;
-  DNA_FLOAT N = (DNA_FLOAT) 0.5 * DNA_POW2(transformed_dt1) / pow2_c0 * NLflag;
+  DNA_FLOAT A1 = 1.0 - (transformed_dt1 + u0 * transformed_dXI1_phi) * K * NLflag;
+  DNA_FLOAT AG = u0 + 0.5 * (1.0 - DNA_POW2(u0) * K) * transformed_dXI1_phi * NLflag;
+  DNA_FLOAT N = (DNA_FLOAT) 0.5 * DNA_POW2(transformed_dt1) * K * NLflag;
 
   Fields->PhiField.phi[RunOptions->iExcitation] = -b / a0 - dt / (a0 * A1) * ((A1 * q + AG * detJ) * dXI1_phi + N + p / rho0);
 
@@ -51,6 +52,7 @@ int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, st
   DNA_FLOAT detJ = Fields->Grid.detJacobi;
   DNA_FLOAT rho0 = FluidProperties->rho0;
   DNA_FLOAT pow2_c0 = DNA_POW2(FluidProperties->c0);
+  DNA_FLOAT K = (3.0 - 2.0 * FluidProperties->beta)/pow2_c0;
 
   for (int iPoint = 1; iPoint < RunOptions->NumericsFD.NPoints; iPoint++)
   {
@@ -62,9 +64,9 @@ int TransformPotentialFieldToPressureField(struct DNA_RunOptions *RunOptions, st
     DNA_FLOAT transformed_dXI1_phi = detJ * dXI1_phi;
     DNA_FLOAT transformed_dt1 = dtphi + q * dXI1_phi;
 
-    DNA_FLOAT A1 = 1.0 - (transformed_dt1 + u0 * transformed_dXI1_phi) / pow2_c0 * NLflag;
-    DNA_FLOAT AG = u0 + 0.5 * (1.0 - DNA_POW2(u0) / pow2_c0) * transformed_dXI1_phi * NLflag;
-    DNA_FLOAT N = 0.5 * DNA_POW2(transformed_dt1) / pow2_c0 * NLflag;
+    DNA_FLOAT A1 = 1.0 - (transformed_dt1 + u0 * transformed_dXI1_phi) * K * NLflag;
+    DNA_FLOAT AG = u0 + 0.5 * (1.0 - DNA_POW2(u0) * K) * transformed_dXI1_phi * NLflag;
+    DNA_FLOAT N = 0.5 * DNA_POW2(transformed_dt1) * K * NLflag;
 
     Fields->PhiField.PressureField[iPoint] = -rho0 * (A1 * dtphi + (A1 * q + AG * detJ) * dXI1_phi + N);
   }
