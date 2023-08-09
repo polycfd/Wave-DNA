@@ -3,8 +3,8 @@
 #ifndef DNACONSTANTS_H_
 #define DNACONSTANTS_H_
 
-#define DNA_VERSION_NUM (1.0)
-static const char DNA_RELEASE_DATE[] = "7 Apr 2023";
+#define DNA_VERSION_NUM (1.2)
+static const char DNA_RELEASE_DATE[] = "9 August 2023";
 
 typedef double DNA_FLOAT;
 #define DNA_EPS (1.0e-15)
