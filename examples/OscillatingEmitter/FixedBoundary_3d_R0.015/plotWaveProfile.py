@@ -54,7 +54,7 @@ def _read(filename, timestep):
 
                 while "EOS" not in line:
                     splitline = line.split()
-                    x.append(float(splitline[1])/c0*fa)
+                    x.append(float(splitline[1])*fa/c0)
                     p.append(float(splitline[2])/pa)
                     line = next(fo)
     fo.close()
@@ -73,7 +73,7 @@ for i in range(0,len(x)):
 plt.plot(x,decay_pos, linewidth=2.0, color='red', linestyle='dashed', label=r'$1/r\mathrm{\:decay}$')
 plt.plot(x,decay_neg, linewidth=2.0, color='red', linestyle='dashed')
 
-plt.xlabel(r'$r/\lambda_0$', fontsize=fontsize)
+plt.xlabel(r'$r/\lambda_\mathrm{a}$', fontsize=fontsize)
 plt.ylabel(r'$p_1/\Delta p_{\mathrm{a}}$', fontsize=fontsize)
 
 plt.xlim((0,12))
@@ -85,5 +85,5 @@ plt.legend(fontsize=fontsize, loc='upper right', ncol=1, frameon=True)
 plt.grid()
 
 plt.show()
-#plt.savefig("../../figures/pr_oscilattingEmitter_staticBoundary.pdf", bbox_inches = "tight", dpi=400)
+#plt.savefig("wave.pdf", bbox_inches = "tight", dpi=400)
 #plt.close()

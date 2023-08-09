@@ -54,7 +54,7 @@ def _read(filename, timestep):
 
                 while "EOS" not in line:
                     splitline = line.split()
-                    x.append(float(splitline[1])/c0*fa)
+                    x.append(float(splitline[1])*fa/c0)
                     p.append(float(splitline[2])/pa)
                     line = next(fo)
     fo.close()
@@ -65,7 +65,7 @@ filename = "results/fields.dat"
 x,p = _read(filename, 200000)
 plt.plot(x,p, linewidth=2.0, color='black')
 
-plt.xlabel(r'$r/\lambda_0$', fontsize=fontsize)
+plt.xlabel(r'$r/\lambda_\mathrm{a}$', fontsize=fontsize)
 plt.ylabel(r'$p_1/\Delta p_{\mathrm{a}}$', fontsize=fontsize)
 
 plt.grid()
