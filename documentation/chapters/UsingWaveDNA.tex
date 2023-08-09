@@ -50,8 +50,8 @@ The options file may also take another name different from {\tt run.DNA}. In tha
 The basic run options and fluid properties are set in the sections {\tt RUNOPTIONS} and {\tt FLUID}, respectively. Next to the background density and speed of sound, $\rho_0$ and $c_0$, respectively, one can specify the nonlinearity coefficient $\beta$ to admit cumulative nonlinearities. Independent of this option, one can further indicate, whether local nonlinearties (a non-zero Lagrangian density $\mathcal{L}$) are taken into account. By this means, one can effectively solve
 \begin{compactitem}
 \item the linear wave equation ($\beta = 0$, $\mathcal{L}=0$),
-\item the lossless Westervelt equation ($\beta \neq 0$, $\mathcal{L}=0$),
-\item or the lossless Kuznetsov equation ($\beta \neq 0$, $\mathcal{L}\neq 0$).
+\item the lossless Westervelt equation ($\beta \neq 0$, $\mathcal{L}=0$) \citep{Schenke_et_al_2022},
+\item or the lossless Kuznetsov equation ($\beta \neq 0$, $\mathcal{L}\neq 0$) \citep{Schenke_et_al_2023_JASA}.
 \end{compactitem}
 The following table provides a detailed overview of the run and fluid property options.
 
@@ -208,6 +208,7 @@ for the acoustic white hole scenario.
 {\tt BackgroundMotionMode <string>} & Specifies whether the background flow field is unconditionally quiescent (option {\tt <quiescent>}), regardless of the motion of the moving domain boundary, or whether the background flow field is coupled to the moving domain boundary (option {\tt <coupledToMovingBoundary>}). \\
 {\tt Geometry <string>} & Specifies whether the flow field is spatially homogeneous (option {\tt <1dCartesian>}) or satisfying the continuity equation of a spherically symmetric flow (option {\tt <3dSphericallySymmetric>}). \\
 {\tt HorizonRadius <float>} & Point of sonic transition if {\tt BoundaryMotionType} is set to {\tt <stationaryBlackHole>} or {\tt <stationaryWhiteHole>}. \\
+{\tt BackgroundVelocityScalingFactor <float>} & Exponent $n$ in Eq.~\eqref{eq:u0_spherical}, defining the parametrization of the spatially non-uniform background flow. \\
 {\tt GravitationalPotential <string>} & If set to {\tt True} and if {\tt BackgroundMotionMode} is set to {\tt <stationaryBlackHole>} or {\tt <stationaryWhiteHole>}, a gravitational potential is included to mimic a simplified Bondi-Parker-type flow. \\
  \hline
 \end{longtable} \vspace{1em}
@@ -216,7 +217,7 @@ for the acoustic white hole scenario.
 \section{Finite-difference discretization}
 \label{sec:Finite difference discretization}
 
-To be compatible with the predictor-corrector method and the wave-absorbing boundary conditions as explained further below, we use first-order finite differences in time. For the spatial discretization, second-order central differences are used. The Laplacian and the mixed spatial-temporal derivatives only have to be evaluated in the inner field, whereas the gradient also has to be evaluated at the boundary, to impose the wave-absorbing boundary condition. At the boundaries, a first-order finite difference stencil is used to compute the gradient. .
+To be compatible with the predictor-corrector method and the wave-absorbing boundary conditions as explained further below, we use first-order finite differences in time. For the spatial discretization, second-order central differences are used. The Laplacian and the mixed spatial-temporal derivatives only have to be evaluated in the inner field, whereas the gradient also has to be evaluated at the boundary, to impose the wave-absorbing boundary condition. At the boundaries, a first-order finite difference stencil is used to compute the gradient.
 
 Next to the time step size $\Delta t$ and the total number of grid points, one can specify the parameter $\gamma$ of a predictor-corrector method as developed by \citet{Dey_and_Dey_1983} and \citet{Nascimento_et_al_2010}, where the interim solution $\widetilde{\Phi}_1$, predicted by the explicit finite-difference integration, is weighted by $\left(1-\gamma\right)$, whereas the corrected solution is weighted by $\gamma$. With $i$ and $j$ indicating the grid point and the time step, respectively, the spatial and temporal finite-difference approximations are given by
 \begin{align}

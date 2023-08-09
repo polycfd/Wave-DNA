@@ -8,7 +8,7 @@ The following examples are found in the {\tt Wave-DNA} source directory {\tt </p
 
 This example is found in {\tt examples/DefaultRun}.
 
-If the {\tt run.DNA} options file is empty, the simulation is exclusively based on the default options. The result is a sinusoidal wave comprising ten emitted wave periods in a domain that comprises ten wavelengths. The is excited at the left (West) boundary and travels from left to right. The $\mathrm{CFL}$ number is equal to 0.1 and the spatial resolution is $N_{\mathrm{ppw}}=100$ points per wavelength. {\tt fields.dat} is the only output file as no probes are specified. The instantaneous obtained at a physical time of ten wave periods is shown in Fig. \ref{fig:DefaultRun}. See Sec. \ref{sec:Default settings} and/or the source file {\tt src/io/iodefaultoptions.c} for the default settings.
+If the {\tt run.DNA} options file is empty, the simulation is exclusively based on the default options. The result is a sinusoidal wave comprising ten emitted wave periods in a domain that comprises ten wavelengths. The is excited at the left (West) boundary and travels from left to right. The $\mathrm{CFL}$ number is equal to 0.1 and the spatial resolution is $N_{\mathrm{ppw}}=100$ points per wavelength. {\tt fields.dat} is the only output file as no probes are specified. The instantaneous obtained at a physical time of ten wave periods is shown in Fig.~\ref{fig:DefaultRun}. See Sec. \ref{sec:Default settings} and/or the source file {\tt src/io/iodefaultoptions.c} for the default settings.
 
 \begin{figure}
     \centering
@@ -23,21 +23,21 @@ If the {\tt run.DNA} options file is empty, the simulation is exclusively based 
 
 This example is found in {\tt examples/ScatteringAbsorbing}.
 
-This test case illustrates the options for the boundary conditions. A Gaussian pulse is emitted as indicated by the red lines in Fig. \ref{fig:BC} (see the {\tt run.DNA} file). The pulse is emitted at $x=0$ and travels from left to right. In Fig. \ref{fig:BC} (a), the settings are:
+This test case illustrates the options for the boundary conditions. A Gaussian pulse is emitted as indicated by the red lines in Fig.~\ref{fig:BC} (see the {\tt run.DNA} file). The pulse is emitted at $x=0$ and travels from left to right. In Fig.~\ref{fig:BC} (a), the settings are:
 
 {\tt
 BoundaryConditionEast scattering\\
 BoundaryConditionWest scattering
 }
 
-With the {\tt scattering} condition at the East boundary, the pulse is reflected at the boundary as indicated by the black line in Fig. \ref{fig:BC} (a). In Fig. \ref{fig:BC} (b), the settings are:
+With the {\tt scattering} condition at the East boundary, the pulse is reflected at the boundary as indicated by the black line in Fig.~\ref{fig:BC} (a). In Fig.~\ref{fig:BC} (b), the settings are:
 
 {\tt
 BoundaryConditionEast absorbing\\
 BoundaryConditionWest scattering
 }
 
-With the {\tt absorbing} condition at the East boundary, the pulse leaves the domain without reflection as shown by the black line in Fig. \ref{fig:BC} (b). The settings for the West boundary are arbitrary as this boundary is the emission node in this case.
+With the {\tt absorbing} condition at the East boundary, the pulse leaves the domain without reflection as shown by the black line in Fig.~\ref{fig:BC} (b). The settings for the West boundary are arbitrary as this boundary is the emission node in this case.
 
 \begin{figure}
     \centering
@@ -66,12 +66,12 @@ This rather high resolution is needed in order avoid excessive numerical dissipa
     x_{\mathrm{sh}} = \dfrac{\rho_0 c_0^3}{2\pi \beta f_{\mathrm{a}}\Delta p_{\mathrm{a}}},
     \label{eq:xsh}
 \end{equation}
-takes the value $x_{\mathrm{sh}}=10$. At the shock formation distance, the progressively steepening wavefront first starts to develop a discontinuity. The red dashed line in Fig. \ref{fig:shock_attenuation} represents the envelope $\widehat{p}_1$ owing to the Fay solution \citep{Fay_1931}, given by \citep{Blackstock_1966}
+takes the value $x_{\mathrm{sh}}=10$. At the shock formation distance, the progressively steepening wavefront first starts to develop a discontinuity. The red dashed line in Fig.~\ref{fig:shock_attenuation} represents the envelope $\widehat{p}_1$ owing to the Fay solution \citep{Fay_1931}, given by \citep{Blackstock_1966}
 \begin{equation}
     \dfrac{\widehat{p}_1}{\Delta p_{\mathrm{a}}} = \dfrac{\pi}{1 + x/x_{\mathrm{sh}}}.
     \label{eq:Fay}
 \end{equation}
-The Fay solution is not applicable to the close vicinity of the emitter, but asymptotically approaches the wave profile decay at distances larger than approximately $3x_{\mathrm{sh}}$, where the initially sinusoidal has fully evolved into a saw-tooth shape. Fig. \ref{fig:shock_attenuation} (a) shows that the wave profile exhibits only a minor decay prior to the shock formation distance, after which starts to approach the Fay envelope. Fig. \ref{fig:shock_attenuation} (b) shows a detail of the fully developed saw-tooth pattern. It is noted that the predictor-corrector method drives the attenuation associated with the dissipation across the shock front. See \citet{Schenke_et_al_2022} for further discussions of this effect.
+The Fay solution is not applicable to the close vicinity of the emitter, but asymptotically approaches the wave profile decay at distances larger than approximately $3x_{\mathrm{sh}}$, where the initially sinusoidal has fully evolved into a saw-tooth shape. Fig.~\ref{fig:shock_attenuation} (a) shows that the wave profile exhibits only a minor decay prior to the shock formation distance, after which starts to approach the Fay envelope. Fig.~\ref{fig:shock_attenuation} (b) shows a detail of the fully developed saw-tooth pattern. It is noted that the predictor-corrector method drives the attenuation associated with the dissipation across the shock front. See \citet{Schenke_et_al_2022} for further discussions of this effect.
 
 \begin{figure}
     \centering
@@ -117,11 +117,11 @@ InitialMovingBoundaryPosition 0.0 \\
 FixedBoundaryPosition 0.18
 }
 
-Hence, the moving boundary acts as a wave emitting boundary so that the acoustic wave is Doppler-shifted upon emission. In Fig. \ref{fig:RelativeEmitterMotion} (a), the wave emitting boundary moves from right to left, hence against the direction of wave propagation, by setting:
+Hence, the moving boundary acts as a wave emitting boundary so that the acoustic wave is Doppler-shifted upon emission. In Fig.~\ref{fig:RelativeEmitterMotion} (a), the wave emitting boundary moves from right to left, hence against the direction of wave propagation, by setting:
 
 {\tt MovingBoundaryVelocityAmplitude -500}
 
-This causes a red-shift (frequency decrease) of the emitted wave. In Fig. \ref{fig:RelativeEmitterMotion} (b), the wave emitting boundary moves from left to right, hence in the direction of wave propagation, by setting:
+This causes a red-shift (frequency decrease) of the emitted wave. In Fig.~\ref{fig:RelativeEmitterMotion} (b), the wave emitting boundary moves from left to right, hence in the direction of wave propagation, by setting:
 
 {\tt MovingBoundaryVelocityAmplitude 500}
 
@@ -143,19 +143,19 @@ This causes a blue-shift (frequency increase) of the emitted wave.
 
 This example is found in {\tt examples/MovingBoundary/InducedFlow}.
 
-Fig. \ref{fig:ConvectedWave} shows how an acoustic wave is Doppler-shifted by a temporaily constant and spatially uniform background flow field in one-dimensional Cartesian coordinates. In both Figs. \ref{fig:ConvectedWave} (a) and (b), the left domain boundary moves to the right with a velocity of $c_0/3$, and in both cases it induces a background flow field of the same velocity and direction by setting:
+Fig.~\ref{fig:ConvectedWave} shows how an acoustic wave is Doppler-shifted by a temporaily constant and spatially uniform background flow field in one-dimensional Cartesian coordinates. In both Figs. \ref{fig:ConvectedWave} (a) and (b), the left domain boundary moves to the right with a velocity of $c_0/3$, and in both cases it induces a background flow field of the same velocity and direction by setting:
 
 {\tt
 BackgroundMotionMode coupledToMovingBoundary
 }
 
-In Fig. \ref{fig:ConvectedWave} (a), the wave is excited at the moving boundary, which is initially at $x=0$ by setting:
+In Fig.~\ref{fig:ConvectedWave} (a), the wave is excited at the moving boundary, which is initially at $x=0$ by setting:
 
 {\tt
 ExcitationNode 0
 }
 
-As a result, the wave travels from left to right and there is no relative motion between the wave emitter and the background flow field and the emitted wavelength $\lambda_0$ is not modulated. The instantaneous wave profile in Fig. \ref{fig:ConvectedWave} is shown at two time instances in order to illustrate the variable position of the wave emitting boundary. In Fig. \ref{fig:ConvectedWave} (b), the wave is excited at the fixed right boundary by setting:
+As a result, the wave travels from left to right and there is no relative motion between the wave emitter and the background flow field and the emitted wavelength $\lambda_0$ is not modulated. The instantaneous wave profile in Fig.~\ref{fig:ConvectedWave} is shown at two time instances in order to illustrate the variable position of the wave emitting boundary. In Fig.~\ref{fig:ConvectedWave} (b), the wave is excited at the fixed right boundary by setting:
 
 {\tt
 ExcitationNode 4800
@@ -242,7 +242,7 @@ MovingBoundaryFrequency 1e4
 
 Hence, the boundary oscillates around an initial radius of $R_0=0.015\:\mathrm{m}$, which corresponds to one wavelength with an emitted wave frequency of $f_{\mathrm{a}}=100\:\mathrm{kHz}$ (ten times larger than the frequency the boundary motion) and a speed of sound of $c_0=1500\:\mathrm{m/s}$. With a velocity amplitude of $375\:\mathrm{m/s}$ of the boundary motion, the maximum Mach number is 0.25.
 
-For reference, Fig. \ref{fig:pr_oscilattingEmitter_staticBoundary} shows the instantaneous wave profile for a resting wave-emitting boundary ({\tt MovingBoundaryVelocityAmplitude 0}), where the wave decays like $1/r$ as indicated by the red dashed line. Figs. \ref{fig:rt_oscillatingEmitter} (a), (b), and (c) show the space-time diagrams for the resting, the relatively moving, and the flow-inducing moving boundaries, respectively. In the latter case, the characteristics posses a slight curvature due the variable background flow field in which the acoustic wave propagates.
+For reference, Fig.~\ref{fig:pr_oscilattingEmitter_staticBoundary} shows the instantaneous wave profile for a resting wave-emitting boundary ({\tt MovingBoundaryVelocityAmplitude 0}), where the wave decays like $1/r$ as indicated by the red dashed line. Figs. \ref{fig:rt_oscillatingEmitter} (a), (b), and (c) show the space-time diagrams for the resting, the relatively moving, and the flow-inducing moving boundaries, respectively. In the latter case, the characteristics posses a slight curvature due the variable background flow field in which the acoustic wave propagates.
 
 \begin{figure}
     \centering
@@ -268,11 +268,11 @@ For reference, Fig. \ref{fig:pr_oscilattingEmitter_staticBoundary} shows the ins
 \section{Acoustic black and white holes}
 \label{sec:Acoustic black and white holes}
 
-The following examples show how {\tt Wave-DNA} can be used to simulate the acoustic wave propgation in acoustic black and white hole configurations. The individual test case folders, containing illustrative acoustic black and white hole examples, include python postprocessing scripts in order to produce space-time diagrams, the plots of the instantaneous wave profiles, and the acoustic pressure evolution at the sonic horizon.
+The following examples show how {\tt Wave-DNA} can be used to simulate the acoustic wave propgation in acoustic black and white hole configurations \citep{Schenke_et_al_2022_PoF}. The individual test case folders, containing illustrative acoustic black and white hole examples, include python postprocessing scripts in order to produce space-time diagrams, the plots of the instantaneous wave profiles, and the acoustic pressure evolution at the sonic horizon.
 
 It is important to note that rather than representing compressible background flow fields with variable $\rho_0$ and $c_0$, the acoustic black/white hole configurations are model systems for acoustic waves propagating in accelerating flow fields of any (also subsonic) velocity magnitude. The reason for the acoustic black/white hole being such a convenient system for the computational study of acoustic waves in accelerating flow fields lies in the fact that they allow to trap a wave characteristic at the point of sonic transition, the sonic horizon, where it is subject to both a constant background flow velocity and a constant background flow acceleration. Due to the non-zero acceleration, the neighbouring characteristics are either converging towards or diverging away from the sonic horizon.
 
-In the acoustic black hole example shown here, nonlinearities are neglected ($\beta=0$ and $\mathcal{L}=0$). Fig. \ref{fig:BH} exemplarily shows (a) the space-time diagram and (b) the instantaneous acoustic pressure profiles for an acoustic black hole. The entire physical domain in Fig. \ref{fig:BH} is initially located outside the acoustic black hole. Subsequently, the moving wave emitting boundary collapses and eventually passes the sonic horizon while emitting outgoing characteristics. The example in Fig. \ref{fig:BH} is realized by the following boundary settings:
+In the acoustic black hole example shown here, nonlinearities are neglected ($\beta=0$ and $\mathcal{L}=0$). Fig.~\ref{fig:BH} exemplarily shows (a) the space-time diagram and (b) the instantaneous acoustic pressure profiles for an acoustic black hole. The entire physical domain in Fig.~\ref{fig:BH} is initially located outside the acoustic black hole. Subsequently, the moving wave emitting boundary collapses and eventually passes the sonic horizon while emitting outgoing characteristics. The example in Fig.~\ref{fig:BH} is realized by the following boundary settings:
 
 {\tt
 BoundaryMotionType stationaryBlackHole \\
@@ -290,7 +290,7 @@ HorizonRadius 1.5
 
 With these settings, the wave emitting boundary radiates a wavetrain that propagates in positive $r$-direction. At the same time, the spherical moving boundary collapses and induces an inward-directed spherically symmetric background fluid flow that satisfies Eq. \eqref{eq:u0_spherical}. The boundary satisfies Eq. \eqref{eq:R} so that a stationary flow field is obtained. The data at the stationary sonic horizon is written to the output file {\tt horizon.dat}. This file can be consulted to examine the evolution of the acoustic pressure and the acoustic (velocity) potential at the sonic horizon.
 
-Fig. \ref{fig:WH} exemplarily shows (a) the space-time diagram and (b) the instantaneous acoustic pressure profiles for an acoustic white hole, which can be seen as the inverse problem of the acoustic black hole. This time, the entire physical domain is initially located inside the acoustic white hole. Subsequently, the wave emitting boundary expands and eventually passes the sonic horizon while emitting ingoing characteristics. The sonic horizon radius, the speed of sound, and the emitted wave frequency are the same as in Fig. \ref{fig:BH}. The settings to trap the same emitted wave period at the sonic horizon as in the acoustic black hole configuration are as follows:
+Fig.~\ref{fig:WH} exemplarily shows (a) the space-time diagram and (b) the instantaneous acoustic pressure profiles for an acoustic white hole, which can be seen as the inverse problem of the acoustic black hole. This time, the entire physical domain is initially located inside the acoustic white hole. Subsequently, the wave emitting boundary expands and eventually passes the sonic horizon while emitting ingoing characteristics. The sonic horizon radius, the speed of sound, and the emitted wave frequency are the same as in Fig.~\ref{fig:BH}. The settings to trap the same emitted wave period at the sonic horizon as in the acoustic black hole configuration are as follows:
 
 {\tt
 BOUNDARYMOTION \\
@@ -299,14 +299,14 @@ InitialMovingBoundaryPosition 1.3824 \\
 FixedBoundaryPosition 1.2359
 }
 
-Furthermore, Fig. \ref{fig:WH} shows the results for the nonlinear wave, which exhibits the well-known nonlinear wave-steepening. The settings to achieve the nonlinear wave propagation behavior, in this particular case dominated by the constitutive nonlinearity represented by the nonlinearity coefficient $\beta$ ({\tt FluidNonLinearity}), are:
+Furthermore, Fig.~\ref{fig:WH} shows the results for the nonlinear wave, which exhibits the well-known nonlinear wave-steepening. The settings to achieve the nonlinear wave propagation behavior, in this particular case dominated by the constitutive nonlinearity represented by the nonlinearity coefficient $\beta$ ({\tt FluidNonLinearity}), are:
 
     {\tt
         FluidNonLinearity 3.5 \\
         LocalNonlinearity True
     }
 
-In the acoustic white hole in Fig. \ref{fig:WH}, the characteristics converge towards the sonic horizon so that the acoustic wave is progressively blue-shifted while the acoustic wave amplitude increases over time.
+In the acoustic white hole in Fig.~\ref{fig:WH}, the characteristics converge towards the sonic horizon so that the acoustic wave is progressively blue-shifted while the acoustic wave amplitude increases over time.
 
 \begin{figure*}
     %\baselineskip=12pt
