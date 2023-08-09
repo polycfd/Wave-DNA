@@ -1,5 +1,9 @@
 # Wave-DNA
-
+<p align="left">
+  <a href="https://doi.org/10.5281/zenodo.8229898">
+    <img src="https://img.shields.io/badge/DOI-10.5281/zenodo.8229898-blue" alt="Latest version">
+  </a>
+</p>
 Wave-DNA is a software tool for one-dimensional and spherically-symmetric nonlinear acoustic waves in transient and spatially variable background flow fields. The motion of the background medium is accounted for by considering a convective form of the lossless Kuznetsov wave equation, derived from first principles based on perturbations of the continuity equation and the transient Bernoulli equation, which is solved using a finite-difference method. In principle, the background flow field may be obtained from analytical solutions, numerical simulations, or experimental measurements. The acronym Wave-DNA stands for "Wave Doppler effects in Nonlinear Acoustics".
 
 <p align="left">
