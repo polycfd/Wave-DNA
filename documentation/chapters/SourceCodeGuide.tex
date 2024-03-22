@@ -65,7 +65,7 @@ The core of the computational method revolves around solving the lossless convec
 {\tt initializesimulation.c} & Routine that allocates memory for all scalar fields and results vectors by calling functions in {\tt memoryallocfields.c} (see below). Initial values are set and the grid point IDs corresponding to the coordinates of the probe sample locations (IDs of the nearest neighbours are taken) specified in the {\tt Wave-DNA} options file are identified. \\
 \\
 \hline Directory {\tt io} &\\ \hline
-{\tt iodefaultoptions.c} & Defaults for the options that can be set in the {\tt Wave-DNA} options file. A simulation is performed even with an empty options file (see Section \ref{sec:Default run}). \\
+{\tt iodefaultoptions.c} & Defaults for the options that can be set in the {\tt Wave-DNA} options file. A simulation is performed even with an empty options file (see Section \ref{sec:defaultrun}). \\
 {\tt ioonscreen.c} & Functions for output on screen during the run time of the simulation. \\
 {\tt ioreadcommandlineoptions.c} & Function to read command line options. \\
 {\tt ioreadoneoption.c} & Called in {\tt ioreadoptionsfile.c} to read a single option the {\tt Wave-DNA} options file. \\
