@@ -19,13 +19,31 @@ Wave-DNA is a software tool for one-dimensional and spherically-symmetric nonlin
 </p>
 
 ## Developers
-- [Sören Schenke](mailto:soeren.schenke@ovgu.de) (principal developer)
+- Sören Schenke (principal developer)
 - [Fabian Sewerin](mailto:fabian.sewerin@ovgu.de)
 - [Berend van Wachem](mailto:berend.vanwachem@ovgu.de)
 - [Fabian Denner](mailto:fabian.denner@polymtl.ca) (maintainer)
 
 ## License and Copyright
 Wave-DNA is under the copyright of its developers and made available as open-source software under the terms of the [MIT License](LICENSE).
+
+## Requirements
+
+Wave-DNA has been developed and tested on Unix systems, using Linux and MacOS operating systems. The only mandatory requirement to compile and run Wave-DNA is a standard C compiler, such as [````gcc````](https://gcc.gnu.org).
+
+Optionally, [````cmake````](https://cmake.org) (version 3.12 or higher) is required if you would like to make use of the provided compilation scripts. To use the provided Python scripts for visualizing the output of Wave-DNA, [````Python````](https://www.python.org) (version 3), [````numpy````](https://numpy.org) and [````matplotlib````](https://matplotlib.org) are required. 
+
+## Quick start guide
+
+Getting started with Wave-DNA using a Unix operating system, e.g. Linux or MacOS, is easy. After downloading Wave-DNA in the directory ````<path to Wave-DNA>````, define the environment variable ````WaveDNA_DIR```` to the directory in which Wave-DNA is located. Using bash, for instance, simply execute the command ````export WaveDNA_DIR=<path to Wave-DNA>```` or, even better, add this command to your bash profile. 
+
+Now, navigate into the folder ````$WaveDNA_DIR/build```` and execute ````./cleanbuild_release.sh````. This shell script will compile Wave-DNA in _Release_ mode (meaning all optimization flags are enabled)[^1] using _cmake_ with the ````CMakeLists.txt```` file[^2] provided in this folder. That's it, you've successfully compiled Wave-DNA! 
+
+You can now navigate to ````$WaveDNA_DIR/examples````, where you find several representative examples that demonstrate the capabilities of Wave-DNA. Each folder contains a ````README.md```` file that explains the specificities of the example(s) and how to run the example(s).
+
+[^1]: You can compile Wave-DNA in _Debug_ mode by executing ````./cleanbuild_debug.sh````.
+
+[^2]: Dependent on where the system libraries are located, you may need to change the ````$mylibdirs```` in the ````$WaveDNA_DIR/build/CMakeLists.txt```` file (by default, this is set to ````/usr/lib64/````).
 
 ## Repository Structure
 The Wave-DNA repository is structured as follows:
@@ -38,4 +56,4 @@ The Wave-DNA repository is structured as follows:
 - The [README.md](README.md) file is the file you are currently reading.
 
 ## Acknowledgements
-The development of Wave-DNA has directly benefitted from research funding provided by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation), grant number 441063377.
+The development of Wave-DNA has directly benefitted from research funding provided by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation), grant number 441063377, and by the Natural Sciences and Engineering Research Council of Canada (NSERC), funding reference number RGPIN-2024-04805.
